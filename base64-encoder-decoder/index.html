@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Base64 Encoder / Decoder</title>
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.22);--tint:rgba(96,0,96,.07);--err:#b00020}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1160px;margin:0 auto;padding:22px 24px 14px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:14px}
+h1{font:400 clamp(1.8rem,3.8vw,2.6rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:34ch}
+.tools{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin-bottom:8px}
+.seg{display:flex;border:1px solid var(--primary)}
+.seg button{border:0;border-radius:0;padding:7px 20px;background:transparent;color:var(--primary);font-weight:600}
+.seg button+button{border-left:1px solid var(--primary)}
+.seg button[aria-pressed=true]{background:var(--secondary-bg);color:var(--secondary-text)}
+.seg button:hover:not([aria-pressed=true]){background:var(--tint);color:var(--primary)}
+label.chk{display:flex;gap:8px;align-items:center;cursor:pointer}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--secondary-bg)}
+.sp{flex:1}
+button{font:inherit;cursor:pointer;border-radius:2px;padding:6px 14px;border:1px solid var(--primary);background:transparent;color:var(--primary)}
+button:hover{background:var(--primary);color:var(--primary-bg)}
+button.fill{background:var(--secondary-bg);border-color:var(--secondary-bg);color:var(--secondary-text)}
+button.fill:hover{background:var(--primary);border-color:var(--primary)}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+#err{min-height:1.4em;margin:0 0 6px;color:var(--err);font-weight:600;font-size:.9rem}
+.panes{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pane{display:flex;flex-direction:column;min-height:0}
+.head{display:flex;align-items:center;gap:8px;min-height:34px;margin-bottom:6px}
+.head b{font:400 1.15rem Charter,Georgia,serif;flex:1}
+.body{flex:1;min-height:0;display:flex;flex-direction:column}
+textarea{flex:1;min-height:0;width:100%;resize:none;padding:14px 16px;border:1px solid var(--line);background:#fff;color:var(--primary);font:.9rem/1.55 ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+textarea:focus{outline:2px solid var(--secondary-bg);outline-offset:0}
+.drop{flex:1;min-height:0;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:2px dashed var(--secondary-bg);background:var(--tint);cursor:pointer;text-align:center;padding:14px;overflow:hidden}
+.drop.over{background:rgba(128,0,128,.18)}
+.drop:focus-within{outline:3px solid var(--secondary-bg);outline-offset:2px}
+.drop input{position:absolute;opacity:0;width:1px;height:1px}
+.drop strong{font:400 1.2rem Charter,Georgia,serif}
+.drop small{color:var(--soft)}
+.chk-bg{background-color:#fff;background-image:linear-gradient(45deg,var(--tint) 25%,transparent 25%,transparent 75%,var(--tint) 75%),linear-gradient(45deg,var(--tint) 25%,transparent 25%,transparent 75%,var(--tint) 75%);background-size:16px 16px;background-position:0 0,8px 8px}
+.pv{text-align:center;color:var(--soft);flex:1;min-height:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);padding:10px;overflow:hidden}
+.pv img,.drop img{max-width:100%;max-height:100%;object-fit:contain}
+.drop img{flex:1;min-height:0}
+.info{margin:6px 0 0;min-height:1.3em;color:var(--soft);font-size:.85rem}
+.foot{margin:6px 0 0;color:var(--soft);font-size:.78rem}
+@media(max-width:820px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .panes{grid-template-columns:1fr;gap:16px}.pane{min-height:280px}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Base64 Encoder / Decoder</h1>
+    <div class="tag">Text or images, in both directions. Everything stays in your browser.</div>
+  </header>
+
+  <div class="tools">
+    <div class="seg" id="segMode"><button data-v="t" aria-pressed="true">Text</button><button data-v="i" aria-pressed="false">Image</button></div>
+    <div class="seg" id="segDir"><button data-v="e" aria-pressed="true">Encode</button><button data-v="d" aria-pressed="false">Decode</button></div>
+    <label class="chk" id="optUrl"><input type="checkbox" id="url"> URL-safe (- _ and no padding)</label>
+    <label class="chk" id="optUri" hidden><input type="checkbox" id="uri" checked> Include data URI prefix</label>
+    <span class="sp"></span>
+    <button id="swap" title="Move the output back in as input, in the other direction">Swap</button>
+    <button id="clear">Clear</button>
+  </div>
+  <p id="err" role="alert"></p>
+
+  <div class="panes">
+    <div class="pane">
+      <div class="head"><b id="lIn">Text</b></div>
+      <div class="body">
+        <textarea id="inText" spellcheck="false" placeholder="Type or paste here"></textarea>
+        <label class="drop" id="drop" hidden>
+          <input type="file" id="file" accept="image/*">
+          <img id="dpv" alt="Selected image" hidden>
+          <span id="dhint"><strong>Drop an image here</strong><br><small>or click to choose one (PNG, JPEG, GIF, WebP, SVG; up to 5 MB)</small></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="pane">
+      <div class="head"><b id="lOut">Base64</b><button id="copy">Copy</button><button id="dl" class="fill" hidden>Download</button></div>
+      <div class="body">
+        <textarea id="outText" readonly spellcheck="false"></textarea>
+        <div class="pv chk-bg" id="outImg" hidden><p id="dstat"></p></div>
+      </div>
+      <p class="info" id="info"></p>
+    </div>
+  </div>
+  <p class="foot">Base64 is an encoding, not encryption. Anyone can decode it, so never use it to hide passwords or secrets.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let mode='t',dir='e',img=null,decId=0,fileId=0;
+
+function b2s(bytes){let s='';for(let i=0;i<bytes.length;i+=0x8000)s+=String.fromCharCode.apply(null,bytes.subarray(i,i+0x8000));return btoa(s)}
+function s2b(str){
+  let s=str.replace(/\s+/g,'').replace(/-/g,'+').replace(/_/g,'/');
+  if(!/^[A-Za-z0-9+/]*={0,2}$/.test(s)||s.replace(/=+$/,'').length%4===1)throw new Error('That isn\u2019t valid Base64. Look for stray characters or a missing piece.');
+  s=s.replace(/=+$/,'');while(s.length%4)s+='=';
+  const bin=atob(s),out=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);
+  return out;
+}
+const fmtSize=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(2)+' MB';
+function sniff(b){
+  const h=(...a)=>a.every((v,i)=>b[i]===v);
+  if(h(0x89,0x50,0x4e,0x47))return'image/png';
+  if(h(0xff,0xd8,0xff))return'image/jpeg';
+  if(h(0x47,0x49,0x46,0x38))return'image/gif';
+  if(h(0x42,0x4d))return'image/bmp';
+  if(h(0,0,1,0))return'image/x-icon';
+  if(b[4]===0x66&&b[5]===0x74&&b[6]===0x79&&b[7]===0x70&&b[8]===0x61&&b[9]===0x76&&b[10]===0x69&&b[11]===0x66)return'image/avif';
+  if(h(0x52,0x49,0x46,0x46)&&b[8]===0x57&&b[9]===0x45&&b[10]===0x42&&b[11]===0x50)return'image/webp';
+  const t=new TextDecoder().decode(b.subarray(0,300)).trimStart().toLowerCase();
+  if(t.startsWith('<svg')||(t.startsWith('<?xml')&&t.includes('<svg')))return'image/svg+xml';
+  return null;
+}
+function fail(m){$('err').textContent=m}
+
+function layout(){
+  const te=mode==='t',ie=mode==='i'&&dir==='e',id=mode==='i'&&dir==='d';
+  $('inText').hidden=ie;$('drop').hidden=!ie;
+  $('outText').hidden=id;$('outImg').hidden=!id;
+  $('lIn').textContent=te?(dir==='e'?'Text':'Base64'):ie?'Image':'Base64 or data URI';
+  $('lOut').textContent=te?(dir==='e'?'Base64':'Text'):ie?'Base64':'Image';
+  $('inText').placeholder=id?'Paste Base64 or a data:image/... URI':dir==='d'?'Paste Base64 here':'Type or paste here';
+  $('optUrl').hidden=!te;$('optUri').hidden=!ie;
+  $('swap').hidden=!te;
+  $('copy').hidden=id;
+  $('dl').hidden=te||id;
+  $('dl').textContent='Download .txt';
+}
+
+function run(){
+  fail('');$('info').textContent='';
+  const key=mode+dir;
+  if(key!=='id')decId++;
+  try{
+    if(key==='te'){
+      const bytes=new TextEncoder().encode($('inText').value);
+      let s=b2s(bytes);
+      if($('url').checked)s=s.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+      $('outText').value=s;
+      if(bytes.length)$('info').textContent=bytes.length+' bytes \u2192 '+s.length+' characters';
+    }else if(key==='td'){
+      const v=$('inText').value;
+      if(!v.trim()){$('outText').value='';return}
+      const bytes=s2b(v);
+      try{$('outText').value=new TextDecoder('utf-8',{fatal:true}).decode(bytes)}
+      catch(e){$('outText').value='';fail('Valid Base64, but the bytes aren\u2019t UTF-8 text. It may be binary data such as an image; try the Image tab.')}
+      $('info').textContent=bytes.length+' bytes decoded';
+    }else if(key==='ie'){
+      if(!img){$('outText').value='';return}
+      const out=$('uri').checked?img.dataUrl:img.dataUrl.slice(img.dataUrl.indexOf(',')+1);
+      $('outText').value=out;
+      $('info').textContent=img.name+' \u00b7 '+fmtSize(img.size)+' \u2192 '+out.length.toLocaleString()+' characters';
+    }else{
+      decodeImage();
+    }
+  }catch(e){$('outText').value='';fail(e.message)}
+}
+
+const HINT='Paste Base64 or a data URI on the left. The image appears here.';
+function decodeImage(){
+  const box=$('outImg'),id=++decId;
+  box.innerHTML='<p id="dstat"></p>';$('dstat').textContent=HINT;
+  let v=$('inText').value.trim();
+  if(!v)return;
+  let mime=null;
+  const m=v.match(/^data:([^;,]*)(;[^,]*)?,/i);
+  if(m){mime=(m[1]||'').toLowerCase();v=v.slice(m[0].length)}
+  const bytes=s2b(v),real=sniff(bytes);
+  if(!real&&!(mime&&mime.startsWith('image/')))throw new Error('Valid Base64, but the bytes don\u2019t look like an image.');
+  const type=real||mime,p=new Image();
+  p.alt='Decoded image';
+  p.onload=()=>{
+    if(id!==decId)return;
+    box.replaceChildren(p);
+    const label=type.replace('image/','').toUpperCase().replace('SVG+XML','SVG').replace('X-ICON','ICO');
+    $('info').textContent=label+' \u00b7 '+p.naturalWidth+'\u00d7'+p.naturalHeight+' \u00b7 '+fmtSize(bytes.length);
+  };
+  p.onerror=()=>{if(id===decId)fail('Decoded '+fmtSize(bytes.length)+' as '+type+', but the browser couldn\u2019t draw it. The data may be cut off or damaged.')};
+  p.src='data:'+type+';base64,'+b2s(bytes); // data URI rather than a blob URL, so it also works in sandboxed previews
+}
+
+function loadFile(f){
+  fail('');
+  if(!f)return;
+  const id=++fileId;
+  if(!f.type.startsWith('image/')){resetImage();run();fail('That file isn\u2019t an image.');return}
+  if(f.size>5*1048576){resetImage();run();fail('That image is over 5 MB. Try a smaller one.');return}
+  const r=new FileReader();
+  r.onload=()=>{
+    if(id!==fileId)return;
+    img={dataUrl:r.result,name:f.name,size:f.size};
+    $('dpv').src=r.result;$('dpv').hidden=false;
+    $('dhint').innerHTML='<small>'+f.name.replace(/</g,'&lt;')+' \u00b7 click or drop to replace</small>';
+    run();
+  };
+  r.onerror=()=>{
+    if(id!==fileId)return;
+    resetImage();run();fail('Couldn\u2019t read that file.');
+  };
+  r.readAsDataURL(f);
+}
+
+function resetImage(){
+  fileId++;img=null;$('file').value='';$('dpv').hidden=true;$('dpv').removeAttribute('src');
+  $('dhint').innerHTML='<strong>Drop an image here</strong><br><small>or click to choose one (PNG, JPEG, GIF, WebP, SVG; up to 5 MB)</small>';
+}
+
+async function copyText(t,btn){
+  let copied=false;
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+    try{await navigator.clipboard.writeText(t);copied=true}catch(e){}
+  }
+  if(!copied){
+    const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();
+    try{copied=document.execCommand('copy')}catch(e){}
+    a.remove();
+  }
+  if(copied){const o=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=o,1200)}
+  else fail('Couldn\u2019t copy automatically. Select the output and copy it manually.');
+}
+function save(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+
+function seg(id,fn){
+  $(id).addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    [...$(id).children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+    fn(b.dataset.v);layout();run();
+  });
+}
+seg('segMode',v=>mode=v);
+seg('segDir',v=>dir=v);
+
+$('inText').addEventListener('input',run);
+['url','uri'].forEach(i=>$(i).addEventListener('change',run));
+$('file').addEventListener('change',e=>loadFile(e.target.files[0]));
+const dz=$('drop');
+['dragenter','dragover'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.add('over')}));
+['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('over')}));
+dz.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
+$('copy').onclick=e=>copyText($('outText').value,e.target);
+$('dl').onclick=()=>save(new Blob([$('outText').value+'\n'],{type:'text/plain'}),'base64.txt');
+$('swap').onclick=()=>{
+  if($('err').textContent)return;
+  $('inText').value=$('outText').value;
+  dir=dir==='e'?'d':'e';
+  [...$('segDir').children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===dir));
+  layout();run();
+};
+$('clear').onclick=()=>{
+  $('inText').value='';$('outText').value='';resetImage();
+  layout();run();
+};
+layout();run();
+</script>
+</body>
+</html>

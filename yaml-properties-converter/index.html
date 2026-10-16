@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YAML Formatter &amp; application.properties Converter</title>
+<meta name="description" content="Format YAML, convert application.yml to application.properties, and convert application.properties back to YAML. Comments are kept. Runs in your browser.">
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--panel:rgba(96,0,96,.06);--err:#b00020}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1320px;margin:0 auto;padding:20px 24px 10px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:12px}
+h1{font:400 clamp(1.7rem,3.6vw,2.5rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:40ch}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.act{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;padding:9px 14px;border-radius:8px;border:1px solid var(--secondary-bg);background:var(--secondary-bg);color:var(--secondary-text);font:inherit;cursor:pointer;transition:background .15s,transform .1s}
+.act b{font:600 1rem system-ui,sans-serif}
+.act span{font-size:.76rem;opacity:.85}
+.act:hover:not(:disabled){background:var(--primary);border-color:var(--primary)}
+.act:active:not(:disabled){transform:translateY(1px)}
+.act:disabled{opacity:.55;cursor:default}
+.opts{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;margin-bottom:10px;font-size:.88rem}
+.opts label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.opts select{padding:3px 8px;border:1px solid var(--primary);border-radius:6px;background:#fff;color:var(--primary);font:inherit}
+input[type=checkbox]{width:15px;height:15px;accent-color:var(--secondary-bg)}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.pane{display:flex;flex-direction:column;min-height:0}
+.bar{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;min-height:30px}
+.bar b{font:400 1.15rem Charter,Georgia,serif}
+.badge{font-size:.74rem;font-weight:700;padding:1px 9px;border:1px solid var(--primary);border-radius:20px;margin-left:4px}
+.bar .sp{flex:1}
+button.s{font:inherit;font-size:.84rem;cursor:pointer;border-radius:6px;padding:3px 11px;border:1px solid var(--primary);background:transparent;color:var(--primary)}
+button.s:hover:not(:disabled){background:var(--primary);color:var(--primary-bg)}
+button.s:disabled{opacity:.4;cursor:default}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+.ed{position:relative;flex:1;min-height:0;display:flex}
+textarea{flex:1;min-height:0;width:100%;resize:none;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--primary);font:.86rem/1.6 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto;tab-size:2;transition:color .3s}
+textarea:focus{outline:2px solid var(--secondary-bg)}
+textarea[readonly]{background:var(--panel)}
+.ed.scanning textarea{color:rgba(96,0,96,.5)}
+.drag textarea{outline:3px dashed var(--secondary-bg)}
+.scan{position:absolute;inset:0;border-radius:12px;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .15s}
+.scan.on{opacity:1}
+.trail{position:absolute;left:0;right:0;top:0;height:0;background:repeating-linear-gradient(0deg,rgba(128,0,128,.12) 0 1px,transparent 1px 22px),linear-gradient(180deg,rgba(128,0,128,.02),rgba(128,0,128,.2))}
+.beam{position:absolute;left:0;right:0;top:0;height:2px;background:#fff;box-shadow:0 0 5px 1px #fff,0 0 16px 5px rgba(170,0,170,.85),0 0 42px 14px rgba(128,0,128,.4)}
+.cn{position:absolute;width:20px;height:20px;border:3px solid var(--secondary-bg);animation:pulse 1s ease-in-out infinite alternate}
+.cn.a{top:8px;left:8px;border-right:0;border-bottom:0}.cn.b{top:8px;right:8px;border-left:0;border-bottom:0}
+.cn.c{bottom:8px;left:8px;border-right:0;border-top:0}.cn.d{bottom:8px;right:8px;border-left:0;border-top:0}
+@keyframes pulse{from{opacity:.35}to{opacity:1}}
+.hud{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:var(--secondary-bg);color:var(--secondary-text);font:600 .74rem ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em;padding:4px 12px;border-radius:20px;box-shadow:0 2px 12px rgba(96,0,96,.35);white-space:nowrap}
+.hud::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;margin-right:8px;animation:blink .6s steps(2) infinite}
+@keyframes blink{50%{opacity:.2}}
+.info{margin:6px 0 0;min-height:1.3em;font-size:.86rem;color:var(--soft)}
+.info.err{color:var(--err);font-weight:600}
+.foot{margin:4px 0 0;color:var(--soft);font-size:.74rem}
+@media(max-width:900px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .grid{grid-template-columns:1fr}.actions{grid-template-columns:1fr}
+  .ed{height:340px;flex:none}
+}
+@media(prefers-reduced-motion:reduce){.cn,.hud::before{animation:none}}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>YAML &amp; Properties Converter</h1>
+    <div class="tag">Format YAML and convert between application.yml and application.properties.</div>
+  </header>
+
+  <div class="actions" id="actions">
+    <button class="act" data-a="fmt"><b>YAML Formatter</b><span>Tidy indentation and spacing</span></button>
+    <button class="act" data-a="y2p"><b>YAML &rarr; application.properties</b><span>Flatten into key=value lines</span></button>
+    <button class="act" data-a="p2y"><b>application.properties &rarr; YAML</b><span>Rebuild the nested structure</span></button>
+  </div>
+  <div class="opts">
+    <label>Indent <select id="ind"><option value="2">2 spaces</option><option value="4">4 spaces</option></select></label>
+    <label><input type="checkbox" id="srt"> Sort keys A to Z</label>
+    <label><input type="checkbox" id="asc" checked> Escape non-ASCII as \uXXXX in .properties</label>
+  </div>
+
+  <div class="grid">
+    <div class="pane">
+      <div class="bar">
+        <b>Input</b><span class="badge" id="badge">Empty</span><span class="sp"></span>
+        <button class="s" id="sy">YAML sample</button><button class="s" id="sp">Properties sample</button>
+        <button class="s" id="open">Open file</button><button class="s" id="clear">Clear</button>
+        <input type="file" id="file" accept=".yml,.yaml,.properties,.txt" hidden>
+      </div>
+      <div class="ed" id="edIn">
+        <textarea id="t" spellcheck="false" placeholder="Paste YAML or application.properties here, or drop a file onto this box."></textarea>
+      </div>
+    </div>
+    <div class="pane">
+      <div class="bar">
+        <b>Result</b><span class="badge" id="obadge" hidden></span><span class="sp"></span>
+        <button class="s" id="use" disabled>Use as input</button><button class="s" id="copy" disabled>Copy</button><button class="s" id="dl" disabled>Download</button>
+      </div>
+      <div class="ed" id="edOut">
+        <textarea id="o" readonly spellcheck="false" placeholder="Your result appears here."></textarea>
+      </div>
+    </div>
+  </div>
+  <p class="info" id="info" aria-live="polite"></p>
+  <p class="foot">Runs in your browser; nothing is uploaded. Comments are kept (properties files can't hold end-of-line comments, so those move above the key). Anchors, aliases and tags aren't supported. Don't paste live secrets into any online tool you don't control.</p>
+</div>
+
+<script>
+/* ---------- YAML parser (comment-preserving subset used by application.yml) ---------- */
+class YErr extends Error{constructor(m,l){super(l?'Line '+l+': '+m:m);this.name='YErr'}}
+function endQuote(t,s){
+  const q=t[s];
+  for(let k=s+1;k<t.length;k++){
+    if(q==='"'&&t[k]==='\\'){k++;continue}
+    if(t[k]===q){if(q==="'"&&t[k+1]==="'"){k++;continue}return k}
+  }
+  return -1;
+}
+const ESC={n:'\n',r:'\r',t:'\t',b:'\b',f:'\f',v:'\v',a:'\x07',e:'\x1b','0':'\0',' ':' ','"':'"','/':'/','\\':'\\',N:'\x85',_:'\xa0',L:'\u2028',P:'\u2029'};
+function unq(raw){
+  const b=raw.slice(1,-1);
+  if(raw[0]==="'")return b.replace(/''/g,"'");
+  return b.replace(/\\(?:x([0-9a-fA-F]{2})|u([0-9a-fA-F]{4})|U([0-9a-fA-F]{8})|([\s\S]))/g,(m,x,u,U,c)=>x?String.fromCharCode(parseInt(x,16)):u?String.fromCharCode(parseInt(u,16)):U?String.fromCodePoint(parseInt(U,16)):(ESC[c]!==undefined?ESC[c]:c));
+}
+function splitComment(s){
+  let q=null,startOk=true;
+  for(let k=0;k<s.length;k++){
+    const c=s[k];
+    if(q){
+      if(q==='"'){if(c==='\\')k++;else if(c==='"')q=null}
+      else if(c==="'"){if(s[k+1]==="'")k++;else q=null}
+      continue;
+    }
+    if(c==='#'&&(k===0||/\s/.test(s[k-1])))return[s.slice(0,k).trimEnd(),s.slice(k)];
+    if(startOk&&(c==='"'||c==="'")){q=c;startOk=false;continue}
+    if(c===' ')continue;
+    startOk=/[\[{,]/.test(c)||((c===':'||c==='-')&&(k+1>=s.length||s[k+1]===' '));
+  }
+  return[s.trimEnd(),''];
+}
+function splitKey(t){
+  if(t[0]==='"'||t[0]==="'"){
+    const e=endQuote(t,0);if(e<0)return null;
+    let k=e+1;while(t[k]===' ')k++;
+    if(t[k]!==':'||(k+1<t.length&&t[k+1]!==' '))return null;
+    const raw=t.slice(0,e+1);
+    return{key:{raw,text:unq(raw),q:t[0]},rest:t.slice(k+1).trim()};
+  }
+  if(t[0]==='['||t[0]==='{')return null;
+  for(let k=0;k<t.length;k++){
+    if(t[k]===':'&&(k+1===t.length||t[k+1]===' ')){const raw=t.slice(0,k).trimEnd();return{key:{raw,text:raw,q:''},rest:t.slice(k+1).trim()}}
+  }
+  return null;
+}
+function mkScalar(t,ln){
+  if(t[0]==='"'||t[0]==="'"){
+    const e=endQuote(t,0);
+    if(e<0)throw new YErr('Unterminated quoted string',ln);
+    if(e!==t.length-1)throw new YErr('Unexpected text after the closing quote',ln);
+    return{kind:'scalar',raw:t,text:unq(t),q:t[0]};
+  }
+  return{kind:'scalar',raw:t,text:t,q:'',nul:/^(~|null|Null|NULL)$/.test(t)};
+}
+function balanced(s){
+  let d=0,q=null,ok=true;
+  for(let k=0;k<s.length;k++){
+    const c=s[k];
+    if(q){if(q==='"'&&c==='\\')k++;else if(c===q)q=null;continue}
+    if(ok&&(c==='"'||c==="'")){q=c;ok=false;continue}
+    if(c==='['||c==='{')d++;else if(c===']'||c==='}')d--;
+    if(c!==' ')ok=/[\[{,:]/.test(c);
+  }
+  return d<=0;
+}
+function parseFlow(s,ln){
+  let p=0;
+  const ws=()=>{while(p<s.length&&s[p]===' ')p++};
+  const fail=m=>{throw new YErr(m,ln)};
+  function quoted(){const e=endQuote(s,p);if(e<0)fail('Unterminated quoted string');const raw=s.slice(p,e+1);p=e+1;return{kind:'scalar',raw,text:unq(raw),q:raw[0]}}
+  function plain(stop){const st=p;while(p<s.length&&!stop(s[p],s[p+1]))p++;const t=s.slice(st,p).trim();return{kind:'scalar',raw:t,text:t,q:'',nul:/^(~|null)?$/i.test(t)}}
+  function val(){
+    ws();const c=s[p];
+    if(c==='['){
+      p++;const items=[];ws();
+      if(s[p]===']'){p++;return{kind:'seq',flow:true,items}}
+      for(;;){
+        items.push({value:val(),lead:[],blank:false,tail:''});ws();
+        if(s[p]===','){p++;ws();if(s[p]===']'){p++;break}continue}
+        if(s[p]===']'){p++;break}
+        fail('Expected "," or "]" in a list');
+      }
+      return{kind:'seq',flow:true,items};
+    }
+    if(c==='{'){
+      p++;const entries=[];ws();
+      if(s[p]==='}'){p++;return{kind:'map',flow:true,entries}}
+      for(;;){
+        ws();
+        const k=(s[p]==='"'||s[p]==="'")?quoted():plain((ch,nx)=>(ch===':'&&(nx===' '||nx===undefined))||ch===','||ch==='}');
+        ws();let v=null;
+        if(s[p]===':'){p++;v=val()}
+        entries.push({key:{raw:k.raw,text:k.text,q:k.q},value:v,lead:[],blank:false,tail:''});ws();
+        if(s[p]===','){p++;continue}
+        if(s[p]==='}'){p++;break}
+        fail('Expected "," or "}" in a map');
+      }
+      return{kind:'map',flow:true,entries};
+    }
+    if(c==='"'||c==="'")return quoted();
+    return plain(ch=>ch===','||ch===']'||ch==='}');
+  }
+  const v=val();ws();
+  if(p<s.length)fail('Unexpected text after the flow collection');
+  return v;
+}
+const isDash=c=>c==='-'||c.startsWith('- ');
+
+function parseDoc(L,off){
+  let i=0,pend={lead:[],blank:false},lastTail='';
+  const err=(m,k)=>{throw new YErr(m,off+(k===undefined?i:k)+1)};
+  const info=k=>{
+    const s=L[k];
+    if(/^ *\t/.test(s))err('Tabs can\u2019t be used for indentation',k);
+    const t=s.trim();return{indent:s.length-s.trimStart().length,t};
+  };
+  const take=()=>{const p=pend;pend={lead:[],blank:false};return p};
+  function skip(){
+    while(i<L.length){
+      const t=L[i].trim();
+      if(t===''){if(!pend.lead.length)pend.blank=true;i++}
+      else if(t[0]==='#'){pend.lead.push(t);i++}
+      else break;
+    }
+  }
+  function flowFrom(text,lineNo){
+    let s=text;
+    while(!balanced(s)){
+      if(i>=L.length)err('Unclosed [ or {',lineNo);
+      s+=' '+splitComment(L[i].trim())[0];i++;
+    }
+    return parseFlow(s,off+lineNo+1);
+  }
+  function blockScalar(header,parent){
+    const m=header.match(/^([|>])([+-]?)(\d?)([+-]?)\s*$/);
+    if(!m)err('Unsupported block scalar header "'+header+'"',i-1);
+    const style=m[1],chomp=m[2]||m[4],body=[];let bi=-1;
+    while(i<L.length){
+      const s=L[i];
+      if(s.trim()===''){body.push('');i++;continue}
+      const ind=s.length-s.trimStart().length;
+      if(ind<=parent)break;
+      if(bi<0)bi=ind;
+      if(ind<bi)break;
+      body.push(s.slice(bi));i++;
+    }
+    let trail=0;
+    while(body.length&&body[body.length-1]===''){body.pop();trail++}
+    if(chomp==='+')for(let k=0;k<trail;k++)body.push('');
+    else if(trail)pend.blank=true;
+    let text;
+    if(style==='|')text=body.join('\n');
+    else{
+      text='';
+      body.forEach((l,k)=>{
+        if(l===''){text+='\n';return}
+        if(k===0){text=l;return}
+        const prev=body[k-1];
+        if(prev==='')text+=l;
+        else if(/^\s/.test(l)||/^\s/.test(prev))text+='\n'+l;else text+=' '+l;
+      });
+    }
+    if(chomp!=='-'&&body.length)text+='\n';
+    return{kind:'scalar',raw:header,text,q:'',block:{style,chomp,lines:body}};
+  }
+  function scalarLine(parent){
+    const{t}=info(i),[c,cm]=splitComment(t),lineNo=i;i++;
+    lastTail=cm;
+    if(c[0]==='|'||c[0]==='>')return blockScalar(c,parent);
+    if(c[0]==='['||c[0]==='{')return flowFrom(c,lineNo);
+    if(/^[&*!]/.test(c))err('Anchors, aliases and tags aren\u2019t supported',lineNo);
+    return mkScalar(c,off+lineNo+1);
+  }
+  function parseNode(min,parent){
+    skip();
+    if(i>=L.length)return null;
+    const{indent,t}=info(i);
+    if(indent<min)return null;
+    const c=splitComment(t)[0];
+    if(isDash(c))return parseSeq(indent);
+    if(splitKey(c))return parseMap(indent);
+    return scalarLine(parent);
+  }
+  function parseMap(ind){
+    const entries=[],seen=new Set();
+    for(;;){
+      skip();if(i>=L.length)break;
+      const{indent,t}=info(i);
+      if(indent<ind)break;
+      if(indent>ind)err('Unexpected indentation (multi-line plain text isn\u2019t supported)');
+      const[c,cm]=splitComment(t),kv=splitKey(c);
+      if(!kv)err(isDash(c)?'Unexpected list item here':'Expected "key: value"');
+      const p=take(),lineNo=i;i++;
+      if(seen.has(kv.key.text))err('Duplicate key "'+kv.key.text+'"',lineNo);
+      seen.add(kv.key.text);
+      const e={key:kv.key,lead:p.lead,blank:p.blank,tail:cm,value:null};
+      const rest=kv.rest;
+      if(rest===''){
+        skip();
+        if(i<L.length){
+          const n=info(i),nc=splitComment(n.t)[0];
+          if(n.indent>ind)e.value=parseNode(ind+1,ind);
+          else if(n.indent===ind&&isDash(nc))e.value=parseSeq(ind);
+        }
+      }else if(rest[0]==='|'||rest[0]==='>')e.value=blockScalar(rest,ind);
+      else if(rest[0]==='['||rest[0]==='{')e.value=flowFrom(rest,lineNo);
+      else if(/^[&*!]/.test(rest))err('Anchors, aliases and tags aren\u2019t supported',lineNo);
+      else e.value=mkScalar(rest,off+lineNo+1);
+      entries.push(e);
+    }
+    return{kind:'map',entries};
+  }
+  function parseSeq(ind){
+    const items=[];
+    for(;;){
+      skip();if(i>=L.length)break;
+      const{indent,t}=info(i);
+      if(indent<ind)break;
+      if(indent>ind)err('Unexpected indentation');
+      if(!isDash(t.replace(/\s+#.*$/,'')))break;
+      const p=take(),after=t.slice(1),content=after.trimStart(),sp=after.length-content.length;
+      const it={lead:p.lead,blank:p.blank,tail:'',value:null};
+      if(content===''||content[0]==='#'){
+        it.tail=content;i++;skip();
+        if(i<L.length&&info(i).indent>ind)it.value=parseNode(ind+1,ind);
+      }else{
+        const vi=ind+1+sp;L[i]=' '.repeat(vi)+content;lastTail='';
+        it.value=parseNode(vi,ind);
+        if(it.value&&it.value.kind!=='map'&&it.value.kind!=='seq'||(it.value&&it.value.flow))it.tail=lastTail;
+      }
+      items.push(it);
+    }
+    return{kind:'seq',items};
+  }
+  const root=parseNode(0,-1);
+  skip();
+  if(i<L.length)err('Unexpected content');
+  return{root,lead:[],tail:pend.lead,explicit:false};
+}
+function parseYaml(text){
+  const all=text.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n').split('\n');
+  const segs=[];let cur=[],start=0;
+  all.forEach((l,k)=>{
+    if(/^---\s*(#.*)?$/.test(l)){segs.push({lines:cur,off:start});cur=[];start=k+1}
+    else if(/^(\.\.\.|%\w+).*$/.test(l)){cur.push('')}
+    else cur.push(l);
+  });
+  segs.push({lines:cur,off:start});
+  const blank=s=>s.lines.every(l=>l.trim()==='');
+  let explicitFirst=false;
+  if(segs.length>1&&blank(segs[0])){segs.shift();explicitFirst=true}
+  const docs=segs.map(s=>parseDoc(s.lines,s.off));
+  if(explicitFirst)docs[0].explicit=true;
+  return docs;
+}
+
+/* ---------- YAML dumper ---------- */
+const pad=n=>' '.repeat(n);
+function flowStr(v){
+  if(!v)return '';
+  if(v.kind==='scalar')return v.raw;
+  if(v.kind==='seq')return '['+v.items.map(i=>flowStr(i.value)).join(', ')+']';
+  return '{'+v.entries.map(e=>e.key.raw+(e.value?': '+flowStr(e.value):'')).join(', ')+'}';
+}
+function inlineOf(v){
+  if(!v)return '';
+  if(v.kind==='scalar'&&!v.block)return v.raw;
+  if((v.kind==='seq'||v.kind==='map')&&v.flow)return flowStr(v);
+  return null;
+}
+const hdr=v=>v.block.style+v.block.chomp;
+function sortTree(n){
+  if(!n)return;
+  if(n.kind==='map'){
+    n.entries.sort((a,b)=>{const x=a.key.text.toLowerCase(),y=b.key.text.toLowerCase();return x<y?-1:x>y?1:0});
+    n.entries.forEach(e=>sortTree(e.value));
+  }else if(n.kind==='seq')n.items.forEach(i=>sortTree(i.value));
+}
+function dumpMap(m,ind,o){
+  const L=[];
+  m.entries.forEach((e,idx)=>{
+    if(e.blank&&idx>0)L.push('');
+    e.lead.forEach(c=>L.push(pad(ind)+c));
+    const tail=e.tail?'  '+e.tail:'',v=e.value,il=inlineOf(v),k=pad(ind)+e.key.raw+':';
+    if(il!==null)L.push(il===''?k+tail:k+' '+il+tail);
+    else if(v.block){L.push(k+' '+hdr(v)+tail);v.block.lines.forEach(l=>L.push(l?pad(ind+o.indent)+l:''))}
+    else if(v.kind==='map'){L.push(k+tail);L.push(...dumpMap(v,ind+o.indent,o))}
+    else{L.push(k+tail);L.push(...dumpSeq(v,ind+o.indent,o))}
+  });
+  return L;
+}
+function dumpSeq(s,ind,o){
+  const L=[],P=pad(ind);
+  s.items.forEach((it,idx)=>{
+    if(it.blank&&idx>0)L.push('');
+    it.lead.forEach(c=>L.push(P+c));
+    const v=it.value,tail=it.tail?'  '+it.tail:'',il=inlineOf(v);
+    if(il!==null)L.push(il===''?P+'-'+tail:P+'- '+il+tail);
+    else if(v.block){L.push(P+'- '+hdr(v)+tail);v.block.lines.forEach(l=>L.push(l?pad(ind+o.indent)+l:''))}
+    else{
+      let sub;
+      if(v.kind==='map'){
+        const first=v.entries[0];
+        first.lead.forEach(c=>L.push(P+c));
+        sub=dumpMap({...v,entries:[{...first,lead:[],blank:false},...v.entries.slice(1)]},ind+2,o);
+      }else sub=dumpSeq(v,ind+2,o);
+      sub[0]=P+'- '+sub[0].slice(ind+2);
+      L.push(...sub);
+    }
+  });
+  return L;
+}
+function dumpDocs(docs,o){
+  if(o.sort)docs.forEach(d=>sortTree(d.root));
+  const out=[];
+  docs.forEach((d,k)=>{
+    if(k>0||d.explicit)out.push('---');
+    d.lead.forEach(c=>out.push(c));
+    const r=d.root;
+    if(r){
+      if(r.kind==='map'&&!r.flow)out.push(...dumpMap(r,0,o));
+      else if(r.kind==='seq'&&!r.flow)out.push(...dumpSeq(r,0,o));
+      else if(r.block){out.push(hdr(r));r.block.lines.forEach(l=>out.push(l?pad(o.indent)+l:''))}
+      else out.push(inlineOf(r));
+    }
+    d.tail.forEach(c=>out.push(c));
+  });
+  return out.join('\n')+'\n';
+}
+
+/* ---------- YAML to .properties ---------- */
+function escProp(s,isKey,ascii){
+  let r='';
+  for(let k=0;k<s.length;k++){
+    const c=s[k],code=s.charCodeAt(k);
+    if(c==='\\')r+='\\\\';
+    else if(c==='\n')r+='\\n';else if(c==='\r')r+='\\r';else if(c==='\t')r+='\\t';else if(c==='\f')r+='\\f';
+    else if(isKey&&(c===' '||c==='='||c===':'))r+='\\'+c;
+    else if(isKey&&k===0&&(c==='#'||c==='!'))r+='\\'+c;
+    else if(!isKey&&c===' '&&/^ *$/.test(s.slice(0,k)))r+='\\ ';
+    else if(code<32||(ascii&&code>126))r+='\\u'+code.toString(16).padStart(4,'0');
+    else r+=c;
+  }
+  return r;
+}
+function toProps(docs,o){
+  const parts=[];let pre=[],count=0;
+  docs.forEach(d=>{
+    if(!d.root){pre.push(...d.tail);return}
+    if(d.root.kind!=='map'&&d.root.kind!=='seq')throw new YErr('The top level has to be a mapping (key: value) to become properties.');
+    const out=[...pre];pre=[];let pend=[];
+    const join=(p,k)=>p?(k[0]==='['&&k.endsWith(']')?p+k:p+'.'+k):k;
+    const note=e=>{
+      if(e.blank&&(out.length||pend.length)&&!pend.length)pend.push('');
+      e.lead.forEach(c=>pend.push(c));
+      if(e.tail)pend.push(e.tail);
+    };
+    const leaf=(path,val)=>{
+      out.push(...pend);pend=[];
+      out.push(escProp(path,true,o.ascii)+'='+escProp(val,false,o.ascii));count++;
+    };
+    const walk=(n,path)=>{
+      if(!n||(n.kind==='scalar'&&n.nul&&!n.q)){leaf(path,'');return}
+      if(n.kind==='scalar'){leaf(path,n.text);return}
+      if(n.kind==='map'){
+        if(!n.entries.length){out.push(...pend);pend=[];return}
+        n.entries.forEach(e=>{note(e);walk(e.value,join(path,e.key.text))});
+      }else{
+        if(!n.items.length){leaf(path,'');return}
+        n.items.forEach((it,k)=>{note(it);walk(it.value,path+'['+k+']')});
+      }
+    };
+    if(d.root.kind==='seq')throw new YErr('The top level is a list. Properties need a mapping at the top level.');
+    walk(d.root,'');
+    out.push(...pend,...d.tail);
+    parts.push(out.join('\n'));
+  });
+  if(pre.length)parts.push(pre.join('\n'));
+  return{text:parts.join('\n#---\n').replace(/\n{3,}/g,'\n\n')+'\n',count};
+}
+
+/* ---------- .properties to YAML ---------- */
+function unescProp(s){
+  return s.replace(/\\(?:u([0-9a-fA-F]{4})|([\s\S]))/g,(m,u,c)=>u?String.fromCharCode(parseInt(u,16)):c==='n'?'\n':c==='t'?'\t':c==='r'?'\r':c==='f'?'\f':c);
+}
+function yamlScalar(v){
+  if(v==='')return "''";
+  if(/[\u0000-\u001f\u007f\u2028\u2029]/.test(v))return JSON.stringify(v);
+  let q=/^\s|\s$/.test(v)||/^[,\[\]{}#&*!|>'"%@`]/.test(v)||(/^[-?:]/.test(v)&&(v.length===1||/\s/.test(v[1])))
+    ||/:\s|\s#|:$/.test(v)||/^(y|n|yes|no|on|off|null|~)$/i.test(v)
+    ||/^\d{4}-\d\d-\d\d/.test(v)||/^[-+]?\d+(:\d+)+(\.\d*)?$/.test(v)||/^0\d+$/.test(v)||/^[-+]?\d[\d_]*_[\d_]*$/.test(v);
+  return q?"'"+v.replace(/'/g,"''")+"'":v;
+}
+function yamlKey(k){
+  if(/^[A-Za-z0-9_$][A-Za-z0-9_$.\-\/ ]*$/.test(k)&&!/ $/.test(k))return{raw:k,text:k,q:''};
+  const raw=JSON.stringify(k);return{raw,text:k,q:'"'};
+}
+function splitPath(key,ln){
+  const segs=[];let cur='',depth=0;
+  for(const c of key){
+    if(c==='['){depth++}else if(c===']'){depth=Math.max(0,depth-1)}
+    if(c==='.'&&depth===0){segs.push(cur);cur=''}else cur+=c;
+  }
+  segs.push(cur);
+  return segs.map(sg=>{
+    if(sg==='')throw new YErr('Empty key segment in "'+key+'"',ln);
+    const m=sg.match(/^(.*?)((?:\[\d+\])+)$/);
+    if(m&&m[1]!=='')return{name:m[1],idx:[...m[2].matchAll(/\[(\d+)\]/g)].map(x=>+x[1])};
+    if(m&&m[1]==='')throw new YErr('"'+key+'" can\u2019t start with an index',ln);
+    return{name:sg,idx:[]};
+  });
+}
+function insertProp(root,tokens,val,meta,ln,keyText){
+  let holder=root,first=null,leafSlot=null;
+  const conflict=()=>{throw new YErr('"'+keyText+'" clashes with another key that is both a value and a parent',ln)};
+  const mark=s=>{if(!first)first=s};
+  tokens.forEach((t,ti)=>{
+    let e=holder._idx.get(t.name);
+    if(!e){e={key:yamlKey(t.name),value:null,lead:[],blank:false,tail:''};holder.entries.push(e);holder._idx.set(t.name,e);mark(e)}
+    let slot=e;
+    for(const n of t.idx){
+      if(!slot.value)slot.value={kind:'seq',items:[]};else if(slot.value.kind!=='seq')conflict();
+      const s=slot.value;
+      while(s.items.length<=n){const it={value:null,lead:[],blank:false,tail:''};s.items.push(it);if(s.items.length-1===n)mark(it)}
+      slot=s.items[n];
+    }
+    if(ti===tokens.length-1){
+      if(slot.value&&(slot.value.kind==='map'||slot.value.kind==='seq'))conflict();
+      slot.value=val;leafSlot=slot;
+    }else{
+      if(!slot.value)slot.value={kind:'map',entries:[],_idx:new Map()};else if(slot.value.kind!=='map')conflict();
+      holder=slot.value;
+    }
+  });
+  const t=first||leafSlot;
+  if(t&&!t.lead.length&&!t.blank){t.lead=meta.lead;t.blank=meta.blank}
+}
+function parsePropsDoc(lines,off){
+  const root={kind:'map',entries:[],_idx:new Map()};
+  let meta={lead:[],blank:false},n=0;
+  for(let k=0;k<lines.length;k++){
+    let line=lines[k].trimStart();
+    if(line===''){if(!meta.lead.length)meta.blank=true;continue}
+    if(line[0]==='#'||line[0]==='!'){meta.lead.push('#'+line.slice(1));continue}
+    const ln=off+k+1;
+    while(/(?:^|[^\\])(?:\\\\)*\\$/.test(line)&&k+1<lines.length)line=line.slice(0,-1)+lines[++k].trimStart();
+    let p=0,key='';
+    while(p<line.length){
+      const c=line[p];
+      if(c==='\\'){key+=line.slice(p,p+2);p+=2;continue}
+      if(c==='='||c===':'||c===' '||c==='\t')break;
+      key+=c;p++;
+    }
+    while(line[p]===' '||line[p]==='\t')p++;
+    if(line[p]==='='||line[p]===':'){p++;while(line[p]===' '||line[p]==='\t')p++}
+    const keyText=unescProp(key),value=unescProp(line.slice(p));
+    if(!keyText)throw new YErr('This line has no key',ln);
+    const sc={kind:'scalar',text:value,raw:yamlScalar(value),q:''};
+    insertProp(root,splitPath(keyText,ln),sc,meta,ln,keyText);
+    meta={lead:[],blank:false};n++;
+  }
+  return{doc:{root:root.entries.length?root:null,lead:[],tail:meta.lead,explicit:false},n};
+}
+function parseProps(text){
+  const all=text.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n').split('\n');
+  const segs=[];let cur=[],start=0;
+  all.forEach((l,k)=>{
+    if(/^[#!]---\s*$/.test(l)){segs.push({lines:cur,off:start});cur=[];start=k+1}else cur.push(l);
+  });
+  segs.push({lines:cur,off:start});
+  let total=0;
+  const docs=segs.map(s=>{const r=parsePropsDoc(s.lines,s.off);total+=r.n;return r.doc});
+  return{docs,count:total};
+}
+
+/* ---------- detection ---------- */
+function sig(t){return t.split(/\r?\n/).filter(l=>l.trim()&&!/^\s*[#!]/.test(l))}
+function yamlish(s){return s.some(l=>/^\s*-(\s|$)/.test(l)||/:\s*(#.*)?$/.test(l)||/^---/.test(l)||/^\s+\S/.test(l))}
+function propsLike(s){return s.length>0&&s.every(l=>/^\s*(?:[^\s=:\\]|\\.)+\s*=/.test(l)||/^\s/.test(l))}
+function detect(t){
+  const s=sig(t);
+  if(!s.length)return t.trim()?'comments':'empty';
+  if(propsLike(s)&&!s.some(l=>/^\s*-\s/.test(l)))return 'props';
+  return 'yaml';
+}
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);
+const tin=$('t'),tout=$('o');
+let busy=false,outKind=null;
+let copyRequest=0;
+let fileReadRequest=0,fileReadPending=false;
+
+function makeScan(ed){
+  const el=document.createElement('div');
+  el.className='scan';el.setAttribute('aria-hidden','true');
+  el.innerHTML='<div class="trail"></div><div class="beam"></div><span class="cn a"></span><span class="cn b"></span><span class="cn c"></span><span class="cn d"></span><div class="hud">SCANNING 0%</div>';
+  ed.appendChild(el);
+  const trail=el.querySelector('.trail'),beam=el.querySelector('.beam'),hud=el.querySelector('.hud');
+  const ta=ed.querySelector('textarea');
+  return{
+    show(on){el.classList.toggle('on',on);ed.classList.toggle('scanning',on&&ta===tin)},
+    sweep(dur,label,withTrail,reveal){
+      return new Promise(res=>{
+        const h=ed.clientHeight,o={duration:dur,easing:'cubic-bezier(.45,.05,.55,.95)',fill:'forwards'};
+        trail.style.display=withTrail?'block':'none';
+        const a=beam.animate([{transform:'translateY(0)'},{transform:'translateY('+h+'px)'}],o);
+        if(withTrail)trail.animate([{height:'0px'},{height:h+'px'}],o);
+        if(reveal)ta.animate([{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)'}],o);
+        const t0=performance.now();
+        (function tick(){const p=Math.min(1,(performance.now()-t0)/dur);hud.textContent=label+' '+Math.round(p*100)+'%';if(p<1)requestAnimationFrame(tick)})();
+        a.onfinish=()=>res();
+      });
+    },
+    clear(){[beam,trail,ta].forEach(e=>e.getAnimations().forEach(a=>a.cancel()))}
+  };
+}
+const scanIn=makeScan($('edIn')),scanOut=makeScan($('edOut'));
+const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+function say(m,err){const i=$('info');i.textContent=m;i.className='info'+(err?' err':'')}
+
+function badge(){
+  const k=detect(tin.value),b=$('badge');
+  b.textContent=k==='yaml'?'YAML':k==='props'?'Properties':k==='comments'?'Comments only':'Empty';
+}
+function setOut(text,kind,label){
+  copyRequest++;
+  tout.value=text;outKind=kind;
+  const b=$('obadge');b.hidden=!text;b.textContent=label;
+  $('copy').textContent='Copy';
+  ['use','copy','dl'].forEach(id=>$(id).disabled=!text);
+}
+const opts=()=>({indent:+$('ind').value,sort:$('srt').checked,ascii:$('asc').checked});
+
+const ACTIONS={
+  fmt:{label:'FORMATTING',
+    guard:t=>{const s=sig(t);return propsLike(s)&&!yamlish(s)?'This looks like a properties file. Use application.properties \u2192 YAML instead.':''},
+    run:t=>{const text=dumpDocs(parseYaml(t),opts());return{text,kind:'yaml',label:'YAML',msg:'YAML formatted \u00b7 '+text.trim().split('\n').length+' lines'}}},
+  y2p:{label:'CONVERTING',
+    guard:t=>{const s=sig(t);return propsLike(s)&&!yamlish(s)?'This already looks like a properties file.':''},
+    run:t=>{const r=toProps(parseYaml(t),opts());return{text:r.text,kind:'props',label:'.properties',msg:'Converted to application.properties \u00b7 '+r.count+' properties'}}},
+  p2y:{label:'REBUILDING',
+    guard:t=>{const s=sig(t);return yamlish(s)&&!propsLike(s)?'This looks like YAML. Use the formatter, or YAML \u2192 application.properties.':''},
+    run:t=>{const r=parseProps(t);const text=dumpDocs(r.docs,opts());return{text,kind:'yaml',label:'YAML',msg:'Converted to application.yml \u00b7 '+r.count+' properties'}}}
+};
+
+async function perform(key){
+  if(busy)return;
+  if(fileReadPending){say('Wait for the selected file to finish loading.',true);return}
+  const A=ACTIONS[key],text=tin.value;
+  if(!text.trim()){say('Nothing to convert yet. Paste some text, drop a file, or load a sample.',true);return}
+  const g=A.guard(text);if(g){say(g,true);return}
+  busy=true;say('');
+  document.querySelectorAll('.act').forEach(b=>b.disabled=true);tin.readOnly=true;
+  scanIn.show(true);
+  const lines=text.split('\n').length;
+  await scanIn.sweep(reduced()?150:Math.min(2200,1000+lines*10),'SCANNING',true,false);
+  scanIn.clear();
+  let res=null,error='';
+  try{res=A.run(text)}catch(e){error=e instanceof YErr?e.message:'Something in that text couldn\u2019t be converted.'}
+  scanIn.show(false);
+  if(res){
+    tout.style.clipPath='inset(0 0 100% 0)';
+    setOut(res.text,res.kind,res.label);
+    tout.scrollTop=0;tout.scrollLeft=0;
+    scanOut.show(true);
+    await scanOut.sweep(reduced()?100:700,A.label,false,true);
+    scanOut.clear();scanOut.show(false);
+    tout.style.clipPath='';
+  }
+  document.querySelectorAll('.act').forEach(b=>b.disabled=false);tin.readOnly=false;busy=false;
+  say(res?res.msg:error,!res);
+}
+
+const YAML_SAMPLE=`# Spring Boot configuration
+server:
+    port: 8080
+    servlet:
+        context-path: /api
+spring:
+  application:
+     name: demo-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo   # primary database
+    username: demo
+    password: "s3cr3t: pass"
+  profiles:
+    include: [web, metrics]
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+app:
+  allowed-origins:
+  - http://localhost:3000
+  - https://example.com
+  users:
+  - name: asha
+    roles: [admin, dev]
+  - name: ravi
+    roles: [dev]
+  banner: |
+    Welcome
+    to demo
+`;
+const PROPS_SAMPLE=`# Server
+server.port=8080
+server.servlet.context-path=/api
+
+# Database
+spring.application.name=demo-service
+spring.datasource.url=jdbc:postgresql://localhost:5432/demo
+spring.datasource.password=s3cr3t: pass
+spring.profiles.include[0]=web
+spring.profiles.include[1]=metrics
+
+app.users[0].name=asha
+app.users[0].roles[0]=admin
+app.users[1].name=ravi
+app.banner=Welcome\\nto demo
+`;
+
+function load(text,msg){fileReadRequest++;fileReadPending=false;tin.value=text;badge();say(msg||'')}
+$('actions').addEventListener('click',e=>{const b=e.target.closest('.act');if(b)perform(b.dataset.a)});
+tin.addEventListener('input',()=>{fileReadRequest++;fileReadPending=false;badge()});
+$('sy').onclick=()=>{if(!busy)load(YAML_SAMPLE,'YAML sample loaded. Try the formatter or YAML \u2192 application.properties.')};
+$('sp').onclick=()=>{if(!busy)load(PROPS_SAMPLE,'Properties sample loaded. Try application.properties \u2192 YAML.')};
+$('clear').onclick=()=>{if(busy)return;load('');setOut('',null,'');tin.focus()};
+$('open').onclick=()=>$('file').click();
+async function readFile(f){
+  if(!f||busy)return;
+  const request=++fileReadRequest;
+  fileReadPending=true;
+  if(f.size>2*1048576){fileReadPending=false;say('That file is over 2 MB.',true);return}
+  try{
+    const text=await f.text();
+    if(request!==fileReadRequest)return;
+    fileReadPending=false;
+    load(text,'Loaded '+f.name);
+  }catch{
+    if(request===fileReadRequest){fileReadPending=false;say('Could not read '+f.name+'. Try another file.',true)}
+  }
+}
+$('file').addEventListener('change',e=>{readFile(e.target.files[0]);e.target.value=''});
+const edIn=$('edIn');
+['dragenter','dragover'].forEach(t=>edIn.addEventListener(t,e=>{e.preventDefault();edIn.classList.add('drag')}));
+['dragleave','drop'].forEach(t=>edIn.addEventListener(t,e=>{e.preventDefault();edIn.classList.remove('drag')}));
+edIn.addEventListener('drop',e=>readFile(e.dataTransfer.files[0]));
+$('use').onclick=()=>{if(busy||!tout.value)return;load(tout.value,'Result moved to the input.');setOut('',null,'')};
+$('copy').onclick=async e=>{
+  const request=++copyRequest,button=e.currentTarget;
+  let copied=false;
+  try{
+    if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+      await navigator.clipboard.writeText(tout.value);
+      copied=true;
+    }
+  }catch{}
+  if(!copied){
+    const active=document.activeElement;
+    tout.focus();tout.select();
+    try{copied=document.execCommand('copy')}catch{}
+    if(active instanceof HTMLElement)active.focus();
+  }
+  if(request!==copyRequest)return;
+  say(copied?'Result copied to the clipboard.':'Could not copy the result. Select it and copy manually.',!copied);
+  const label=button.textContent;
+  button.textContent=copied?'Copied':'Copy failed';
+  setTimeout(()=>{if(request===copyRequest)button.textContent=label},1200);
+};
+$('dl').onclick=()=>{
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([tout.value],{type:'text/plain'}));
+  a.download=outKind==='props'?'application.properties':'application.yml';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+};
+badge();
+</script>
+</body>
+</html>

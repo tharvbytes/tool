@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Converter &amp; Stylish Text</title>
+<meta name="description" content="Convert text to uppercase, lowercase, title case, camelCase and more, then style any selection in bold, italic, strikethrough, bubble and other fancy fonts.">
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--panel:rgba(96,0,96,.06);--onp-line:rgba(255,250,250,.32)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1200px;margin:0 auto;padding:22px 24px 12px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:14px}
+h1{font:400 clamp(1.8rem,3.8vw,2.6rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:36ch}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 400px;gap:20px}
+.left{display:flex;flex-direction:column;min-height:0}
+.bar{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.bar b{font:400 1.15rem Charter,Georgia,serif}
+.scope{flex:1;font-size:.85rem;color:var(--soft)}
+button{font:inherit;cursor:pointer;border-radius:6px;padding:5px 14px;border:1px solid var(--primary);background:transparent;color:var(--primary)}
+button:hover:not(:disabled){background:var(--primary);color:var(--primary-bg)}
+button:disabled{opacity:.4;cursor:default}
+button.fill{background:var(--secondary-bg);border-color:var(--secondary-bg);color:var(--secondary-text);font-weight:600}
+button.fill:hover{background:var(--primary)!important;border-color:var(--primary)}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+textarea{flex:1;min-height:0;width:100%;resize:none;padding:18px 22px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--primary);font:1.15rem/1.7 Georgia,"Times New Roman",serif}
+textarea:focus{outline:2px solid var(--secondary-bg)}
+textarea::selection{background:var(--secondary-bg);color:var(--secondary-text)}
+.side{background:var(--secondary-bg);color:var(--secondary-text);padding:14px 18px 16px;overflow-y:auto;min-height:0}
+.side h2{margin:0 0 4px;font:400 1.15rem Charter,Georgia,serif}
+.side h2:not(:first-child){margin-top:14px;padding-top:12px;border-top:1px solid var(--onp-line)}
+.side p{margin:0 0 8px;font-size:.8rem;opacity:.9}
+.side :focus-visible{outline-color:var(--secondary-text)}
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.side button{border-color:var(--secondary-text);color:var(--secondary-text);border-radius:4px}
+.side button:hover{background:var(--secondary-text)!important;color:var(--primary)!important}
+.cases button{padding:7px 8px;font-size:.9rem;text-align:left}
+.styles{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.styles button{padding:6px 4px 5px;text-align:center;line-height:1.2}
+.styles .sm{display:block;font-size:1.25rem;min-height:1.5em}
+.styles .nm{display:block;font-size:.72rem;opacity:.85}
+.foot{margin:6px 0 0;color:var(--soft);font-size:.76rem}
+@media(max-width:900px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .grid{grid-template-columns:1fr}textarea{min-height:260px}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Case Converter &amp; Stylish Text</h1>
+    <div class="tag">Change the case of your text, then select a part and give it a fancy font.</div>
+  </header>
+
+  <div class="grid">
+    <div class="left">
+      <div class="bar">
+        <b>Your text</b><span class="scope" id="scope" role="status" aria-live="polite"></span>
+        <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button>
+        <button id="clear">Clear</button><button id="copy" class="fill">Copy</button>
+      </div>
+      <textarea id="t" spellcheck="false" placeholder="Type or paste text here, then pick a case or style on the right. Select part of the text first to change only that part."></textarea>
+    </div>
+
+    <div class="side">
+      <h2>Change case</h2>
+      <p>Applies to your selection, or to everything if nothing is selected.</p>
+      <div class="cases" id="cases"></div>
+      <h2>Stylish fonts</h2>
+      <p>Select the words you want to style, then pick a font.</p>
+      <div class="styles" id="styles"></div>
+    </div>
+  </div>
+  <p class="foot">Stylish fonts are special Unicode characters, so they paste into bios and posts. Screen readers and some apps may read them badly or show boxes, so keep important text plain.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const ta=$('t');
+
+/* ---------- case conversions ---------- */
+const cap=w=>{const c=Array.from(w);return c.length?c[0].toUpperCase()+c.slice(1).join(''):''};
+const SMALL=new Set('a an and as at but by for from in nor of on or per the to up via vs with'.split(' '));
+const WORD=/\p{L}[\p{L}\p{M}\p{N}'\u2019]*/gu;
+function title(s){
+  const low=s.toLowerCase(),n=[...low.matchAll(WORD)].length;let i=0;
+  return low.replace(WORD,(w,off)=>{
+    const k=i++,small=SMALL.has(w)&&k!==0&&k!==n-1&&low[off-1]!=='-'&&low[off+w.length]!=='-';
+    return small?w:cap(w);
+  });
+}
+function sentence(s){
+  return s.toLowerCase()
+    .replace(/(?<![\p{L}\p{N}])i(?![\p{L}\p{N}])/gu,'I')
+    .replace(/(^|[.!?\u2026]\s+|\n\s*)(["'\u201c\u2018(\[]*)(\p{L})/gu,(m,p,q,c)=>p+q+c.toUpperCase());
+}
+const parts=l=>l.replace(/([\p{Ll}\p{N}])(\p{Lu})/gu,'$1 $2').replace(/(\p{Lu}+)(\p{Lu}\p{Ll})/gu,'$1 $2').match(/[\p{L}\p{N}]+/gu)||[];
+const perLine=f=>s=>s.split('\n').map(l=>{const p=parts(l);return p.length?f(p):l}).join('\n');
+const CASES=[
+ ['UPPERCASE',s=>s.toUpperCase()],
+ ['lowercase',s=>s.toLowerCase()],
+ ['Title Case',title],
+ ['Sentence case',sentence],
+ ['camelCase',perLine(p=>p.map((x,i)=>i?cap(x.toLowerCase()):x.toLowerCase()).join(''))],
+ ['PascalCase',perLine(p=>p.map(x=>cap(x.toLowerCase())).join(''))],
+ ['snake_case',perLine(p=>p.join('_').toLowerCase())],
+ ['kebab-case',perLine(p=>p.join('-').toLowerCase())],
+ ['CONSTANT_CASE',perLine(p=>p.join('_').toUpperCase())],
+ ['aLtErNaTiNg',s=>{let i=0;return s.replace(/\p{L}/gu,c=>i++%2?c.toUpperCase():c.toLowerCase())}],
+ ['iNVERSE cASE',s=>Array.from(s,c=>c===c.toUpperCase()&&c!==c.toLowerCase()?c.toLowerCase():c.toUpperCase()).join('')]
+];
+
+/* ---------- stylish fonts (Unicode) ---------- */
+const AZ='ABCDEFGHIJKLMNOPQRSTUVWXYZ',az='abcdefghijklmnopqrstuvwxyz',D='0123456789';
+function range(base,str){const m=new Map();[...str].forEach((c,i)=>m.set(c,String.fromCodePoint(base+i)));return m}
+function mk(U,L,Dg,ex){
+  const m=new Map([...range(U,AZ),...range(L,az)]);
+  if(Dg)for(const [k,v] of range(Dg,D))m.set(k,v);
+  for(const k in (ex||{}))m.set(k,ex[k]);
+  return m;
+}
+const digitsFrom=(base,zero)=>{const o={'0':zero};for(let i=1;i<=9;i++)o[i]=String.fromCodePoint(base+i-1);return o};
+const full=new Map([[' ','\u3000']]);for(let c=0x21;c<=0x7e;c++)full.set(String.fromCharCode(c),String.fromCharCode(c+0xfee0));
+const sc=new Map();[...az].forEach((c,i)=>sc.set(c,[...'\u1d00\u0299\u1d04\u1d05\u1d07\ua730\u0262\u029c\u026a\u1d0a\u1d0b\u029f\u1d0d\u0274\u1d0f\u1d18\u01eb\u0280s\u1d1b\u1d1c\u1d20\u1d21x\u028f\u1d22'][i]));
+const flipMap=new Map();
+[...(az+AZ+D+'!?.,')].forEach((c,i)=>flipMap.set(c,[...('\u0250q\u0254p\u01dd\u025f\u0183\u0265\u1d09\u027e\u029el\u026fuodb\u0279s\u0287n\u028c\u028dx\u028ez\u2200\u15fa\u0186\u15e1\u018e\u2132\u2141HI\u017f\ua4d8\u2142WNO\u0500\u038c\ua4e4S\u22a5\u2229\u039bMX\u2144Z0\u0196\u1105\u0190\u3123\u03db9\u312586\u00a1\u00bf\u02d9\'')][i]));
+const mapStyle=m=>s=>Array.from(s,c=>m.get(c)??c).join('');
+const combine=ch=>s=>Array.from(s,c=>c==='\n'?c:c+ch).join('');
+const MAPS={
+ bold:mk(0x1D400,0x1D41A,0x1D7CE),
+ italic:mk(0x1D434,0x1D44E,0,{h:'\u210e'}),
+ bolditalic:mk(0x1D468,0x1D482),
+ script:mk(0x1D49C,0x1D4B6,0,{B:'\u212c',E:'\u2130',F:'\u2131',H:'\u210b',I:'\u2110',L:'\u2112',M:'\u2133',R:'\u211b',e:'\u212f',g:'\u210a',o:'\u2134'}),
+ boldscript:mk(0x1D4D0,0x1D4EA),
+ fraktur:mk(0x1D504,0x1D51E,0,{C:'\u212d',H:'\u210c',I:'\u2111',R:'\u211c',Z:'\u2128'}),
+ double:mk(0x1D538,0x1D552,0x1D7D8,{C:'\u2102',H:'\u210d',N:'\u2115',P:'\u2119',Q:'\u211a',R:'\u211d',Z:'\u2124'}),
+ sans:mk(0x1D5A0,0x1D5BA,0x1D7E2),
+ sansbold:mk(0x1D5D4,0x1D5EE,0x1D7EC),
+ mono:mk(0x1D670,0x1D68A,0x1D7F6),
+ bubble:mk(0x24B6,0x24D0,0,digitsFrom(0x2460,'\u24ea')),
+ fbubble:mk(0x1F150,0x1F150,0,digitsFrom(0x2776,'\u24ff')),
+ square:mk(0x1F130,0x1F130),
+ fsquare:mk(0x1F170,0x1F170),
+ full,sc
+};
+const REV=new Map();
+for(const m of Object.values(MAPS))for(const [k,v] of m)if(!REV.has(v))REV.set(v,k);
+const unstyle=s=>Array.from(s.replace(/[\u0332\u0333\u0336]/g,''),c=>REV.get(c)??c).join('');
+const STYLES=[
+ ['Bold',mapStyle(MAPS.bold)],['Italic',mapStyle(MAPS.italic)],['Bold italic',mapStyle(MAPS.bolditalic)],
+ ['Strikethrough',combine('\u0336')],['Underline',combine('\u0332')],['Double underline',combine('\u0333')],
+ ['Bubble',mapStyle(MAPS.bubble)],['Filled bubble',mapStyle(MAPS.fbubble)],['Square',mapStyle(MAPS.square)],
+ ['Filled square',mapStyle(MAPS.fsquare)],['Script',mapStyle(MAPS.script)],['Bold script',mapStyle(MAPS.boldscript)],
+ ['Fraktur',mapStyle(MAPS.fraktur)],['Double-struck',mapStyle(MAPS.double)],['Monospace',mapStyle(MAPS.mono)],
+ ['Sans',mapStyle(MAPS.sans)],['Sans bold',mapStyle(MAPS.sansbold)],['Small caps',s=>mapStyle(MAPS.sc)(s.toLowerCase())],
+ ['Wide',mapStyle(MAPS.full)],['Upside down',s=>Array.from(s).reverse().map(c=>flipMap.get(c)??c).join('')],
+ ['Plain text',unstyle]
+];
+
+/* ---------- history ---------- */
+let H=[{v:''}],hi=0,lastT=0;
+function btns(){$('undo').disabled=hi<=0;$('redo').disabled=hi>=H.length-1}
+function commit(typing){
+  const v=ta.value;if(H[hi].v===v)return;
+  const now=Date.now();
+  if(typing&&H[hi].typed&&now-lastT<700)H[hi]={v,typed:1};
+  else{H=H.slice(0,hi+1);H.push({v,typed:typing?1:0});hi=H.length-1;if(H.length>200){H.shift();hi--}}
+  lastT=now;btns();
+}
+function jump(i){if(i<0||i>=H.length)return;hi=i;ta.value=H[hi].v;ta.setSelectionRange(ta.value.length,ta.value.length);btns();scope()}
+
+/* ---------- apply to selection or whole text ---------- */
+function apply(fn,isStyle){
+  let a=ta.selectionStart,b=ta.selectionEnd;
+  const whole=a===b;if(whole){a=0;b=ta.value.length}
+  const src=ta.value.slice(a,b);if(!src)return;
+  const out=fn(isStyle&&fn!==unstyle?unstyle(src):src);
+  ta.value=ta.value.slice(0,a)+out+ta.value.slice(b);
+  if(whole)ta.setSelectionRange(ta.value.length,ta.value.length);else ta.setSelectionRange(a,a+out.length);
+  commit(false);ta.focus();scope();
+}
+function scope(){
+  const a=ta.selectionStart,b=ta.selectionEnd;
+  $('scope').textContent=!ta.value?'':a!==b?'Editing the selection ('+Array.from(ta.value.slice(a,b)).length+' characters)':'Editing the whole text';
+}
+
+CASES.forEach(([n,f])=>{const b=document.createElement('button');b.textContent=n;b.onclick=()=>apply(f,false);$('cases').appendChild(b)});
+STYLES.forEach(([n,f])=>{
+  const b=document.createElement('button');
+  b.innerHTML='<span class="sm"></span><span class="nm">'+n+'</span>';
+  b.firstChild.textContent=n==='Plain text'?'Abc':f('Abc');
+  b.title=n;b.setAttribute('aria-label','Style as '+n);
+  b.onclick=()=>apply(f,true);$('styles').appendChild(b);
+});
+
+ta.addEventListener('input',()=>{commit(true);scope()});
+document.addEventListener('selectionchange',()=>{if(document.activeElement===ta)scope()});
+['keyup','mouseup','focus'].forEach(e=>ta.addEventListener(e,scope));
+$('undo').onclick=()=>jump(hi-1);$('redo').onclick=()=>jump(hi+1);
+ta.addEventListener('keydown',e=>{
+  if(!(e.ctrlKey||e.metaKey))return;
+  const k=e.key.toLowerCase();
+  if(k==='z'){e.preventDefault();jump(e.shiftKey?hi+1:hi-1)}
+  else if(k==='y'){e.preventDefault();jump(hi+1)}
+});
+$('clear').onclick=()=>{ta.value='';commit(false);scope();ta.focus()};
+const copyLabel=$('copy').textContent;
+let copyRequest=0,copyTimer;
+$('copy').onclick=async e=>{
+  const request=++copyRequest,t=ta.value,btn=e.currentTarget,active=document.activeElement,start=ta.selectionStart,end=ta.selectionEnd;
+  clearTimeout(copyTimer);
+  let copied=false;
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+    try{await navigator.clipboard.writeText(t);copied=true}catch(x){}
+  }
+  if(!copied&&request===copyRequest){
+    const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();
+    try{copied=document.execCommand('copy')}catch(x){}
+    a.remove();
+    if(active&&active.isConnected)active.focus();
+    if(active===ta)ta.setSelectionRange(start,end);
+  }
+  if(request!==copyRequest)return;
+  btn.textContent=copied?'Copied':'Copy failed';
+  $('scope').textContent=copied?'Copied to clipboard.':'Couldn\u2019t copy automatically. Select the text and copy it manually.';
+  copyTimer=setTimeout(()=>{btn.textContent=copyLabel;scope()},1200);
+};
+scope();ta.focus();
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Password generator</title>
+<style>
+:root{--bg:#e6e9e4;--panel:#f3f5f1;--ink:#16232e;--mute:#5b6b78;--line:#b9c0b8;--hl:#f0d34a;--num:#1f5f9e;--sym:#b3372b;--ok:#2f6f4e;--bad:#b3372b}
+@media (prefers-color-scheme:dark){:root{--bg:#141b21;--panel:#1c252d;--ink:#e4e8e2;--mute:#93a1ac;--line:#33414c;--hl:#c9ae2c;--num:#6db0f0;--sym:#ff8a7a;--ok:#6cc596;--bad:#ff8a7a}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1080px;margin:0 auto;padding:22px 24px 16px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+h1{font:400 clamp(1.9rem,4.2vw,2.9rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.claim{margin:6px 0 0;font:italic 1.05rem Charter,Georgia,serif;color:var(--mute)}
+.tag{color:var(--mute);font-size:.85rem;text-align:right;max-width:26ch}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:290px 1fr;gap:30px}
+.left{display:flex;flex-direction:column;min-height:0}
+.right{display:flex;flex-direction:column;min-height:0}
+fieldset{border:0;border-top:1px solid var(--line);margin:0;padding:8px 0 10px}
+legend{padding:0 10px 0 0;font-weight:600;font-size:.9rem}
+.row{display:flex;justify-content:space-between;align-items:baseline}
+.val{font:600 1.25rem Charter,Georgia,serif}
+input[type=range]{width:100%;margin:2px 0 0;accent-color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:10px}
+label.chk{display:flex;gap:8px;align-items:center;padding:3px 0;cursor:pointer;font-size:.92rem}
+label.chk small{color:var(--mute);margin-left:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.75rem}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--ink)}
+input[type=text]{width:100%;padding:7px 9px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-family:ui-monospace,Menlo,Consolas,monospace;border-radius:2px}
+.hint{color:var(--mute);font-size:.8rem;margin:4px 0 0}
+button{font:inherit;cursor:pointer;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:6px 12px;border-radius:2px}
+button:hover{background:var(--ink);color:var(--bg)}
+button.main{background:var(--ink);color:var(--bg);padding:11px 20px;font-weight:600;margin-top:auto}
+button.main:hover{background:var(--mute);border-color:var(--mute)}
+button.sm{padding:2px 8px;font-size:.82rem}
+:focus-visible{outline:3px solid var(--num);outline-offset:2px}
+.meter{background:var(--panel);border:1px solid var(--line);padding:10px 14px;margin-bottom:10px}
+.mtop{display:flex;align-items:center;gap:14px}
+.meter b{font:600 1.05rem Charter,Georgia,serif;min-width:5.5ch}
+.bar{display:flex;gap:4px;flex:1}
+.bar i{flex:1;height:8px;background:var(--line)}
+.bar i.on{background:var(--c)}
+.st{color:var(--mute)}.st.bad{color:var(--bad);font-weight:600}.st.ok{color:var(--ok);font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.acts .sp{flex:1}
+.err{color:var(--bad);margin:0 0 8px}
+button:disabled{opacity:.45;cursor:default}
+#list{list-style:none;margin:0;padding:0;flex:1;min-height:0;overflow-y:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+li{border-top:1px solid var(--line);padding:8px 10px 8px 0}
+li:first-child{border-top:0}
+.pw{font:1.05rem/1.4 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;letter-spacing:.02em}
+.pw .n{color:var(--num)}.pw .s{color:var(--sym)}
+.pw mark{background:var(--hl);color:inherit;padding:0 1px}
+li:first-child .pw{font-size:1.25rem}
+.meta{display:flex;gap:8px;align-items:center;margin-top:5px;font-size:.84rem;flex-wrap:wrap}
+.foot{margin:8px 0 0;color:var(--mute);font-size:.76rem}
+@media(max-width:820px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:8px}.tag{text-align:left;max-width:none}
+  .grid{grid-template-columns:1fr;gap:18px}#list{max-height:60vh}button.main{margin-top:10px}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Security comes first.</h1>
+      <p class="claim">Data is worth more than money. Information is wealth now.</p>
+    </div>
+    <div class="tag">Password generator. Runs in your browser; nothing is stored or sent.</div>
+  </header>
+
+  <div class="grid">
+    <div class="left">
+      <fieldset>
+        <legend>Length</legend>
+        <div class="row"><span>Total characters</span><span class="val" id="lenv">20</span></div>
+        <input type="range" id="len" min="4" max="64" value="20" aria-label="Password length">
+      </fieldset>
+
+      <fieldset>
+        <legend>Characters</legend>
+        <div class="two">
+          <label class="chk"><input type="checkbox" id="lower" checked> Lowercase</label>
+          <label class="chk"><input type="checkbox" id="upper" checked> Uppercase</label>
+          <label class="chk"><input type="checkbox" id="num" checked> Numbers</label>
+          <label class="chk"><input type="checkbox" id="sym" checked> Symbols</label>
+        </div>
+        <label class="chk"><input type="checkbox" id="amb"> Skip look-alikes <small>Il1O0</small></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Prefix</legend>
+        <input type="text" id="prefix" maxlength="30" placeholder="e.g. acme-" autocomplete="off" spellcheck="false" aria-label="Prefix">
+        <p class="hint">Counts toward length. Not random, so it adds no strength.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>How many</legend>
+        <div class="row"><span>Passwords</span><span class="val" id="cntv">1</span></div>
+        <input type="range" id="cnt" min="1" max="50" value="1" aria-label="Number of passwords">
+      </fieldset>
+
+      <button class="main" id="go">Generate</button>
+    </div>
+
+    <div class="right">
+      <div class="meter" aria-live="polite">
+        <div class="mtop">
+          <b id="sl">–</b>
+          <div class="bar" id="bar"><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="st" id="sd"></span>
+        </div>
+        <div class="hint" id="sn"></div>
+      </div>
+
+      <p class="err" id="err" role="alert" hidden></p>
+
+      <div class="acts">
+        <button id="copyall">Copy all</button>
+        <button id="checkall">Check all for breaches</button>
+        <span class="sp"></span>
+        <span class="st" id="sum"></span>
+      </div>
+
+      <ul id="list"></ul>
+
+      <p class="foot">Breach check uses Have I Been Pwned: only the first 5 characters of the password's SHA-1 hash leave your browser. "Not found" means not in known leaks, not unguessable.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const SETS={lower:'abcdefghijklmnopqrstuvwxyz',upper:'ABCDEFGHIJKLMNOPQRSTUVWXYZ',num:'0123456789',sym:'!@#$%^&*()-_=+[]{};:,.?/~'};
+const AMB=/[Il1O0]/g;
+let items=[];
+
+function rnd(n){ // unbiased random int in [0,n)
+  const lim=Math.floor(4294967296/n)*n, a=new Uint32Array(1);
+  do{crypto.getRandomValues(a)}while(a[0]>=lim);
+  return a[0]%n;
+}
+function groups(){
+  return Object.keys(SETS).filter(k=>$(k).checked).map(k=>$('amb').checked?SETS[k].replace(AMB,''):SETS[k]);
+}
+function make(g,n,prefix){
+  const pool=g.join('');
+  const out=g.map(s=>s[rnd(s.length)]);
+  while(out.length<n)out.push(pool[rnd(pool.length)]);
+  for(let i=out.length-1;i>0;i--){const j=rnd(i+1);[out[i],out[j]]=[out[j],out[i]]}
+  return prefix+out.join('');
+}
+function render(pw,pl){ // prefix highlighted, rest coloured
+  const esc=c=>c==='<'?'&lt;':c==='>'?'&gt;':c==='&'?'&amp;':c;
+  const ch=[...pw];
+  const pre=ch.slice(0,pl).map(esc).join('');
+  const rest=ch.slice(pl).map(c=>{const e=esc(c);
+    return /\d/.test(c)?'<span class="n">'+e+'</span>':/[^A-Za-z]/.test(c)?'<span class="s">'+e+'</span>':e}).join('');
+  return (pre?'<mark>'+pre+'</mark>':'')+rest;
+}
+function strength(g,n){
+  if(!g.length||n<=0)return{bits:0};
+  const pool=new Set(g.join('')).size;
+  return{bits:n*Math.log2(pool)};
+}
+function showStrength(bits){
+  const L=[[0,'None','#b9c0b8',0],[40,'Weak','var(--bad)',1],[60,'Fair','#c7822a',2],[80,'Good','#8a9a2e',3],[110,'Strong','var(--ok)',4],[140,'Excellent','var(--ok)',5]];
+  let lv=L[0];
+  if(bits>0){lv=L[1];for(const x of L)if(bits>=x[0]&&x[0]>0)lv=x}
+  $('sl').textContent=lv[1];
+  $('sd').textContent=bits?Math.round(bits)+' bits of entropy':'';
+  [...$('bar').children].forEach((b,i)=>{b.classList.toggle('on',i<lv[3]);b.style.setProperty('--c',lv[2])});
+  $('sn').textContent=!bits?'':bits<60?'Fine for a throwaway, too short for anything you care about.':bits<80?'Reasonable, but longer is cheap.':bits<110?'Hard to crack by brute force.':'Beyond practical brute force.';
+}
+function generate(){
+  $('lenv').textContent=$('len').value;
+  $('cntv').textContent=$('cnt').value;
+  const g=groups(),len=+$('len').value,prefix=$('prefix').value,pl=[...prefix].length,n=len-pl;
+  const err=$('err');
+  const invalid=message=>{items=[];draw();showStrength(0);err.hidden=false;err.textContent=message};
+  if(!window.crypto||typeof window.crypto.getRandomValues!=='function'){invalid('Secure password generation requires HTTPS or localhost in a modern browser.');return}
+  if(!g.length){invalid('Pick at least one character type.');return}
+  if(n<g.length){invalid('The prefix leaves no room. Increase the length or shorten the prefix.');return}
+  err.hidden=true;
+  items=Array.from({length:+$('cnt').value},()=>({pw:make(g,n,prefix),pl,st:''}));
+  showStrength(strength(g,n).bits);
+  draw();
+}
+function draw(){
+  const ul=$('list');ul.innerHTML='';
+  items.forEach((it,i)=>{
+    const li=document.createElement('li');
+    li.innerHTML='<div class="pw">'+render(it.pw,it.pl)+'</div><div class="meta"><button class="sm" data-c="'+i+'">Copy</button><button class="sm" data-k="'+i+'">Check breach</button><span class="st '+(it.cls||'')+'" id="st'+i+'" role="status" aria-live="polite">'+it.st+'</span></div>';
+    ul.appendChild(li);
+  });
+  $('sum').textContent=items.length+(items.length===1?' password':' passwords');
+  $('copyall').disabled=!items.length;
+  $('checkall').disabled=!items.length;
+}
+async function sha1(s){
+  const b=await crypto.subtle.digest('SHA-1',new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('').toUpperCase();
+}
+async function check(i){
+  const it=items[i],el=$('st'+i);
+  const set=(t,c)=>{it.st=t;it.cls=c||'';if(el){el.textContent=t;el.className='st '+(c||'')}};
+  if(!(window.crypto&&crypto.subtle)){set('Needs https or localhost for hashing.','bad');return}
+  set('Checking…');
+  try{
+    const h=await sha1(it.pw),pre=h.slice(0,5),suf=h.slice(5);
+    const r=await fetch('https://api.pwnedpasswords.com/range/'+pre);
+    if(!r.ok)throw 0;
+    const line=(await r.text()).split('\n').find(l=>l.startsWith(suf));
+    if(line){set('Found in '+Number(line.split(':')[1]).toLocaleString()+' known breaches. Don\u2019t use it.','bad')}
+    else set('Not found in known breaches.','ok');
+  }catch(e){set('Couldn\u2019t reach the breach service. Check your connection.','bad')}
+}
+async function copy(t,btn){
+  let copied=false;
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+    try{await navigator.clipboard.writeText(t);copied=true}catch(e){}
+  }
+  if(!copied){
+    const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();
+    try{copied=document.execCommand('copy')}catch(e){}
+    a.remove();
+  }
+  if(copied){if(btn){const o=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=o,1200)}}
+  else{$('err').hidden=false;$('err').textContent='Couldn\u2019t copy automatically. Select the password and copy it manually.'}
+}
+$('list').addEventListener('click',e=>{
+  const c=e.target.dataset.c,k=e.target.dataset.k;
+  if(c!==undefined)copy(items[c].pw,e.target);
+  if(k!==undefined)check(+k);
+});
+$('copyall').onclick=e=>copy(items.map(x=>x.pw).join('\n'),e.target);
+$('checkall').onclick=async()=>{for(let i=0;i<items.length;i++){await check(i)}};
+$('go').onclick=generate;
+['len','cnt','prefix','lower','upper','num','sym','amb'].forEach(id=>$(id).addEventListener('input',generate));
+generate();
+</script>
+</body>
+</html>

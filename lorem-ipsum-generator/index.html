@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorem Ipsum Generator</title>
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--onp-line:rgba(255,250,250,.32)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1120px;margin:0 auto;padding:22px 24px 16px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:16px}
+h1{font:400 clamp(1.9rem,4vw,2.7rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:30ch}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:300px 1fr;gap:26px}
+.side{background:var(--secondary-bg);color:var(--secondary-text);padding:16px 20px 20px;display:flex;flex-direction:column;min-height:0;overflow-y:auto}
+fieldset{border:0;border-top:1px solid var(--onp-line);margin:0;padding:10px 0 12px}
+fieldset:first-child{border-top:0;padding-top:0}
+legend{padding:0 10px 0 0;font-weight:600;font-size:.9rem}
+.modes label{display:block;cursor:pointer;padding:7px 10px;margin-bottom:5px;border:1px solid var(--onp-line)}
+.modes input{position:absolute;opacity:0;pointer-events:none}
+.modes b{display:block;font:400 1.1rem Charter,Georgia,serif}
+.modes span{display:block;font-size:.78rem;opacity:.8}
+.modes label:hover{border-color:var(--secondary-text)}
+.modes input:checked+label{background:var(--secondary-text);color:var(--primary);border-color:var(--secondary-text)}
+.modes input:focus-visible+label{outline:3px solid var(--secondary-text);outline-offset:2px}
+.cnt{display:flex;align-items:center;gap:12px}
+.cnt input[type=range]{flex:1;accent-color:var(--secondary-text)}
+input[type=number]{width:74px;padding:6px 8px;font:inherit;font-weight:600;background:var(--secondary-text);color:var(--primary);border:0;border-radius:2px}
+.unit{font-size:.8rem;opacity:.85;margin:4px 0 0}
+label.chk{display:flex;gap:9px;align-items:center;padding:3px 0;cursor:pointer;font-size:.92rem}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--secondary-text)}
+button{font:inherit;cursor:pointer;border-radius:2px;padding:6px 14px;border:1px solid var(--primary);background:transparent;color:var(--primary)}
+button:hover{background:var(--primary);color:var(--primary-bg)}
+.side button.main{margin-top:auto;background:var(--secondary-text);color:var(--primary);border-color:var(--secondary-text);font-weight:600;padding:11px 18px}
+.side button.main:hover{background:transparent;color:var(--secondary-text)}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+.out{display:flex;flex-direction:column;min-height:0}
+.bar{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.bar .sp{flex:1}
+#stats{color:var(--soft);font-size:.88rem}
+#text{flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid var(--line);padding:22px 28px;font:1.08rem/1.7 Georgia,"Times New Roman",serif;white-space:pre-wrap}
+#text.code{font:.92rem/1.6 ui-monospace,Menlo,Consolas,monospace}
+.foot{margin:8px 0 0;color:var(--soft);font-size:.76rem}
+@media(max-width:820px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .grid{grid-template-columns:1fr;gap:18px}#text{max-height:60vh}.side button.main{margin-top:10px}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Lorem Ipsum Generator</h1>
+    <div class="tag">Placeholder text for layouts, mockups and tests.</div>
+  </header>
+
+  <div class="grid">
+    <div class="side">
+      <fieldset class="modes" role="radiogroup">
+        <legend>Generate by</legend>
+        <input type="radio" name="mode" id="mw" value="w"><label for="mw"><b>Words</b><span>An exact word count</span></label>
+        <input type="radio" name="mode" id="ms" value="s"><label for="ms"><b>Sentences</b><span>One block of full sentences</span></label>
+        <input type="radio" name="mode" id="mp" value="p" checked><label for="mp"><b>Passages</b><span>Paragraphs of 4 to 7 sentences</span></label>
+      </fieldset>
+
+      <fieldset>
+        <legend id="cl">Number of passages</legend>
+        <div class="cnt"><input type="range" id="cnt" aria-label="Amount"><input type="number" id="num" aria-label="Amount"></div>
+        <p class="unit" id="rng"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Options</legend>
+        <label class="chk"><input type="checkbox" id="open" checked> Start with "Lorem ipsum dolor sit amet"</label>
+        <label class="chk"><input type="checkbox" id="html"> Wrap in &lt;p&gt; tags</label>
+      </fieldset>
+
+      <button class="main" id="go">Generate again</button>
+    </div>
+
+    <div class="out">
+      <div class="bar">
+        <span id="stats"></span><span class="sp"></span>
+        <button id="copy" aria-live="polite">Copy</button>
+        <button id="dl">Download</button>
+      </div>
+      <div id="text" tabindex="0" aria-live="polite"></div>
+      <p class="foot">Made in your browser from a small pool of Latin-style words. It reads like text but means nothing, on purpose.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const POOL=("lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum curabitur pretium tincidunt lacus nunc vitae mauris libero pellentesque habitant morbi tristique senectus netus fames turpis egestas vestibulum").split(' ');
+const OPEN_WORDS=POOL.slice(0,8);
+const OPEN_SENT='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+const CFG={
+  w:{label:'Number of words',max:1000,unit:'1 to 1,000 words'},
+  s:{label:'Number of sentences',max:100,unit:'1 to 100 sentences'},
+  p:{label:'Number of passages',max:50,unit:'1 to 50 passages'}
+};
+const counts={w:60,s:5,p:3};
+let blocks=[],text='';
+let copyRequest=0,copyTimer;
+
+const r=n=>Math.floor(Math.random()*n);
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+function pick(prev){let w;do{w=POOL[r(POOL.length)]}while(w===prev);return w}
+
+function sentence(){
+  const len=8+r(9),w=[];
+  let next=3+r(3);
+  for(let i=0;i<len;i++){
+    let x=pick(w[i-1]&&w[i-1].replace(',',''));
+    if(i===next&&i<len-2){x+=',';next=i+3+r(3)}
+    w.push(x);
+  }
+  return cap(w.join(' '))+'.';
+}
+function passage(first){
+  const n=4+r(4),s=[];
+  for(let i=0;i<n;i++)s.push(first&&i===0?OPEN_SENT:sentence());
+  return s.join(' ');
+}
+function build(){
+  const mode=document.querySelector('input[name=mode]:checked').value,n=counts[mode],open=$('open').checked;
+  if(mode==='w'){
+    const w=open?OPEN_WORDS.slice(0,n):[];
+    while(w.length<n)w.push(pick(w[w.length-1]));
+    blocks=[cap(w.join(' '))+'.'];
+  }else if(mode==='s'){
+    const s=[];
+    for(let i=0;i<n;i++)s.push(open&&i===0?OPEN_SENT:sentence());
+    blocks=[s.join(' ')];
+  }else{
+    blocks=Array.from({length:n},(_,i)=>passage(open&&i===0));
+  }
+  show();
+}
+function show(){
+  text=blocks.join('\n\n');
+  const wrap=$('html').checked;
+  const out=wrap?blocks.map(b=>'<p>'+b+'</p>').join('\n'):text;
+  const el=$('text');
+  el.textContent=out;
+  el.classList.toggle('code',wrap);
+  el.scrollTop=0;
+  const wc=text.split(/\s+/).filter(Boolean).length;
+  $('stats').textContent=wc.toLocaleString()+(wc===1?' word':' words')+' \u00b7 '+text.length.toLocaleString()+' characters';
+}
+function sync(){
+  const mode=document.querySelector('input[name=mode]:checked').value,c=CFG[mode];
+  $('cl').textContent=c.label;$('rng').textContent=c.unit;
+  ['cnt','num'].forEach(id=>{$(id).min=1;$(id).max=c.max;$(id).value=counts[mode]});
+}
+function setCount(v){
+  const mode=document.querySelector('input[name=mode]:checked').value;
+  v=Math.max(1,Math.min(CFG[mode].max,Math.round(+v)||1));
+  counts[mode]=v;$('cnt').value=v;
+  if(document.activeElement!==$('num'))$('num').value=v;
+  build();
+}
+async function copy(t,btn){
+  const request=++copyRequest,active=document.activeElement;
+  clearTimeout(copyTimer);
+  let copied=false;
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+    try{await navigator.clipboard.writeText(t);copied=true}catch(e){}
+  }
+  if(!copied&&request===copyRequest){
+    const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();
+    try{copied=document.execCommand('copy')}catch(e){}
+    a.remove();
+    if(active&&active.isConnected)active.focus();
+  }
+  if(request!==copyRequest)return;
+  btn.textContent=copied?'Copied':'Copy failed';
+  copyTimer=setTimeout(()=>{if(request===copyRequest&&btn.isConnected)btn.textContent='Copy'},1200);
+}
+const outText=()=>$('html').checked?blocks.map(b=>'<p>'+b+'</p>').join('\n'):text;
+
+document.querySelectorAll('input[name=mode]').forEach(x=>x.addEventListener('change',()=>{sync();build()}));
+$('cnt').addEventListener('input',e=>setCount(e.target.value));
+$('num').addEventListener('input',e=>{if(e.target.value!=='')setCount(e.target.value)});
+$('num').addEventListener('blur',e=>{e.target.value=counts[document.querySelector('input[name=mode]:checked').value]});
+$('open').addEventListener('change',build);
+$('html').addEventListener('change',show);
+$('go').onclick=build;
+$('copy').onclick=e=>copy(outText(),e.target);
+$('dl').onclick=()=>{
+  const a=document.createElement('a'),h=$('html').checked;
+  a.href=URL.createObjectURL(new Blob([outText()+'\n'],{type:h?'text/html':'text/plain'}));
+  a.download='lorem-ipsum.'+(h?'html':'txt');a.click();URL.revokeObjectURL(a.href);
+};
+sync();build();
+</script>
+</body>
+</html>

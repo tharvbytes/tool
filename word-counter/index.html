@@ -1,0 +1,3613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Word & Character Counter</title>
+
+<meta
+  name="description"
+  content="Count words, characters and sentences, find duplicate sentences, and customize accessibility and appearance."
+>
+
+<style>
+:root {
+  color-scheme: light;
+
+  --primary: #600060;
+  --primary-bg: #fffafa;
+  --secondary-bg: #800080;
+  --secondary-text: #fffafa;
+
+  --soft: rgba(96, 0, 96, .68);
+  --line: rgba(96, 0, 96, .20);
+  --panel: rgba(96, 0, 96, .06);
+  --onp-line: rgba(255, 250, 250, .32);
+
+  --surface: #ffffff;
+  --surface-2: #f8f0f8;
+
+  --original-bg: #dff3df;
+  --original-text: #245b2a;
+  --original-border: #82bd87;
+
+  --duplicate-bg: #fff0c7;
+  --duplicate-text: #735900;
+  --duplicate-border: #e2c86a;
+
+  --danger: #a30000;
+
+  --shadow: 0 8px 28px rgba(60, 0, 60, .12);
+
+  --focus: #ff9f00;
+
+  --base-font-size: 15px;
+  --motion: 1;
+}
+
+/* =========================================================
+   NIGHT THEME
+========================================================= */
+
+html[data-theme="night"] {
+  color-scheme: dark;
+
+  --primary: #f0c8f0;
+  --primary-bg: #171217;
+  --secondary-bg: #4d174d;
+  --secondary-text: #fff7ff;
+
+  --soft: rgba(255, 225, 255, .72);
+  --line: rgba(255, 210, 255, .22);
+  --panel: rgba(255, 220, 255, .07);
+  --onp-line: rgba(255, 250, 255, .25);
+
+  --surface: #211a21;
+  --surface-2: #2a202a;
+
+  --original-bg: #193d24;
+  --original-text: #c8f1cf;
+  --original-border: #5c9b68;
+
+  --duplicate-bg: #4a3b16;
+  --duplicate-text: #ffe8a0;
+  --duplicate-border: #b89b42;
+
+  --danger: #ff8a8a;
+
+  --shadow: 0 8px 28px rgba(0, 0, 0, .35);
+
+  --focus: #ffd15c;
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+html.access-large {
+  --base-font-size: 18px;
+}
+
+html.access-large h1 {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+}
+
+html.access-large textarea,
+html.access-large .highlight-layer {
+  font-size: 1.18rem;
+}
+
+html.access-high-contrast {
+  --primary: #000000;
+  --primary-bg: #ffffff;
+  --secondary-bg: #000000;
+  --secondary-text: #ffffff;
+  --soft: #222222;
+  --line: #000000;
+  --surface: #ffffff;
+  --surface-2: #eeeeee;
+}
+
+html[data-theme="night"].access-high-contrast {
+  --primary: #ffffff;
+  --primary-bg: #000000;
+  --secondary-bg: #000000;
+  --secondary-text: #ffffff;
+  --soft: #ffffff;
+  --line: #ffffff;
+  --surface: #080808;
+  --surface-2: #151515;
+}
+
+html.access-focus *:focus-visible {
+  outline: 4px solid var(--focus) !important;
+  outline-offset: 3px !important;
+}
+
+html.access-reduced-motion *,
+html.access-reduced-motion *::before,
+html.access-reduced-motion *::after {
+  transition: none !important;
+  animation: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+html {
+  font-size: var(--base-font-size);
+}
+
+body {
+  background: var(--primary-bg);
+  color: var(--primary);
+
+  font:
+    15px/1.5
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+
+  transition:
+    background-color .2s ease,
+    color .2s ease;
+}
+
+button,
+textarea,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+:focus-visible {
+  outline: 3px solid var(--secondary-bg);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.wrap {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 22px 24px 28px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+
+  border-bottom: 2px solid var(--primary);
+}
+
+h1 {
+  margin: 0;
+
+  font:
+    400 clamp(1.8rem, 3.8vw, 2.6rem) / 1
+    Charter,
+    "Bitstream Charter",
+    "Iowan Old Style",
+    Georgia,
+    serif;
+
+  letter-spacing: -.02em;
+}
+
+.tag {
+  max-width: 42ch;
+
+  color: var(--soft);
+
+  font-size: .88rem;
+  text-align: right;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 370px;
+  gap: 20px;
+}
+
+.left {
+  min-width: 0;
+}
+
+/* =========================================================
+   TOP TOOLBAR
+========================================================= */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  margin-bottom: 7px;
+}
+
+.toolbar-title {
+  flex: 1;
+
+  font:
+    400 1.15rem
+    Charter,
+    Georgia,
+    serif;
+}
+
+button {
+  padding: 6px 13px;
+
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+
+  background: transparent;
+  color: var(--primary);
+
+  transition:
+    background-color .15s ease,
+    color .15s ease,
+    transform .15s ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--primary);
+  color: var(--primary-bg);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   EDITOR
+========================================================= */
+
+.editor-wrap {
+  position: relative;
+
+  width: 100%;
+  min-height: 500px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--surface);
+
+  box-shadow: var(--shadow);
+}
+
+.highlight-layer {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+
+  padding: 18px 22px;
+
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  font:
+    1.08rem/1.7
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  color: var(--primary);
+
+  pointer-events: none;
+
+  background: var(--surface);
+}
+
+textarea {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: 100%;
+  min-height: 500px;
+
+  resize: vertical;
+
+  padding: 18px 22px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: transparent;
+  color: var(--primary);
+
+  font:
+    1.08rem/1.7
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  caret-color: var(--primary);
+}
+
+textarea::placeholder {
+  color: var(--soft);
+  opacity: .7;
+}
+
+textarea:focus {
+  outline: 2px solid var(--secondary-bg);
+  outline-offset: -2px;
+}
+
+.editor-wrap.highlights-active textarea {
+  color: transparent;
+}
+
+.sentence-original {
+  background: var(--original-bg);
+  color: var(--original-text);
+
+  border-bottom: 2px solid var(--original-border);
+
+  border-radius: 3px;
+}
+
+.sentence-duplicate {
+  background: var(--duplicate-bg);
+  color: var(--duplicate-text);
+
+  border-bottom: 2px solid var(--duplicate-border);
+
+  border-radius: 3px;
+}
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.highlight-legend {
+  display: none;
+
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 8px;
+
+  color: var(--soft);
+
+  font-size: .78rem;
+}
+
+.highlight-legend.visible {
+  display: flex;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-color {
+  width: 13px;
+  height: 13px;
+
+  border-radius: 3px;
+
+  border: 1px solid;
+}
+
+.legend-original {
+  background: var(--original-bg);
+  border-color: var(--original-border);
+}
+
+.legend-duplicate {
+  background: var(--duplicate-bg);
+  border-color: var(--duplicate-border);
+}
+
+/* =========================================================
+   SIDE PANEL
+========================================================= */
+
+.side {
+  align-self: start;
+
+  padding: 14px 18px 18px;
+
+  border-radius: 3px;
+
+  background: var(--secondary-bg);
+  color: var(--secondary-text);
+
+  box-shadow: var(--shadow);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.c {
+  padding: 12px;
+
+  border: 1px solid var(--onp-line);
+}
+
+.c b {
+  display: block;
+
+  font:
+    400 2.1rem/1.1
+    Charter,
+    Georgia,
+    serif;
+}
+
+.c span {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: .8rem;
+  opacity: .9;
+}
+
+/* =========================================================
+   CHARACTER TOGGLE
+========================================================= */
+
+.char-mode {
+  grid-column: 1 / -1;
+
+  margin-top: 2px;
+  padding: 10px 12px;
+
+  border: 1px solid var(--onp-line);
+}
+
+.char-mode-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mode-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mode-text strong {
+  font-size: .88rem;
+}
+
+.mode-text small {
+  font-size: .75rem;
+  opacity: .72;
+}
+
+/* =========================================================
+   SWITCH
+========================================================= */
+
+.switch {
+  position: relative;
+
+  display: inline-block;
+
+  width: 44px;
+  height: 24px;
+
+  flex-shrink: 0;
+}
+
+.switch input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+
+  cursor: pointer;
+
+  border: 1px solid var(--onp-line);
+  border-radius: 999px;
+
+  background: rgba(255, 250, 250, .28);
+
+  transition: .2s ease;
+}
+
+.slider::before {
+  content: "";
+
+  position: absolute;
+
+  top: 2px;
+  left: 2px;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: var(--secondary-text);
+
+  transition: .2s ease;
+}
+
+.switch input:checked + .slider {
+  background: var(--primary-bg);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+
+  background: var(--secondary-bg);
+}
+
+/* =========================================================
+   DUPLICATE SECTION
+========================================================= */
+
+.duplicates {
+  margin-top: 14px;
+
+  border: 1px solid var(--line);
+
+  background: var(--surface);
+}
+
+.duplicate-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.duplicate-head h2 {
+  margin: 0;
+
+  font:
+    400 1.15rem
+    Charter,
+    Georgia,
+    serif;
+}
+
+.duplicate-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.duplicate-actions button {
+  padding: 5px 10px;
+  font-size: .82rem;
+}
+
+.highlight-btn {
+  background: #fff8dc;
+  border-color: #d6ad32;
+  color: #725700;
+}
+
+.highlight-btn:hover:not(:disabled) {
+  background: #d6ad32;
+  color: #fff;
+}
+
+.delete-btn {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.delete-btn:hover:not(:disabled) {
+  background: var(--danger);
+  color: #fff;
+}
+
+.duplicate-status {
+  padding: 9px 14px;
+
+  color: var(--soft);
+
+  font-size: .86rem;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.duplicate-status.has-duplicates {
+  color: #735900;
+  background: #fff8dc;
+}
+
+.duplicate-status.no-duplicates {
+  color: #176b36;
+  background: #edf9f1;
+}
+
+.duplicate-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.duplicate-item {
+  padding: 11px 14px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.duplicate-item:last-child {
+  border-bottom: 0;
+}
+
+.duplicate-item-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.duplicate-item-text {
+  color: var(--primary);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  line-height: 1.55;
+}
+
+.duplicate-count {
+  flex-shrink: 0;
+
+  padding: 2px 7px;
+
+  border-radius: 999px;
+
+  background: var(--duplicate-bg);
+  color: var(--duplicate-text);
+
+  font-size: .72rem;
+}
+
+.duplicate-locations {
+  margin-top: 5px;
+
+  color: var(--soft);
+
+  font-size: .76rem;
+}
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about {
+  margin-top: 14px;
+
+  padding: 16px 18px;
+
+  border: 1px solid var(--line);
+
+  background: var(--panel);
+}
+
+.about h2 {
+  margin: 0 0 7px;
+
+  font:
+    400 1.2rem
+    Charter,
+    Georgia,
+    serif;
+}
+
+.about p {
+  margin: 0;
+
+  color: var(--soft);
+
+  font-size: .9rem;
+  line-height: 1.6;
+}
+
+.about p + p {
+  margin-top: 8px;
+}
+
+.foot {
+  margin: 10px 0 0;
+
+  color: var(--soft);
+
+  font-size: .76rem;
+}
+
+/* =========================================================
+   SETTINGS BUTTONS
+========================================================= */
+
+.utility-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+
+  margin-bottom: 10px;
+}
+
+.utility-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 5px 10px;
+
+  font-size: .8rem;
+}
+
+/* =========================================================
+   MODAL / DRAWER
+========================================================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+
+  background: rgba(0, 0, 0, .48);
+}
+
+.modal {
+  width: min(560px, 100%);
+  max-height: min(720px, 90vh);
+
+  overflow-y: auto;
+
+  border-radius: 12px;
+
+  background: var(--surface);
+  color: var(--primary);
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, .3);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 16px 18px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-header h2 {
+  margin: 0;
+
+  font:
+    400 1.35rem
+    Charter,
+    Georgia,
+    serif;
+}
+
+.modal-close {
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  font-size: 1.2rem;
+}
+
+.modal-body {
+  padding: 18px;
+}
+
+.setting-group {
+  margin-bottom: 18px;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-group h3 {
+  margin: 0 0 8px;
+
+  font-size: .95rem;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.setting-row:last-child {
+  border-bottom: 0;
+}
+
+.setting-info {
+  min-width: 0;
+}
+
+.setting-info strong {
+  display: block;
+
+  font-size: .88rem;
+}
+
+.setting-info small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--soft);
+
+  font-size: .76rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+
+  margin-top: 16px;
+}
+
+/* =========================================================
+   COOKIE EDITOR
+========================================================= */
+
+.cookie-box {
+  padding: 12px;
+
+  border: 1px solid var(--line);
+
+  background: var(--panel);
+
+  border-radius: 8px;
+}
+
+.cookie-name {
+  margin-bottom: 6px;
+
+  font-family: monospace;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.cookie-value {
+  width: 100%;
+
+  min-height: 90px;
+
+  padding: 9px;
+
+  resize: vertical;
+
+  border: 1px solid var(--line);
+  border-radius: 6px;
+
+  background: var(--surface);
+  color: var(--primary);
+
+  font-family: monospace;
+  font-size: .78rem;
+}
+
+.cookie-meta {
+  margin-top: 7px;
+
+  color: var(--soft);
+
+  font-size: .75rem;
+}
+
+.cookie-warning {
+  margin-top: 12px;
+  padding: 10px;
+
+  border-left: 3px solid #d6ad32;
+
+  background: #fff8dc;
+  color: #735900;
+
+  font-size: .78rem;
+}
+
+html[data-theme="night"] .cookie-warning {
+  background: #3e3218;
+  color: #ffe8a0;
+}
+
+.cookie-empty {
+  color: var(--soft);
+
+  font-size: .85rem;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 860px) {
+
+  .wrap {
+    padding: 18px 16px 22px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .tag {
+    max-width: none;
+    text-align: left;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-wrap {
+    min-height: 360px;
+  }
+
+  textarea {
+    min-height: 360px;
+  }
+
+  .highlight-layer {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 520px) {
+
+  .wrap {
+    padding: 15px 12px 18px;
+  }
+
+  .toolbar-title {
+    flex-basis: 100%;
+  }
+
+  .toolbar button {
+    flex: 1;
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .c {
+    padding: 10px;
+  }
+
+  .c b {
+    font-size: 1.75rem;
+  }
+
+  .duplicate-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .duplicate-actions {
+    width: 100%;
+  }
+
+  .duplicate-actions button {
+    flex: 1;
+  }
+
+  textarea,
+  .highlight-layer {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  .utility-bar {
+    justify-content: stretch;
+  }
+
+  .utility-button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header>
+
+    <h1>Word &amp; Character Counter</h1>
+
+    <div class="tag">
+      Count words, characters and sentences instantly as you type.
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       UTILITY BAR
+  ====================================================== -->
+
+  <div class="utility-bar">
+
+    <button
+      id="themeToggle"
+      class="utility-button"
+      type="button"
+      aria-label="Switch between day and night themes"
+      aria-pressed="false"
+    >
+      ☾ Night
+    </button>
+
+    <button
+      id="accessibilityBtn"
+      class="utility-button"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="accessibilityModal"
+    >
+      Accessibility
+    </button>
+
+    <button
+      id="cookieBtn"
+      class="utility-button"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="cookieModal"
+    >
+      Cookie Settings
+    </button>
+
+  </div>
+
+
+  <div class="grid">
+
+    <!-- ===================================================
+         EDITOR
+    ==================================================== -->
+
+    <main class="left">
+
+      <div class="toolbar">
+
+        <b class="toolbar-title">
+          Your text
+        </b>
+
+        <button
+          id="sample"
+          type="button"
+        >
+          Insert Sample
+        </button>
+
+        <button
+          id="clear"
+          type="button"
+        >
+          Clear
+        </button>
+
+      </div>
+
+
+      <div
+        id="editorWrap"
+        class="editor-wrap"
+      >
+
+        <div
+          id="highlightLayer"
+          class="highlight-layer"
+          aria-hidden="true"
+        ></div>
+
+
+        <textarea
+          id="t"
+          spellcheck="false"
+          placeholder="Type or paste your text here. Counts update as you go."
+          aria-label="Text to count"
+        ></textarea>
+
+      </div>
+
+
+      <div
+        id="highlightLegend"
+        class="highlight-legend"
+      >
+
+        <span class="legend-item">
+
+          <span
+            class="legend-color legend-original"
+          ></span>
+
+          Original sentence
+
+        </span>
+
+
+        <span class="legend-item">
+
+          <span
+            class="legend-color legend-duplicate"
+          ></span>
+
+          Duplicate copy
+
+        </span>
+
+      </div>
+
+
+      <!-- =================================================
+           DUPLICATE SENTENCES
+      ================================================== -->
+
+      <section class="duplicates">
+
+        <div class="duplicate-head">
+
+          <h2>
+            Duplicate Sentences
+          </h2>
+
+
+          <div class="duplicate-actions">
+
+            <button
+              id="highlightBtn"
+              class="highlight-btn"
+              type="button"
+              disabled
+            >
+              Highlight Duplicates
+            </button>
+
+
+            <button
+              id="deleteBtn"
+              class="delete-btn"
+              type="button"
+              disabled
+            >
+              Delete Duplicates
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="duplicateStatus"
+          class="duplicate-status no-duplicates"
+          aria-live="polite"
+        >
+          No duplicate sentences found.
+        </div>
+
+
+        <ul
+          id="duplicateList"
+          class="duplicate-list"
+        ></ul>
+
+      </section>
+
+    </main>
+
+
+    <!-- ===================================================
+         COUNTERS
+    ==================================================== -->
+
+    <aside class="side">
+
+      <div class="cards">
+
+        <div class="c">
+
+          <b id="w">0</b>
+
+          <span>
+            Words
+          </span>
+
+        </div>
+
+
+        <div class="c">
+
+          <b id="s">0</b>
+
+          <span>
+            Sentences
+          </span>
+
+        </div>
+
+
+        <div class="c">
+
+          <b id="ch">0</b>
+
+          <span id="charLabel">
+            Characters, with whitespace
+          </span>
+
+        </div>
+
+
+        <!-- Character mode -->
+
+        <div class="char-mode">
+
+          <div class="char-mode-label">
+
+            <div class="mode-text">
+
+              <strong id="modeLabel">
+                With whitespace
+              </strong>
+
+              <small id="modeDescription">
+                Spaces, tabs and line breaks included
+              </small>
+
+            </div>
+
+
+            <label class="switch">
+
+              <input
+                type="checkbox"
+                id="charToggle"
+                aria-label="Toggle whitespace in character count"
+              >
+
+              <span class="slider"></span>
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+
+  <!-- =====================================================
+       ABOUT
+  ====================================================== -->
+
+  <section class="about">
+
+    <h2>
+      About This Tool
+    </h2>
+
+
+    <p>
+      This free word, character and sentence counter helps you
+      quickly measure the length of your text. Type or paste your
+      content into the editor and the counters update automatically.
+    </p>
+
+
+    <p>
+      The tool counts <strong>words</strong>,
+      <strong>sentences</strong> and
+      <strong>characters</strong>. Use the character toggle to count
+      characters either <strong>with whitespace</strong> or
+      <strong>without whitespace</strong>.
+    </p>
+
+
+    <p>
+      The duplicate sentence checker identifies sentences that
+      appear more than once. The first occurrence is treated as
+      the original and highlighted in green. Subsequent copies are
+      highlighted in yellow/beige.
+    </p>
+
+
+    <p>
+      Accessibility settings can increase text size, strengthen
+      focus indicators, enable higher contrast, and reduce animation.
+      Appearance settings allow you to switch between day and night
+      themes.
+    </p>
+
+
+    <p>
+      Your text is processed directly in your browser. The tool does
+      not need to upload your text to a server.
+    </p>
+
+  </section>
+
+
+  <p class="foot">
+    Characters are counted as visible characters, so an emoji or
+    accented letter counts as one character.
+  </p>
+
+</div>
+
+
+<!-- =======================================================
+     ACCESSIBILITY MODAL
+======================================================== -->
+
+<div
+  id="accessibilityModal"
+  class="modal-backdrop"
+  hidden
+  role="presentation"
+>
+
+  <section
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="accessibilityTitle"
+  >
+
+    <div class="modal-header">
+
+      <h2 id="accessibilityTitle">
+        Accessibility
+      </h2>
+
+      <button
+        class="modal-close"
+        data-close="accessibilityModal"
+        type="button"
+        aria-label="Close accessibility settings"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="setting-group">
+
+        <h3>
+          Display
+        </h3>
+
+
+        <div class="setting-row">
+
+          <div class="setting-info">
+
+            <strong>
+              Larger text
+            </strong>
+
+            <small>
+              Increase the interface and editor text size.
+            </small>
+
+          </div>
+
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="largeText"
+            >
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div class="setting-info">
+
+            <strong>
+              High contrast
+            </strong>
+
+            <small>
+              Increase contrast between text, controls and backgrounds.
+            </small>
+
+          </div>
+
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="highContrast"
+            >
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div class="setting-info">
+
+            <strong>
+              Strong focus indicators
+            </strong>
+
+            <small>
+              Make keyboard focus outlines easier to see.
+            </small>
+
+          </div>
+
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="strongFocus"
+            >
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+
+        <div class="setting-row">
+
+          <div class="setting-info">
+
+            <strong>
+              Reduce motion
+            </strong>
+
+            <small>
+              Remove non-essential transitions and animations.
+            </small>
+
+          </div>
+
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="reducedMotion"
+            >
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          id="resetAccessibility"
+          type="button"
+        >
+          Reset Accessibility
+        </button>
+
+        <button
+          class="modal-close"
+          data-close="accessibilityModal"
+          type="button"
+        >
+          Done
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<!-- =======================================================
+     COOKIE SETTINGS MODAL
+======================================================== -->
+
+<div
+  id="cookieModal"
+  class="modal-backdrop"
+  hidden
+  role="presentation"
+>
+
+  <section
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cookieTitle"
+  >
+
+    <div class="modal-header">
+
+      <h2 id="cookieTitle">
+        Cookie Settings
+      </h2>
+
+      <button
+        class="modal-close"
+        data-close="cookieModal"
+        type="button"
+        aria-label="Close cookie settings"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="setting-group">
+
+        <h3>
+          This tool's preferences
+        </h3>
+
+
+        <div class="setting-row">
+
+          <div class="setting-info">
+
+            <strong>
+              Save preferences
+            </strong>
+
+            <small>
+              Remember your theme and accessibility choices in your browser.
+            </small>
+
+          </div>
+
+
+          <label class="switch">
+
+            <input
+              type="checkbox"
+              id="savePreferences"
+            >
+
+            <span class="slider"></span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <div class="cookie-box">
+
+        <div class="cookie-name">
+          wordCounterPreferences
+        </div>
+
+
+        <textarea
+          id="cookieValue"
+          class="cookie-value"
+          aria-label="Preference cookie value"
+          spellcheck="false"
+        ></textarea>
+
+
+        <div class="cookie-meta">
+          This cookie contains only this tool's UI preferences.
+        </div>
+
+      </div>
+
+
+      <div class="cookie-warning">
+        For privacy and security, this editor does not expose,
+        edit or delete authentication/session cookies belonging
+        to other services.
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          id="saveCookie"
+          type="button"
+        >
+          Save Preferences
+        </button>
+
+
+        <button
+          id="resetCookie"
+          type="button"
+        >
+          Reset Preferences
+        </button>
+
+
+        <button
+          class="modal-close"
+          data-close="cookieModal"
+          type="button"
+        >
+          Done
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   ELEMENT HELPER
+========================================================= */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const PREF_KEY =
+  "wordCounterPreferences";
+
+
+/*
+ * Cookie is intentionally limited to this application's
+ * own preferences.
+ */
+const COOKIE_NAME =
+  "wordCounterPreferences";
+
+
+function getPreferences() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(PREF_KEY);
+
+    return saved
+      ? JSON.parse(saved)
+      : {};
+
+  } catch {
+
+    return {};
+  }
+}
+
+
+function savePreferences(prefs) {
+
+  try {
+
+    localStorage.setItem(
+      PREF_KEY,
+      JSON.stringify(prefs)
+    );
+
+  } catch {
+    /* Storage may be disabled. */
+  }
+}
+
+
+/* =========================================================
+   COOKIE HELPERS
+========================================================= */
+
+function setPreferenceCookie(value) {
+
+  /*
+   * SameSite prevents cross-site cookie sending.
+   *
+   * No Secure flag is added automatically because this
+   * file may also be opened locally with file://.
+   */
+  document.cookie =
+    COOKIE_NAME +
+    "=" +
+    encodeURIComponent(value) +
+    "; Max-Age=31536000; Path=/; SameSite=Lax";
+}
+
+
+function getPreferenceCookie() {
+
+  const prefix =
+    COOKIE_NAME + "=";
+
+
+  const parts =
+    document.cookie.split(";");
+
+
+  for (const part of parts) {
+
+    const item =
+      part.trim();
+
+
+    if (
+      item.indexOf(prefix) === 0
+    ) {
+
+      return decodeURIComponent(
+        item.slice(prefix.length)
+      );
+    }
+  }
+
+
+  return "";
+}
+
+
+function deletePreferenceCookie() {
+
+  document.cookie =
+    COOKIE_NAME +
+    "=; Max-Age=0; Path=/; SameSite=Lax";
+}
+
+
+/* =========================================================
+   UNICODE SEGMENTATION
+========================================================= */
+
+const SEG =
+  typeof Intl !== "undefined" &&
+  Intl.Segmenter;
+
+
+const sg = SEG
+  ? {
+
+      g: new Intl.Segmenter(
+        undefined,
+        {
+          granularity: "grapheme"
+        }
+      ),
+
+      s: new Intl.Segmenter(
+        undefined,
+        {
+          granularity: "sentence"
+        }
+      ),
+
+      w: new Intl.Segmenter(
+        undefined,
+        {
+          granularity: "word"
+        }
+      )
+
+    }
+  : null;
+
+
+const HAS =
+  /[\p{L}\p{N}]/u;
+
+
+const CJK =
+  /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uF900-\uFAFF\uAC00-\uD7AF]/;
+
+
+/* =========================================================
+   CHARACTER COUNT
+========================================================= */
+
+function chars(text) {
+
+  if (!text) {
+    return 0;
+  }
+
+
+  if (!/[^\u0000-\u02ff]/.test(text)) {
+    return text.length;
+  }
+
+
+  if (sg) {
+
+    let count = 0;
+
+    for (const _ of sg.g.segment(text)) {
+      count++;
+    }
+
+    return count;
+  }
+
+
+  return Array.from(text).length;
+}
+
+
+/* =========================================================
+   WORD COUNT
+========================================================= */
+
+function words(text) {
+
+  if (!text.trim()) {
+    return 0;
+  }
+
+
+  if (sg && CJK.test(text)) {
+
+    let count = 0;
+
+    for (const item of sg.w.segment(text)) {
+
+      if (item.isWordLike) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+
+  let count = 0;
+
+
+  for (const token of text.split(/\s+/)) {
+
+    if (HAS.test(token)) {
+      count++;
+    }
+  }
+
+
+  return count;
+}
+
+
+/* =========================================================
+   SENTENCE COUNT
+========================================================= */
+
+function sentences(text) {
+
+  if (!text.trim()) {
+    return 0;
+  }
+
+
+  let count = 0;
+
+
+  if (sg) {
+
+    for (const item of sg.s.segment(text)) {
+
+      if (HAS.test(item.segment)) {
+        count++;
+      }
+    }
+
+  } else {
+
+    const matches =
+      text.match(
+        /[^.!?\u2026\n]+[.!?\u2026]*/g
+      ) || [];
+
+
+    count =
+      matches.filter(
+        item => HAS.test(item)
+      ).length;
+  }
+
+
+  return count;
+}
+
+
+/* =========================================================
+   SENTENCE EXTRACTION
+========================================================= */
+
+function getSentences(text) {
+
+  if (!text.trim()) {
+    return [];
+  }
+
+
+  if (sg) {
+
+    const result = [];
+
+
+    for (const item of sg.s.segment(text)) {
+
+      if (!HAS.test(item.segment)) {
+        continue;
+      }
+
+
+      const start =
+        text.indexOf(
+          item.segment,
+          result.length
+            ? result[result.length - 1].end
+            : 0
+        );
+
+
+      result.push({
+
+        text: item.segment,
+
+        start,
+
+        end:
+          start +
+          item.segment.length,
+
+        index:
+          result.length
+
+      });
+    }
+
+
+    return result;
+  }
+
+
+  const result = [];
+
+  const regex =
+    /[^.!?\u2026\n]+[.!?\u2026]*/g;
+
+
+  let match;
+
+
+  while (
+    (match = regex.exec(text)) !== null
+  ) {
+
+    if (!HAS.test(match[0])) {
+      continue;
+    }
+
+
+    result.push({
+
+      text: match[0],
+
+      start: match.index,
+
+      end:
+        match.index +
+        match[0].length,
+
+      index:
+        result.length
+
+    });
+  }
+
+
+  return result;
+}
+
+
+/* =========================================================
+   NORMALIZE SENTENCE
+========================================================= */
+
+function normalizeSentence(text) {
+
+  return text
+
+    .replace(/\s+/g, " ")
+
+    .trim()
+
+    .replace(
+      /^[\s"'“”‘’]+/,
+      ""
+    )
+
+    .replace(
+      /[\s"'“”‘’]+$/,
+      ""
+    )
+
+    .toLocaleLowerCase();
+}
+
+
+/* =========================================================
+   DUPLICATES
+========================================================= */
+
+function findDuplicates(text) {
+
+  const sentenceArray =
+    getSentences(text);
+
+
+  const groups =
+    new Map();
+
+
+  sentenceArray.forEach(
+    sentence => {
+
+      const key =
+        normalizeSentence(
+          sentence.text
+        );
+
+
+      if (!key || !HAS.test(key)) {
+        return;
+      }
+
+
+      if (!groups.has(key)) {
+        groups.set(key, []);
+      }
+
+
+      groups
+        .get(key)
+        .push(sentence);
+    }
+  );
+
+
+  return [...groups.entries()]
+
+    .filter(
+      ([, items]) =>
+        items.length > 1
+    )
+
+    .map(
+      ([key, items]) => ({
+
+        key,
+
+        text:
+          items[0].text.trim(),
+
+        count:
+          items.length,
+
+        indexes:
+          items.map(
+            item => item.index
+          ),
+
+        sentences:
+          items
+      })
+    );
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value) {
+
+  return value
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let duplicateGroups = [];
+
+let highlightsVisible = false;
+
+
+/* =========================================================
+   COUNTERS
+========================================================= */
+
+function updateCounters() {
+
+  const text =
+    $("t").value;
+
+
+  $("w").textContent =
+    words(text).toLocaleString();
+
+
+  $("s").textContent =
+    sentences(text).toLocaleString();
+
+
+  const includeWhitespace =
+    !$("charToggle").checked;
+
+
+  const characterText =
+    includeWhitespace
+      ? text
+      : text.replace(/\s/g, "");
+
+
+  $("ch").textContent =
+    chars(characterText).toLocaleString();
+
+
+  if (includeWhitespace) {
+
+    $("charLabel").textContent =
+      "Characters, with whitespace";
+
+    $("modeLabel").textContent =
+      "With whitespace";
+
+    $("modeDescription").textContent =
+      "Spaces, tabs and line breaks included";
+
+  } else {
+
+    $("charLabel").textContent =
+      "Characters, without whitespace";
+
+    $("modeLabel").textContent =
+      "Without whitespace";
+
+    $("modeDescription").textContent =
+      "Spaces, tabs and line breaks excluded";
+  }
+}
+
+
+/* =========================================================
+   DUPLICATE UI
+========================================================= */
+
+function updateDuplicateChecker() {
+
+  duplicateGroups =
+    findDuplicates(
+      $("t").value
+    );
+
+
+  const list =
+    $("duplicateList");
+
+
+  const status =
+    $("duplicateStatus");
+
+
+  const highlightBtn =
+    $("highlightBtn");
+
+
+  const deleteBtn =
+    $("deleteBtn");
+
+
+  list.innerHTML = "";
+
+
+  if (!duplicateGroups.length) {
+
+    status.textContent =
+      "No duplicate sentences found.";
+
+    status.className =
+      "duplicate-status no-duplicates";
+
+    highlightBtn.disabled =
+      true;
+
+    deleteBtn.disabled =
+      true;
+
+
+    if (highlightsVisible) {
+
+      highlightsVisible =
+        false;
+
+      $("editorWrap")
+        .classList
+        .remove(
+          "highlights-active"
+        );
+
+      $("highlightLegend")
+        .classList
+        .remove(
+          "visible"
+        );
+
+      highlightBtn.textContent =
+        "Highlight Duplicates";
+    }
+
+
+    return;
+  }
+
+
+  const total =
+    duplicateGroups.reduce(
+      (sum, group) =>
+        sum + group.count,
+      0
+    );
+
+
+  const removable =
+    total -
+    duplicateGroups.length;
+
+
+  status.innerHTML =
+    "<strong>" +
+    duplicateGroups.length +
+    "</strong> duplicate sentence " +
+    (
+      duplicateGroups.length === 1
+        ? "group"
+        : "groups"
+    ) +
+    " found. <strong>" +
+    removable +
+    "</strong> repeated " +
+    (
+      removable === 1
+        ? "copy"
+        : "copies"
+    ) +
+    " found.";
+
+
+  status.className =
+    "duplicate-status has-duplicates";
+
+
+  highlightBtn.disabled =
+    false;
+
+  deleteBtn.disabled =
+    false;
+
+
+  duplicateGroups.forEach(
+    group => {
+
+      const li =
+        document.createElement("li");
+
+
+      li.className =
+        "duplicate-item";
+
+
+      li.innerHTML = `
+
+        <div class="duplicate-item-title">
+
+          <div class="duplicate-item-text">
+            ${escapeHTML(group.text)}
+          </div>
+
+          <span class="duplicate-count">
+            ${group.count}×
+          </span>
+
+        </div>
+
+        <div class="duplicate-locations">
+          Sentence ${group.indexes
+            .map(number => number + 1)
+            .join(", ")}
+        </div>
+
+      `;
+
+
+      list.appendChild(li);
+    }
+  );
+}
+
+
+/* =========================================================
+   HIGHLIGHT LAYER
+========================================================= */
+
+function renderHighlightLayer() {
+
+  const layer =
+    $("highlightLayer");
+
+
+  const text =
+    $("t").value;
+
+
+  if (
+    !highlightsVisible ||
+    !duplicateGroups.length
+  ) {
+
+    layer.innerHTML =
+      escapeHTML(text)
+        .replace(
+          /\n/g,
+          "<br>"
+        );
+
+    return;
+  }
+
+
+  const sentenceArray =
+    getSentences(text);
+
+
+  const duplicateKeys =
+    new Set(
+      duplicateGroups.map(
+        group => group.key
+      )
+    );
+
+
+  const seen =
+    new Set();
+
+
+  let html = "";
+
+  let cursor = 0;
+
+
+  sentenceArray.forEach(
+    sentence => {
+
+      html +=
+        escapeHTML(
+          text.slice(
+            cursor,
+            sentence.start
+          )
+        ).replace(
+          /\n/g,
+          "<br>"
+        );
+
+
+      const key =
+        normalizeSentence(
+          sentence.text
+        );
+
+
+      if (
+        duplicateKeys.has(key)
+      ) {
+
+        const original =
+          !seen.has(key);
+
+
+        seen.add(key);
+
+
+        const className =
+          original
+            ? "sentence-original"
+            : "sentence-duplicate";
+
+
+        html +=
+          `<span class="${className}">` +
+          escapeHTML(
+            sentence.text
+          ).replace(
+            /\n/g,
+            "<br>"
+          ) +
+          "</span>";
+
+      } else {
+
+        html +=
+          escapeHTML(
+            sentence.text
+          ).replace(
+            /\n/g,
+            "<br>"
+          );
+      }
+
+
+      cursor =
+        sentence.end;
+    }
+  );
+
+
+  html +=
+    escapeHTML(
+      text.slice(cursor)
+    ).replace(
+      /\n/g,
+      "<br>"
+    );
+
+
+  layer.innerHTML =
+    html;
+}
+
+
+/* =========================================================
+   SCROLL SYNC
+========================================================= */
+
+function syncEditorScroll() {
+
+  $("highlightLayer").scrollTop =
+    $("t").scrollTop;
+
+
+  $("highlightLayer").scrollLeft =
+    $("t").scrollLeft;
+}
+
+
+/* =========================================================
+   TOGGLE HIGHLIGHTS
+========================================================= */
+
+function toggleHighlights() {
+
+  if (!duplicateGroups.length) {
+    return;
+  }
+
+
+  highlightsVisible =
+    !highlightsVisible;
+
+
+  $("editorWrap")
+    .classList.toggle(
+      "highlights-active",
+      highlightsVisible
+    );
+
+
+  $("highlightLegend")
+    .classList.toggle(
+      "visible",
+      highlightsVisible
+    );
+
+
+  $("highlightBtn").textContent =
+    highlightsVisible
+      ? "Hide Highlights"
+      : "Highlight Duplicates";
+
+
+  renderHighlightLayer();
+
+  syncEditorScroll();
+}
+
+
+/* =========================================================
+   DELETE DUPLICATES
+========================================================= */
+
+function deleteDuplicates() {
+
+  const text =
+    $("t").value;
+
+
+  if (!duplicateGroups.length) {
+    return;
+  }
+
+
+  const sentenceArray =
+    getSentences(text);
+
+
+  const duplicateKeys =
+    new Set(
+      duplicateGroups.map(
+        group => group.key
+      )
+    );
+
+
+  const seen =
+    new Set();
+
+
+  const output = [];
+
+
+  sentenceArray.forEach(
+    sentence => {
+
+      const key =
+        normalizeSentence(
+          sentence.text
+        );
+
+
+      if (!duplicateKeys.has(key)) {
+
+        output.push(
+          sentence.text
+        );
+
+        return;
+      }
+
+
+      if (!seen.has(key)) {
+
+        seen.add(key);
+
+        output.push(
+          sentence.text
+        );
+      }
+    }
+  );
+
+
+  const leading =
+    sentenceArray[0]?.start === 0
+      ? ""
+      : text.match(/^\s*/)?.[0] || "";
+
+
+  const trailing =
+    text.match(/\s*$/)?.[0] || "";
+
+  const sentenceText =
+    output.join("").replace(/\s+$/, "");
+
+
+  $("t").value =
+    leading +
+    sentenceText +
+    trailing;
+
+
+  updateAll();
+
+  $("t").focus();
+}
+
+
+/* =========================================================
+   INSERT SAMPLE
+========================================================= */
+
+$("sample").addEventListener(
+  "click",
+  () => {
+
+    $("t").value =
+`Writing clearly starts with understanding your words.
+
+This sample demonstrates how the Word & Character Counter works. It counts words, characters, and sentences instantly as you type.
+
+This sample demonstrates how the Word & Character Counter works. It counts words, characters, and sentences instantly as you type.
+
+You can switch between character counts with whitespace and without whitespace.
+
+Clear writing makes information easier to understand. Clear writing makes information easier to understand.`;
+
+    updateAll();
+
+    $("t").focus();
+  }
+);
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+$("clear").addEventListener(
+  "click",
+  () => {
+
+    $("t").value = "";
+
+    highlightsVisible =
+      false;
+
+    updateAll();
+
+    $("t").focus();
+  }
+);
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+$("t").addEventListener(
+  "input",
+  updateAll
+);
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+$("t").addEventListener(
+  "scroll",
+  syncEditorScroll
+);
+
+
+/* =========================================================
+   CHARACTER TOGGLE
+========================================================= */
+
+$("charToggle").addEventListener(
+  "change",
+  updateCounters
+);
+
+
+/* =========================================================
+   DUPLICATE BUTTONS
+========================================================= */
+
+$("highlightBtn").addEventListener(
+  "click",
+  toggleHighlights
+);
+
+
+$("deleteBtn").addEventListener(
+  "click",
+  deleteDuplicates
+);
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(theme) {
+
+  document.documentElement
+    .setAttribute(
+      "data-theme",
+      theme
+    );
+
+
+  const button =
+    $("themeToggle");
+
+
+  const night =
+    theme === "night";
+
+
+  button.textContent =
+    night
+      ? "☀ Day"
+      : "☾ Night";
+
+
+  button.setAttribute(
+    "aria-pressed",
+    String(night)
+  );
+
+
+  const prefs =
+    getPreferences();
+
+
+  prefs.theme =
+    theme;
+
+
+  if ($("savePreferences").checked) {
+    savePreferences(prefs);
+  }
+}
+
+
+function loadTheme() {
+
+  const prefs =
+    getPreferences();
+
+
+  const theme =
+    prefs.theme === "night"
+      ? "night"
+      : "day";
+
+
+  document.documentElement
+    .setAttribute(
+      "data-theme",
+      theme
+    );
+
+
+  $("themeToggle").textContent =
+    theme === "night"
+      ? "☀ Day"
+      : "☾ Night";
+
+
+  $("themeToggle").setAttribute(
+    "aria-pressed",
+    String(theme === "night")
+  );
+}
+
+
+$("themeToggle").addEventListener(
+  "click",
+  () => {
+
+    const current =
+      document.documentElement
+        .getAttribute(
+          "data-theme"
+        );
+
+
+    applyTheme(
+      current === "night"
+        ? "day"
+        : "night"
+    );
+  }
+);
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+function applyAccessibility() {
+
+  const html =
+    document.documentElement;
+
+
+  html.classList.toggle(
+    "access-large",
+    $("largeText").checked
+  );
+
+
+  html.classList.toggle(
+    "access-high-contrast",
+    $("highContrast").checked
+  );
+
+
+  html.classList.toggle(
+    "access-focus",
+    $("strongFocus").checked
+  );
+
+
+  html.classList.toggle(
+    "access-reduced-motion",
+    $("reducedMotion").checked
+  );
+}
+
+
+function loadAccessibility() {
+
+  const prefs =
+    getPreferences();
+
+
+  $("largeText").checked =
+    !!prefs.largeText;
+
+
+  $("highContrast").checked =
+    !!prefs.highContrast;
+
+
+  $("strongFocus").checked =
+    !!prefs.strongFocus;
+
+
+  $("reducedMotion").checked =
+    !!prefs.reducedMotion;
+
+
+  applyAccessibility();
+}
+
+
+function saveAccessibility() {
+
+  const prefs =
+    getPreferences();
+
+
+  prefs.largeText =
+    $("largeText").checked;
+
+
+  prefs.highContrast =
+    $("highContrast").checked;
+
+
+  prefs.strongFocus =
+    $("strongFocus").checked;
+
+
+  prefs.reducedMotion =
+    $("reducedMotion").checked;
+
+
+  if ($("savePreferences").checked) {
+
+    savePreferences(
+      prefs
+    );
+  }
+}
+
+
+[
+  "largeText",
+  "highContrast",
+  "strongFocus",
+  "reducedMotion"
+].forEach(
+  id => {
+
+    $(id).addEventListener(
+      "change",
+      () => {
+
+        applyAccessibility();
+
+        saveAccessibility();
+      }
+    );
+  }
+);
+
+
+/* =========================================================
+   RESET ACCESSIBILITY
+========================================================= */
+
+$("resetAccessibility").addEventListener(
+  "click",
+  () => {
+
+    $("largeText").checked =
+      false;
+
+    $("highContrast").checked =
+      false;
+
+    $("strongFocus").checked =
+      false;
+
+    $("reducedMotion").checked =
+      false;
+
+
+    applyAccessibility();
+
+    saveAccessibility();
+  }
+);
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+let lastFocusedElement =
+  null;
+
+
+function openModal(id) {
+
+  const modal =
+    $(id);
+
+
+  lastFocusedElement =
+    document.activeElement;
+
+
+  modal.hidden =
+    false;
+
+
+  const firstFocusable =
+    modal.querySelector(
+      "button, input, textarea, select"
+    );
+
+
+  if (firstFocusable) {
+    firstFocusable.focus();
+  }
+}
+
+
+function closeModal(id) {
+
+  $(id).hidden =
+    true;
+
+
+  if (
+    lastFocusedElement &&
+    typeof lastFocusedElement.focus === "function"
+  ) {
+
+    lastFocusedElement.focus();
+  }
+}
+
+
+$("accessibilityBtn").addEventListener(
+  "click",
+  () => {
+
+    openModal(
+      "accessibilityModal"
+    );
+  }
+);
+
+
+$("cookieBtn").addEventListener(
+  "click",
+  () => {
+
+    refreshCookieEditor();
+
+    openModal(
+      "cookieModal"
+    );
+  }
+);
+
+
+document
+  .querySelectorAll(
+    "[data-close]"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          closeModal(
+            button.dataset.close
+          );
+        }
+      );
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    ".modal-backdrop"
+  )
+  .forEach(
+    backdrop => {
+
+      backdrop.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target === backdrop
+          ) {
+
+            closeModal(
+              backdrop.id
+            );
+          }
+        }
+      );
+    }
+  );
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key !== "Escape"
+    ) {
+      return;
+    }
+
+
+    document
+      .querySelectorAll(
+        ".modal-backdrop:not([hidden])"
+      )
+      .forEach(
+        modal => {
+
+          closeModal(
+            modal.id
+          );
+        }
+      );
+  }
+);
+
+
+/* =========================================================
+   COOKIE EDITOR
+========================================================= */
+
+function getCurrentPreferenceObject() {
+
+  return {
+
+    theme:
+      document.documentElement
+        .getAttribute(
+          "data-theme"
+        ) || "day",
+
+    largeText:
+      $("largeText").checked,
+
+    highContrast:
+      $("highContrast").checked,
+
+    strongFocus:
+      $("strongFocus").checked,
+
+    reducedMotion:
+      $("reducedMotion").checked,
+
+    savePreferences:
+      $("savePreferences").checked
+  };
+}
+
+
+function refreshCookieEditor() {
+
+  const cookie =
+    getPreferenceCookie();
+
+
+  if (cookie) {
+
+    $("cookieValue").value =
+      cookie;
+
+  } else {
+
+    $("cookieValue").value =
+      JSON.stringify(
+        getCurrentPreferenceObject(),
+        null,
+        2
+      );
+  }
+
+
+  $("savePreferences").checked =
+    getPreferences()
+      .savePreferences !== false;
+}
+
+
+/* =========================================================
+   SAVE COOKIE
+========================================================= */
+
+$("saveCookie").addEventListener(
+  "click",
+  () => {
+
+    let data;
+
+
+    try {
+
+      data =
+        JSON.parse(
+          $("cookieValue").value
+        );
+
+    } catch {
+
+      alert(
+        "The preference data must contain valid JSON."
+      );
+
+      $("cookieValue").focus();
+
+      return;
+    }
+
+
+    /*
+     * Only allow known preference fields.
+     */
+    const safeData = {
+
+      theme:
+        data.theme === "night"
+          ? "night"
+          : "day",
+
+      largeText:
+        !!data.largeText,
+
+      highContrast:
+        !!data.highContrast,
+
+      strongFocus:
+        !!data.strongFocus,
+
+      reducedMotion:
+        !!data.reducedMotion,
+
+      savePreferences:
+        data.savePreferences !== false
+    };
+
+
+    $("largeText").checked =
+      safeData.largeText;
+
+
+    $("highContrast").checked =
+      safeData.highContrast;
+
+
+    $("strongFocus").checked =
+      safeData.strongFocus;
+
+
+    $("reducedMotion").checked =
+      safeData.reducedMotion;
+
+
+    $("savePreferences").checked =
+      safeData.savePreferences;
+
+
+    applyAccessibility();
+
+
+    document.documentElement
+      .setAttribute(
+        "data-theme",
+        safeData.theme
+      );
+
+
+    $("themeToggle").textContent =
+      safeData.theme === "night"
+        ? "☀ Day"
+        : "☾ Night";
+
+
+    $("themeToggle").setAttribute(
+      "aria-pressed",
+      String(
+        safeData.theme === "night"
+      )
+    );
+
+
+    const json =
+      JSON.stringify(
+        safeData
+      );
+
+
+    if (
+      safeData.savePreferences
+    ) {
+
+      savePreferences(
+        safeData
+      );
+
+      setPreferenceCookie(
+        json
+      );
+
+    } else {
+
+      localStorage.removeItem(
+        PREF_KEY
+      );
+
+      deletePreferenceCookie();
+    }
+
+
+    $("cookieValue").value =
+      JSON.stringify(
+        safeData,
+        null,
+        2
+      );
+
+
+    alert(
+      "Preference settings saved."
+    );
+  }
+);
+
+
+/* =========================================================
+   RESET COOKIE
+========================================================= */
+
+$("resetCookie").addEventListener(
+  "click",
+  () => {
+
+    localStorage.removeItem(
+      PREF_KEY
+    );
+
+
+    deletePreferenceCookie();
+
+
+    $("largeText").checked =
+      false;
+
+
+    $("highContrast").checked =
+      false;
+
+
+    $("strongFocus").checked =
+      false;
+
+
+    $("reducedMotion").checked =
+      false;
+
+
+    $("savePreferences").checked =
+      false;
+
+
+    applyAccessibility();
+
+
+    document.documentElement
+      .setAttribute(
+        "data-theme",
+        "day"
+      );
+
+
+    $("themeToggle").textContent =
+      "☾ Night";
+
+
+    $("themeToggle").setAttribute(
+      "aria-pressed",
+      "false"
+    );
+
+
+    $("cookieValue").value =
+      JSON.stringify(
+        {
+          theme: "day",
+          largeText: false,
+          highContrast: false,
+          strongFocus: false,
+          reducedMotion: false,
+          savePreferences: false
+        },
+        null,
+        2
+      );
+  }
+);
+
+
+/* =========================================================
+   SAVE PREFERENCE SETTING
+========================================================= */
+
+$("savePreferences").addEventListener(
+  "change",
+  () => {
+
+    if (
+      !$("savePreferences").checked
+    ) {
+
+      localStorage.removeItem(
+        PREF_KEY
+      );
+
+      deletePreferenceCookie();
+
+      return;
+    }
+
+
+    const data =
+      getCurrentPreferenceObject();
+
+
+    savePreferences(
+      data
+    );
+
+
+    setPreferenceCookie(
+      JSON.stringify(data)
+    );
+  }
+);
+
+
+/* =========================================================
+   UPDATE EVERYTHING
+========================================================= */
+
+function updateAll() {
+
+  updateCounters();
+
+  updateDuplicateChecker();
+
+  renderHighlightLayer();
+
+  syncEditorScroll();
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+function initialize() {
+
+  const prefs =
+    getPreferences();
+
+
+  /*
+   * Preference saving is enabled by default.
+   */
+  $("savePreferences").checked =
+    prefs.savePreferences !== false;
+
+
+  loadTheme();
+
+  loadAccessibility();
+
+  updateAll();
+
+  $("t").focus();
+}
+
+
+initialize();
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#321344">
+<meta name="description" content="TharOS turns your Firefox new tab into a desktop-inspired workspace for your web apps and favourite sites.">
+<title>TharOS — Your browser, your workspace</title>
+<style>
+:root{
+  --plum:#59247f;--plum-dark:#321344;--plum-light:#9060c2;
+  --snow:#fbf9ff;--muted:#8f879c;--border:rgba(87,47,116,.14);
+  --shadow:0 18px 55px rgba(42,17,62,.15);--ink:#261a30;--lilac:#eee4f8;
+  --white:#fff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--snow);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+button:focus-visible,a:focus-visible{outline:3px solid #b98ce0;outline-offset:4px}
+.wrap{width:min(1160px,calc(100% - 44px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(251,249,255,.91);backdrop-filter:blur(14px);border-bottom:1px solid rgba(87,47,116,.09)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:780;letter-spacing:-.045em;font-size:21px;color:var(--plum-dark)}
+.brand-mark{width:35px;height:35px;display:grid;place-items:center;background:var(--plum-dark);color:white;border-radius:11px 11px 11px 4px;font-size:17px;transform:rotate(-3deg);box-shadow:3px 3px 0 #d7c0e9}
+.brand small{display:block;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;line-height:1.1}
+.navlinks{display:flex;align-items:center;gap:28px;font-size:13px;color:#65566f}
+.navlinks a:hover{color:var(--plum)}
+.nav-cta,.button{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:8px;padding:12px 17px;background:var(--plum);color:white;font-weight:700;font-size:13px;box-shadow:0 5px 0 rgba(50,19,68,.12);transition:transform .2s,background .2s,box-shadow .2s;cursor:pointer}
+.nav-cta:hover,.button:hover{background:var(--plum-dark);transform:translateY(-2px);box-shadow:0 8px 18px rgba(50,19,68,.18)}
+.button.secondary{background:white;color:var(--plum-dark);border:1px solid var(--border);box-shadow:none}
+.button.secondary:hover{background:#f3ebfa}
+.hero{padding:72px 0 78px;overflow:hidden;position:relative}
+.hero-grid{display:grid;grid-template-columns:.88fr 1.12fr;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--plum);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.eyebrow:before{content:"";width:22px;height:2px;background:var(--plum-light)}
+h1{font-size:clamp(44px,6vw,76px);line-height:.98;letter-spacing:-.075em;color:var(--plum-dark);margin:20px 0 22px;font-weight:790}
+h1 em{font-style:normal;color:var(--plum-light);position:relative;white-space:nowrap}
+.hero-copy{font-size:17px;line-height:1.75;color:#6b6073;max-width:470px;margin:0 0 28px}
+.actions{display:flex;flex-wrap:wrap;gap:11px}
+.micro-proof{margin-top:21px;color:var(--muted);font-size:11px;display:flex;align-items:center;gap:9px}
+.micro-proof span{width:6px;height:6px;background:#6caa7c;border-radius:50%;display:inline-block}
+.visual{position:relative;min-width:0;padding:12px 0 20px 14px}
+.visual:before{content:"";position:absolute;inset:3% -7% 0 9%;background:#eee3f7;border-radius:48% 42% 43% 36%;transform:rotate(3deg);z-index:-1}
+.screen{background:#17121e;border:7px solid #24192c;border-radius:14px;box-shadow:0 28px 60px rgba(42,17,62,.22);overflow:hidden;transform:rotate(1.1deg);animation:floatIn .8s both}
+.screen-top{height:31px;background:#261c30;display:flex;align-items:center;padding:0 11px;gap:5px}
+.dot{width:7px;height:7px;border-radius:50%;background:#786b82}
+.address{height:16px;border-radius:4px;background:#352740;color:#c8bbd1;font-size:8px;display:flex;align-items:center;padding:0 8px;margin-left:10px;flex:1}
+.desktop{min-height:350px;padding:21px 20px 0;background:linear-gradient(135deg,#e7d7f4,#f5effb 58%,#d8c1e9);position:relative;overflow:hidden}
+.desktop:after{content:"";position:absolute;right:-65px;top:40px;width:240px;height:240px;border:1px solid rgba(89,36,127,.15);border-radius:50%;box-shadow:0 0 0 24px rgba(89,36,127,.035),0 0 0 49px rgba(89,36,127,.025)}
+.desktop-head{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:1}
+.greeting{font-size:20px;font-weight:750;letter-spacing:-.05em;color:#3a204b}
+.greeting small{display:block;font-size:9px;letter-spacing:.03em;color:#806c8e;font-weight:500;margin-top:3px}
+.clock{text-align:right;color:#4b2b60;font-size:17px;font-weight:760;letter-spacing:-.04em}
+.clock small{display:block;font-size:8px;font-weight:600;letter-spacing:.08em;color:#89769a;text-transform:uppercase}
+.app-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px 10px;width:70%;margin-top:28px;position:relative;z-index:1}
+.app{border:0;background:transparent;cursor:pointer;color:#4a3457;text-align:center;font-size:9px;padding:0;min-width:0;transition:transform .18s}
+.app:hover{transform:translateY(-4px)}
+.app-icon{width:37px;height:37px;margin:0 auto 6px;border-radius:11px;background:#fff;display:grid;place-items:center;color:var(--plum);font-weight:800;font-size:14px;box-shadow:0 3px 9px rgba(50,19,68,.11);border:1px solid rgba(255,255,255,.8)}
+.app:nth-child(2) .app-icon{background:#e6f0ff;color:#3666a4}
+.app:nth-child(3) .app-icon{background:#fff0d8;color:#a86c23}
+.app:nth-child(4) .app-icon{background:#e0f2e5;color:#357b4d}
+.app:nth-child(5) .app-icon{background:#f9dfe8;color:#a34065}
+.app:nth-child(6) .app-icon{background:#e5e1ff;color:#5541a4}
+.app:nth-child(7) .app-icon{background:#e4edf0;color:#376978}
+.app:nth-child(8) .app-icon{background:#f1e5d8;color:#83592e}
+.window-card{position:absolute;z-index:3;right:19px;bottom:54px;width:45%;min-width:160px;background:rgba(255,255,255,.92);border:1px solid rgba(89,36,127,.18);border-radius:8px;box-shadow:0 14px 28px rgba(50,19,68,.17);overflow:hidden;animation:windowIn .7s .25s both}
+.window-bar{height:27px;background:#f3edf8;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:8px;color:#715d7d;font-weight:700}
+.window-controls{letter-spacing:3px;color:#a28daf}
+.window-body{padding:13px}
+.window-label{font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:#9989a3}
+.window-title{font-size:14px;font-weight:750;letter-spacing:-.04em;color:#39214a;margin:5px 0}
+.window-line{height:5px;background:#e7ddec;border-radius:5px;margin:7px 0;width:90%}
+.window-line.short{width:61%}
+.taskbar{position:absolute;bottom:0;left:0;right:0;height:37px;background:rgba(49,28,63,.88);display:flex;align-items:center;justify-content:space-between;padding:0 13px;color:#f6edfb;font-size:9px;z-index:4}
+.task-apps{display:flex;gap:8px;align-items:center}
+.task-chip{width:18px;height:18px;border-radius:5px;background:#8b61a8;display:grid;place-items:center;font-size:9px}
+.task-chip.active{background:#fff;color:var(--plum)}
+.float-note{position:absolute;z-index:5;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);border-radius:8px;padding:10px 13px;font-size:10px;color:#64516f;animation:float 5s ease-in-out infinite}
+.float-note strong{display:block;color:var(--plum-dark);font-size:11px}
+.note-one{top:0;right:-10px;transform:rotate(2deg)}
+.note-two{bottom:0;left:-6px;transform:rotate(-2deg);animation-delay:-2s}
+.section{padding:76px 0}
+.section-head{max-width:650px;margin-bottom:34px}
+.kicker{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--plum)}
+h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.06em;color:var(--plum-dark);margin:12px 0}
+.section-head p{color:#71657a;font-size:15px;max-width:570px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feature{padding:24px 23px 26px;background:rgba(255,255,255,.72);border:1px solid var(--border);border-radius:12px 12px 12px 4px;min-height:190px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.feature:hover{transform:translateY(-4px);border-color:rgba(89,36,127,.3);box-shadow:var(--shadow)}
+.feature-num{font-size:11px;font-weight:800;color:var(--plum-light);letter-spacing:.12em}
+.feature h3{font-size:18px;letter-spacing:-.04em;color:var(--plum-dark);margin:17px 0 7px}
+.feature p{font-size:13px;line-height:1.7;color:#766b7f;margin:0}
+.demo-section{background:#f0e8f7;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.demo-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center}
+.demo-copy p{color:#6b5d75;font-size:15px}
+.demo-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.demo-controls button{border:1px solid rgba(89,36,127,.2);border-radius:7px;padding:9px 12px;background:rgba(255,255,255,.75);color:#5e4670;font-size:12px;cursor:pointer}
+.demo-controls button[aria-pressed="true"]{background:var(--plum-dark);color:white}
+.demo-preview{background:#fff;border:1px solid rgba(89,36,127,.18);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;min-height:280px}
+.demo-bar{height:36px;background:#f8f4fb;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px;padding:0 13px}
+.demo-bar .dot{width:7px;height:7px}
+.demo-content{padding:24px;min-height:244px;position:relative}
+.demo-content h3{font-size:21px;letter-spacing:-.05em;margin:0 0 6px;color:var(--plum-dark)}
+.demo-content>p{font-size:12px;color:var(--muted);margin:0 0 18px}
+.demo-items{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.demo-item{border:1px solid var(--border);background:#fff;border-radius:8px;padding:13px 10px;text-align:left;cursor:pointer;transition:background .2s,transform .2s}
+.demo-item:hover{background:#f6effb;transform:translateY(-2px)}
+.demo-item b{display:block;font-size:12px;color:#4c315e;margin-top:8px}
+.demo-item span{font-size:10px;color:#97869f}
+.demo-symbol{width:29px;height:29px;border-radius:8px;background:#efe4f8;color:var(--plum);display:grid;place-items:center;font-weight:800}
+.demo-status{font-size:11px;color:var(--plum);margin-top:14px;min-height:17px}
+.cta-band{padding:66px 0}
+.cta-inner{background:var(--plum-dark);color:white;border-radius:15px 15px 15px 5px;padding:38px 42px;display:flex;align-items:center;justify-content:space-between;gap:30px;position:relative;overflow:hidden}
+.cta-inner:after{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:20%;top:-130px;box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 57px rgba(255,255,255,.02)}
+.cta-inner h2{color:white;margin:0 0 9px;font-size:clamp(27px,3vw,38px)}
+.cta-inner p{margin:0;color:#d4c2e0;font-size:13px;max-width:530px}
+.cta-inner .button{background:white;color:var(--plum-dark);position:relative;z-index:1;white-space:nowrap}
+footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted);font-size:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.foot-links{display:flex;gap:18px}
+.foot a:hover{color:var(--plum)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:var(--plum-dark);color:white;padding:12px 17px;border-radius:8px;box-shadow:var(--shadow);font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@keyframes floatIn{from{opacity:0;transform:translateY(18px) rotate(0)}to{opacity:1;transform:translateY(0) rotate(1.1deg)}}
+@keyframes windowIn{from{opacity:0;transform:translate(12px,12px) scale(.97)}to{opacity:1;transform:translate(0,0) scale(1)}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -7px}}
+@media(max-width:900px){.hero-grid,.demo-grid{grid-template-columns:1fr}.hero{padding-top:52px}.hero-copy{max-width:620px}.visual{max-width:680px;width:100%;margin:12px auto 0}.desktop{min-height:330px}.features{grid-template-columns:repeat(2,1fr)}.navlinks{gap:15px}}
+@media(max-width:620px){.wrap{width:min(100% - 30px,1160px)}.nav{height:66px}.navlinks>a:not(.nav-cta){display:none}.nav-cta{padding:10px 12px;font-size:12px}.hero{padding:43px 0 54px}.hero-grid{gap:24px}h1{font-size:48px}.hero-copy{font-size:15px}.visual{padding-left:4px;padding-right:3px}.screen{border-width:5px}.desktop{padding:17px 12px 0;min-height:290px}.app-grid{width:76%;gap:14px 4px;margin-top:24px}.app-icon{width:31px;height:31px;font-size:12px}.window-card{right:9px;bottom:48px;width:43%;min-width:130px}.window-body{padding:9px}.window-title{font-size:12px}.float-note{font-size:9px;padding:8px 10px}.note-one{right:0}.note-two{left:0}.section{padding:55px 0}.features{grid-template-columns:1fr}.feature{min-height:0}.demo-grid{gap:25px}.demo-content{padding:17px}.demo-items{grid-template-columns:repeat(2,1fr)}.cta-band{padding:45px 0}.cta-inner{padding:27px 23px;align-items:flex-start;flex-direction:column}.foot{align-items:flex-start;flex-direction:column}.foot-links{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav wrap" aria-label="Main navigation">
+    <a class="brand" href="#home"><span class="brand-mark">T</span><span>TharOS<small>your browser, reimagined</small></span></a>
+    <div class="navlinks">
+      <a href="#features">Features</a><a href="#preview">Preview</a><a href="https://addons.mozilla.org/en-GB/firefox/addon/tharvos/">Firefox Add-ons ↗</a>
+      <a class="nav-cta" href="https://addons.mozilla.org/en-GB/firefox/addon/tharvos/">Explore TharOS <span aria-hidden="true">↗</span></a>
+    </div>
+  </nav>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="hero-grid wrap">
+    <div class="hero-text">
+      <div class="eyebrow">A new tab. A new workspace.</div>
+      <h1>Your web,<br>on <em>your terms.</em></h1>
+      <p class="hero-copy">TharOS turns your Firefox new tab into a desktop-inspired space for the websites and web apps you reach for every day.</p>
+      <div class="actions">
+        <a class="button" href="https://addons.mozilla.org/en-GB/firefox/addon/tharvos/">Get TharOS for Firefox <span aria-hidden="true">↗</span></a>
+        <a class="button secondary" href="#preview">Take a quick tour <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="micro-proof"><span></span> Made for a more personal start to browsing</div>
+    </div>
+    <div class="visual" aria-label="Illustration of the TharOS new-tab desktop interface">
+      <div class="float-note note-one"><strong>Your space, your setup.</strong>Shortcuts where you need them.</div>
+      <div class="screen">
+        <div class="screen-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">New Tab · TharOS</div></div>
+        <div class="desktop">
+          <div class="desktop-head"><div class="greeting">Good afternoon.<small>Your little corner of the internet.</small></div><div class="clock"><span id="clock">14:32</span><small id="date">Thursday · Oct 15</small></div></div>
+          <div class="app-grid">
+            <button class="app" data-app="Search"><span class="app-icon">⌕</span>Search</button>
+            <button class="app" data-app="Mail"><span class="app-icon">M</span>Mail</button>
+            <button class="app" data-app="Calendar"><span class="app-icon">▦</span>Calendar</button>
+            <button class="app" data-app="Drive"><span class="app-icon">D</span>Drive</button>
+            <button class="app" data-app="Notes"><span class="app-icon">N</span>Notes</button>
+            <button class="app" data-app="Music"><span class="app-icon">♫</span>Music</button>
+            <button class="app" data-app="GitHub"><span class="app-icon">⌘</span>GitHub</button>
+            <button class="app" data-app="Add app"><span class="app-icon">+</span>Add app</button>
+          </div>
+          <div class="window-card" id="windowCard">
+            <div class="window-bar"><span id="windowName">Workspace</span><span class="window-controls">— □ ×</span></div>
+            <div class="window-body"><div class="window-label">Recently opened</div><div class="window-title" id="windowTitle">Pick up where you left off.</div><div class="window-line"></div><div class="window-line short"></div></div>
+          </div>
+          <div class="taskbar"><div class="task-apps"><span class="task-chip active">T</span><span class="task-chip">⌕</span><span class="task-chip">▦</span><span class="task-chip">+</span></div><span id="taskDate">THAROS · READY</span></div>
+        </div>
+      </div>
+      <div class="float-note note-two"><strong>Little things, together.</strong>Apps, time and shortcuts.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap reveal" id="features">
+  <div class="section-head">
+    <div class="kicker">Built around your habits</div>
+    <h2>Less hunting.<br>More getting there.</h2>
+    <p>A few thoughtful tools that make the first page you see feel more like yours.</p>
+  </div>
+  <div class="features">
+    <article class="feature"><div class="feature-num">01 / YOUR DESKTOP</div><h3>A familiar place to land</h3><p>Start with a desktop-inspired new tab instead of a blank page. Your everyday web, gathered in one place.</p></article>
+    <article class="feature"><div class="feature-num">02 / APP DRAWER</div><h3>Find it, open it</h3><p>Browse a searchable app drawer and launch supported web apps from a single, tidy workspace.</p></article>
+    <article class="feature"><div class="feature-num">03 / YOUR APPS</div><h3>Make it personal</h3><p>Add custom web apps with a name, URL and optional icon, so your setup fits the way you browse.</p></article>
+    <article class="feature"><div class="feature-num">04 / APP CATALOGUE</div><h3>Room to discover</h3><p>Explore the built-in app catalogue and add web apps to your drawer when you want to try something new.</p></article>
+    <article class="feature"><div class="feature-num">05 / QUICK UTILITIES</div><h3>Useful at a glance</h3><p>Keep the clock, date, internet status and handy browser utilities close without crowding your screen.</p></article>
+    <article class="feature"><div class="feature-num">06 / YOUR BROWSER</div><h3>Designed for Firefox</h3><p>TharOS lives in your new-tab experience, keeping your browsing flow close to where it starts.</p></article>
+  </div>
+</section>
+
+<section class="section demo-section reveal" id="preview">
+  <div class="wrap demo-grid">
+    <div class="demo-copy">
+      <div class="kicker">A small interactive preview</div>
+      <h2>Tap around.<br>Make yourself at home.</h2>
+      <p>This little mock workspace is a preview of the desktop idea behind TharOS. Choose an item to see how the window changes.</p>
+      <div class="demo-controls" role="group" aria-label="Choose preview content">
+        <button type="button" data-preview="Workspace" aria-pressed="true">Workspace</button>
+        <button type="button" data-preview="App drawer" aria-pressed="false">App drawer</button>
+        <button type="button" data-preview="Your apps" aria-pressed="false">Your apps</button>
+      </div>
+    </div>
+    <div class="demo-preview">
+      <div class="demo-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+      <div class="demo-content">
+        <h3 id="demoTitle">A workspace that feels like yours.</h3>
+        <p id="demoDesc">A clear starting point for your daily web.</p>
+        <div class="demo-items" id="demoItems">
+          <button class="demo-item" data-demo-item="Search"><span class="demo-symbol">⌕</span><b>Search</b><span>Find your way</span></button>
+          <button class="demo-item" data-demo-item="Notes"><span class="demo-symbol">N</span><b>Notes</b><span>Keep a thought</span></button>
+          <button class="demo-item" data-demo-item="Calendar"><span class="demo-symbol">▦</span><b>Calendar</b><span>See your day</span></button>
+        </div>
+        <div class="demo-status" id="demoStatus" aria-live="polite">Preview ready · Choose an app above.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band wrap reveal">
+  <div class="cta-inner">
+    <div><h2>Give your next tab a little more purpose.</h2><p>Meet TharOS, a desktop-inspired new-tab experience made for the way you use the web.</p></div>
+    <a class="button" href="https://addons.mozilla.org/en-GB/firefox/addon/tharvos/">Visit TharOS on Firefox Add-ons ↗</a>
+  </div>
+</section>
+</main>
+
+<footer><div class="foot wrap"><span><strong>TharOS</strong> · Built by Tharvesh Muhaideen A.</span><div class="foot-links"><a href="https://addons.mozilla.org/en-GB/firefox/addon/tharvos/">Firefox Add-ons</a><a href="/tharos/privacy">Privacy policy</a><a href="#home">Back to top ↑</a></div></div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const clock = document.getElementById('clock');
+  const date = document.getElementById('date');
+  const updateClock = () => {
+    const now = new Date();
+    clock.textContent = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', hour12:false});
+    date.textContent = now.toLocaleDateString([], {weekday:'long', month:'short', day:'numeric'});
+  };
+  updateClock(); setInterval(updateClock, 30000);
+
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+  document.querySelectorAll('.app').forEach(button => {
+    button.addEventListener('click', () => {
+      const name = button.dataset.app;
+      document.getElementById('windowName').textContent = name;
+      document.getElementById('windowTitle').textContent =
+        name === 'Add app' ? 'Make room for something new.' : `Your ${name} space is ready.`;
+      document.getElementById('taskDate').textContent = `OPENED · ${name.toUpperCase()}`;
+      showToast(`${name} selected in the TharOS mockup`);
+    });
+  });
+
+  const previews = {
+    'Workspace': {
+      title:'A workspace that feels like yours.',
+      desc:'A clear starting point for your daily web.',
+      items:[['⌕','Search','Find your way'],['N','Notes','Keep a thought'],['▦','Calendar','See your day']]
+    },
+    'App drawer': {
+      title:'Your apps, in one drawer.',
+      desc:'A searchable shelf for the things you use.',
+      items:[['M','Mail','Messages, gathered'],['D','Drive','Files at hand'],['♫','Music','Press play']]
+    },
+    'Your apps': {
+      title:'Bring your own favourites.',
+      desc:'Add a name, URL and optional icon.',
+      items:[['+','Add an app','Name and URL'],['⌘','GitHub','Build something'],['↗','Website','Your own link']]
+    }
+  };
+  function setPreview(key) {
+    const data = previews[key];
+    document.getElementById('demoTitle').textContent = data.title;
+    document.getElementById('demoDesc').textContent = data.desc;
+    document.getElementById('demoStatus').textContent = `${key} preview selected · Mock interaction only.`;
+    document.getElementById('demoItems').innerHTML = data.items.map(item =>
+      `<button class="demo-item" data-demo-item="${item[1]}"><span class="demo-symbol">${item[0]}</span><b>${item[1]}</b><span>${item[2]}</span></button>`
+    ).join('');
+    document.querySelectorAll('[data-preview]').forEach(button =>
+      button.setAttribute('aria-pressed', String(button.dataset.preview === key))
+    );
+    document.querySelectorAll('[data-demo-item]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.getElementById('demoStatus').textContent = `${button.dataset.demoItem} selected · This is a landing-page preview.`;
+      });
+    });
+  }
+  document.querySelectorAll('[data-preview]').forEach(button =>
+    button.addEventListener('click', () => setPreview(button.dataset.preview))
+  );
+  document.querySelectorAll('[data-demo-item]').forEach(button => {
+    button.addEventListener('click', () => {
+      document.getElementById('demoStatus').textContent = `${button.dataset.demoItem} selected · This is a landing-page preview.`;
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template Generator: .gitignore and open-source licenses</title>
+<meta name="description" content="Generate a .gitignore for your tech stack and an open-source LICENSE (MIT, Apache 2.0, GNU GPL v3, BSD) for your repository.">
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--panel:rgba(96,0,96,.06);--onp-line:rgba(255,250,250,.3);--err:#b00020}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1280px;margin:0 auto;padding:20px 24px 10px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:14px}
+h1{font:400 clamp(1.8rem,3.8vw,2.6rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:40ch}
+.shell{flex:1;min-height:0;display:grid;grid-template-columns:220px 1fr;gap:20px}
+nav{background:var(--secondary-bg);color:var(--secondary-text);padding:14px 12px;overflow-y:auto;border-radius:12px}
+nav h2{margin:0 6px 6px;font:400 1.05rem Charter,Georgia,serif}
+nav h2:not(:first-child){margin-top:16px;padding-top:12px;border-top:1px solid var(--onp-line)}
+nav p{margin:0 6px 8px;font-size:.78rem;opacity:.85}
+nav button{display:block;width:100%;text-align:left;margin-bottom:4px;padding:8px 10px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--secondary-text);font:inherit;cursor:pointer}
+nav button:hover{border-color:var(--secondary-text)}
+nav button[aria-current=page]{background:var(--secondary-text);color:var(--primary);font-weight:600}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+nav :focus-visible{outline-color:var(--secondary-text)}
+main{min-height:0;display:flex;flex-direction:column}
+#view{flex:1;min-height:0;display:flex;flex-direction:column}
+.loading{color:var(--soft)}
+.fail{color:var(--err);font-weight:600}
+
+/* shared building blocks used by the generated views */
+.bar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;min-height:30px}
+.bar b{font:400 1.15rem Charter,Georgia,serif}
+.sp{flex:1}
+.muted{color:var(--soft);font-size:.86rem}
+button.s{font:inherit;font-size:.86rem;cursor:pointer;border-radius:6px;padding:4px 12px;border:1px solid var(--primary);background:transparent;color:var(--primary)}
+button.s:hover:not(:disabled){background:var(--primary);color:var(--primary-bg)}
+button.s:disabled{opacity:.4;cursor:default}
+button.s.fill,a.s.fill{background:var(--secondary-bg);border-color:var(--secondary-bg);color:var(--secondary-text);font-weight:600}
+button.s.fill:hover:not(:disabled){background:var(--primary);border-color:var(--primary)}
+a.s{display:inline-block;text-decoration:none;font-size:.86rem;border-radius:6px;padding:4px 12px;border:1px solid var(--primary);color:var(--primary)}
+a.s[aria-disabled=true]{opacity:.4;pointer-events:none}
+label.chk{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:2px 0;font-size:.9rem}
+label.chk input{margin-top:3px;width:15px;height:15px;accent-color:var(--secondary-bg);flex:none}
+label.chk small{color:var(--soft)}
+label.chk.auto{opacity:.7}
+code{font:.86em ui-monospace,Menlo,Consolas,monospace;background:var(--panel);padding:0 4px;border-radius:3px}
+input[type=text],input[type=search],select,textarea.gi-custom{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--primary);font:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--secondary-bg);outline-offset:0}
+textarea.out{flex:1;min-height:0;width:100%;resize:none;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--primary);font:.84rem/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:.78rem;padding:1px 10px;border-radius:20px;border:1px solid var(--secondary-bg);background:var(--secondary-bg);color:var(--secondary-text)}
+.chip.dashed{background:transparent;color:var(--primary);border-style:dashed}
+.chip.fixed{background:var(--primary);border-color:var(--primary)}
+.chip.cond{background:transparent;color:var(--primary);border-color:var(--primary)}
+.chip.lim{background:transparent;color:var(--primary);border-style:dashed;text-decoration:line-through}
+.info{margin:6px 0 0;min-height:1.3em;font-size:.86rem;color:var(--soft)}
+.info.err{color:var(--err);font-weight:600}
+
+/* .gitignore view */
+.gi{flex:1;min-height:0;display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:20px}
+.gi-pick,.gi-out,.lic-side,.lic-out{display:flex;flex-direction:column;min-height:0}
+.gi-q{margin-bottom:8px}
+.gi-list{flex:1;min-height:0;overflow-y:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:2px 4px 8px 0}
+.gi-list h3{margin:12px 0 4px;font:400 1.02rem Charter,Georgia,serif}
+.gi-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:10px}
+.gi-opts{padding-top:8px}
+.gi-cl{display:block;font-size:.84rem;margin:8px 0 3px}
+textarea.gi-custom{height:52px;resize:none;font:.84rem ui-monospace,Menlo,Consolas,monospace}
+.gi-chips{margin-bottom:8px;min-height:24px}
+
+/* license view */
+.lic{flex:1;min-height:0;display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:20px}
+.lic-side{overflow-y:auto;background:var(--panel);border-radius:12px;padding:14px 16px}
+.lic-side h2{margin:0 0 4px;font:400 1.4rem Charter,Georgia,serif}
+.lic-side h3{margin:12px 0 5px;font:600 .86rem system-ui,sans-serif}
+.blurb{margin:0 0 10px;font-size:.88rem;color:var(--soft)}
+.f{margin-bottom:9px}
+.f label{display:block;font-size:.82rem;font-weight:600;margin-bottom:3px}
+.two{display:grid;grid-template-columns:1fr 100px;gap:10px}
+.gh{margin-top:14px;padding-top:4px;border-top:1px solid var(--line)}
+.gh-act{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tabs{display:flex;border:1px solid var(--primary);border-radius:6px;overflow:hidden}
+.tabs button{border:0;border-radius:0;padding:4px 14px;background:transparent;color:var(--primary);font:inherit;font-size:.86rem;cursor:pointer}
+.tabs button+button{border-left:1px solid var(--primary)}
+.tabs button[aria-pressed=true]{background:var(--secondary-bg);color:var(--secondary-text)}
+.foot{margin:6px 0 0;color:var(--soft);font-size:.74rem}
+@media(max-width:900px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .shell{grid-template-columns:1fr}
+  nav{display:flex;flex-wrap:wrap;gap:4px;padding:10px}nav h2,nav p{display:none}nav button{width:auto;margin:0}
+  .gi,.lic{grid-template-columns:1fr}
+  .gi-list{max-height:320px;flex:none}textarea.out{min-height:300px;flex:none}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Template Generator</h1>
+    <div class="tag">Make a .gitignore for your stack and a LICENSE for your repository.</div>
+  </header>
+
+  <div class="shell">
+    <nav id="nav" aria-label="Templates">
+      <h2>Files</h2>
+      <button data-id="gitignore">.gitignore</button>
+      <h2>Open-source license</h2>
+      <p>Compare them at choosealicense.com</p>
+      <button data-id="mit">MIT License</button>
+      <button data-id="apache">Apache License 2.0</button>
+      <button data-id="gpl">GNU GPL v3</button>
+      <button data-id="bsd">BSD 2/3-Clause</button>
+    </nav>
+    <main><div id="view" aria-live="polite"></div></main>
+  </div>
+  <p class="foot">Runs in your browser; nothing is uploaded. Each template lives in its own .js file and is loaded when you open it, so keep all the files in this folder. Not legal advice: read a license before you choose it.</p>
+</div>
+
+<script>
+/* Basic app: navigation, lazy loading of the template files, and shared helpers. */
+var App = (function () {
+  var FILES = { gitignore: 'gitignore.js', mit: 'MIT.js', apache: 'apache.js', gpl: 'gnu-gpl.js', bsd: 'bsd3.js' };
+  var view = document.getElementById('view');
+  var state = { name: '', year: String(new Date().getFullYear()), repo: '', branch: 'main', variant: '3', project: '', desc: '' };
+  window.Templates = window.Templates || {};
+
+  function load(id) {
+    return new Promise(function (ok, bad) {
+      if (window.Templates[id]) return ok(window.Templates[id]);
+      var s = document.createElement('script');
+      s.src = FILES[id];
+      s.onload = function () { window.Templates[id] ? ok(window.Templates[id]) : bad(new Error('empty')); };
+      s.onerror = function () { bad(new Error('missing')); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function open(id) {
+    if (!FILES[id]) id = 'gitignore';
+    document.querySelectorAll('#nav button').forEach(function (b) {
+      if (b.getAttribute('data-id') === id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    view.innerHTML = '<p class="loading">Loading ' + FILES[id] + '\u2026</p>';
+    load(id).then(function (t) {
+      view.innerHTML = '';
+      try { t.render(view); }
+      catch (err) {
+        console.error(err);
+        view.innerHTML = '<p class="fail">Something went wrong while drawing this page. Details are in the browser console.</p>';
+      }
+    }, function () {
+      view.innerHTML = '<p class="fail">Couldn\u2019t load ' + FILES[id] + '. Keep index.html and all the .js files in the same folder.</p>';
+    });
+    try { if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); } catch (e) {}
+  }
+
+  function copy(text, btn) {
+    var done = function () { if (!btn) return; var o = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = o; }, 1200); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+    else fallback();
+    function fallback() {
+      var a = document.createElement('textarea'); a.value = text; document.body.appendChild(a); a.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      a.remove();
+    }
+  }
+  function download(name, text) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
+    a.download = name; a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 500);
+  }
+
+  function repoBase(u) {
+    var value = String(u || '').trim();
+    if (!value) return null;
+    var parsed;
+    try { parsed = new URL(/^https?:\/\//i.test(value) ? value : 'https://' + value); } catch (e) { return null; }
+    var host = parsed.hostname.toLowerCase();
+    if ((host !== 'github.com' && host !== 'www.github.com') || parsed.username || parsed.password || parsed.port) return null;
+    var parts = parsed.pathname.split('/').filter(Boolean);
+    if (parts.length < 2) return null;
+    var owner, repo;
+    try { owner = decodeURIComponent(parts[0]); repo = decodeURIComponent(parts[1]).replace(/\.git$/i, ''); } catch (e) { return null; }
+    if (!/^[A-Za-z0-9_.-]+$/.test(owner) || !/^[A-Za-z0-9_.-]+$/.test(repo) || repo === '.' || repo === '..') return null;
+    return 'https://github.com/' + owner + '/' + repo;
+  }
+
+  /* Shared page for every license template. Each license .js file describes its text and
+     details; this draws the form, the summary, the preview and the GitHub link. */
+  function licenseUI(el, tpl) {
+    el.innerHTML =
+      '<div class="lic">' +
+        '<div class="lic-side">' +
+          '<h2></h2><p class="blurb"></p>' +
+          '<div class="two"><div class="f"><label for="lx-name">Full name or organisation</label><input type="text" id="lx-name" autocomplete="name" placeholder="Jane Doe"></div>' +
+          '<div class="f"><label for="lx-year">Year</label><input type="text" id="lx-year" inputmode="numeric" maxlength="4"></div></div>' +
+          '<div class="lx-extra"></div>' +
+          '<div class="lx-sum"></div>' +
+          '<div class="gh"><h3>Add it on GitHub</h3>' +
+            '<div class="two"><div class="f"><label for="lx-repo">Repository URL</label><input type="text" id="lx-repo" placeholder="https://github.com/you/project" autocomplete="off" spellcheck="false"></div>' +
+            '<div class="f"><label for="lx-branch">Branch</label><input type="text" id="lx-branch" autocomplete="off" spellcheck="false"></div></div>' +
+            '<p class="muted lx-link"></p>' +
+            '<div class="gh-act"><a class="s fill lx-open" target="_blank" rel="noopener">Open on GitHub</a><button class="s lx-copylink">Copy link</button></div>' +
+            '<p class="muted" style="margin-top:6px">GitHub opens its own LICENSE editor with this template. Check the name and year there before you commit.</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="lic-out">' +
+          '<div class="bar"><div class="tabs lx-tabs"></div><span class="sp"></span><button class="s lx-copy">Copy</button><button class="s fill lx-dl">Download</button></div>' +
+          '<textarea class="out lx-text" readonly spellcheck="false" aria-label="License text"></textarea>' +
+          '<p class="info lx-info"></p>' +
+        '</div>' +
+      '</div>';
+
+    var q = function (s) { return el.querySelector(s); };
+    q('h2').textContent = tpl.name;
+    q('.blurb').textContent = tpl.blurb;
+
+    var sum = q('.lx-sum');
+    [['Permissions', 'permissions', ''], ['Conditions', 'conditions', 'cond'], ['Limitations', 'limitations', 'lim']].forEach(function (g) {
+      var h = document.createElement('h3'); h.textContent = g[0]; sum.appendChild(h);
+      var w = document.createElement('div'); w.className = 'chips';
+      tpl.summary[g[1]].forEach(function (t) { var c = document.createElement('span'); c.className = 'chip ' + g[2]; c.textContent = t; w.appendChild(c); });
+      sum.appendChild(w);
+    });
+
+    var nameIn = q('#lx-name'), yearIn = q('#lx-year'), repoIn = q('#lx-repo'), branchIn = q('#lx-branch');
+    nameIn.value = state.name; yearIn.value = state.year; repoIn.value = state.repo; branchIn.value = state.branch;
+
+    (tpl.fields || []).forEach(function (f) {
+      if (state[f.id] === undefined || state[f.id] === '') state[f.id] = f.default || '';
+      var d = document.createElement('div'); d.className = 'f';
+      var l = document.createElement('label'); l.textContent = f.label; l.setAttribute('for', 'lx-' + f.id);
+      var inp;
+      if (f.type === 'select') {
+        inp = document.createElement('select');
+        f.options.forEach(function (o) { var op = document.createElement('option'); op.value = o[0]; op.textContent = o[1]; inp.appendChild(op); });
+      } else { inp = document.createElement('input'); inp.type = 'text'; inp.placeholder = f.placeholder || ''; inp.autocomplete = 'off'; }
+      inp.id = 'lx-' + f.id; inp.value = state[f.id];
+      inp.addEventListener('input', function () { state[f.id] = inp.value; update(); });
+      d.appendChild(l); d.appendChild(inp); q('.lx-extra').appendChild(d);
+    });
+
+    var items = [], tab = 0;
+    function vals() {
+      var y = state.year.trim();
+      var year = /^\d{4}$/.test(y) ? y : (y ? '[year]' : String(new Date().getFullYear()));
+      return { name: state.name.trim(), year: year, variant: state.variant, project: state.project.trim(), desc: state.desc.trim() };
+    }
+    function update() {
+      var v = vals();
+      items = [{ label: 'LICENSE', file: tpl.filename, text: tpl.text(v) }];
+      var ex = tpl.extras && tpl.extras(v);
+      if (ex) items.push(ex);
+      if (tab >= items.length) tab = 0;
+      var tabs = q('.lx-tabs'); tabs.innerHTML = '';
+      items.forEach(function (it, i) {
+        var b = document.createElement('button'); b.textContent = it.label; b.setAttribute('aria-pressed', i === tab ? 'true' : 'false');
+        b.onclick = function () { tab = i; update(); };
+        tabs.appendChild(b);
+      });
+      q('.lx-text').value = items[tab].text;
+      q('.lx-dl').textContent = 'Download ' + items[tab].file;
+
+      var msgs = [];
+      if (!state.name.trim()) msgs.push('Add your name so the copyright line is complete.');
+      if (state.year.trim() && !/^\d{4}$/.test(state.year.trim())) msgs.push('Use a four-digit year.');
+      var inf = q('.lx-info'); inf.textContent = msgs.join(' '); inf.classList.toggle('err', msgs.length > 0);
+
+      var base = repoBase(state.repo), open = q('.lx-open'), cl = q('.lx-copylink'), note = q('.lx-link');
+      if (base) {
+        var url = base + '/community/license/new?branch=' + encodeURIComponent(state.branch.trim() || 'main') + '&filename=LICENSE&template=' + tpl.ghTemplate(v);
+        open.href = url; open.removeAttribute('aria-disabled'); cl.disabled = false; cl.setAttribute('data-url', url);
+        note.textContent = url;
+      } else {
+        open.removeAttribute('href'); open.setAttribute('aria-disabled', 'true'); cl.disabled = true;
+        note.textContent = state.repo.trim() ? 'That doesn\u2019t look like a GitHub repository URL.' : 'Paste your repository URL to get a link that opens GitHub\u2019s license editor.';
+      }
+    }
+    nameIn.addEventListener('input', function () { state.name = nameIn.value; update(); });
+    yearIn.addEventListener('input', function () { state.year = yearIn.value; update(); });
+    repoIn.addEventListener('input', function () { state.repo = repoIn.value; update(); });
+    branchIn.addEventListener('input', function () { state.branch = branchIn.value; update(); });
+    q('.lx-copy').onclick = function (e) { copy(items[tab].text, e.target); };
+    q('.lx-dl').onclick = function () { download(items[tab].file, items[tab].text); };
+    q('.lx-copylink').onclick = function (e) { copy(e.target.getAttribute('data-url'), e.target); };
+    update();
+  }
+
+  document.getElementById('nav').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (b) open(b.getAttribute('data-id'));
+  });
+  window.addEventListener('hashchange', function () { open(location.hash.slice(1)); });
+  open(location.hash.slice(1) || 'gitignore');
+
+  return { open: open, copy: copy, download: download, licenseUI: licenseUI, state: state };
+})();
+</script>
+</body>
+</html>

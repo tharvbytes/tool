@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meta Tag &amp; Open Graph Generator</title>
+<meta name="description" content="Generate SEO meta tags, Open Graph and Twitter Card tags with live search and social previews.">
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--panel:rgba(96,0,96,.06);--onp-line:rgba(255,250,250,.32)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1240px;margin:0 auto;padding:22px 24px 12px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:14px}
+h1{font:400 clamp(1.8rem,3.8vw,2.6rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:36ch}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:360px 1fr;gap:20px}
+.side{background:var(--secondary-bg);color:var(--secondary-text);padding:14px 18px 16px;overflow-y:auto;min-height:0}
+fieldset{border:0;border-top:1px solid var(--onp-line);margin:0;padding:10px 0 8px}
+fieldset:first-child{border-top:0;padding-top:0}
+legend{padding:0 10px 0 0;font:400 1.1rem Charter,Georgia,serif}
+.f{margin-bottom:9px}
+.f label{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:3px}
+.f label span{opacity:.85}.f label span.warn{opacity:1;font-weight:700}
+input[type=text],select,textarea{width:100%;padding:7px 9px;font:.9rem system-ui,sans-serif;background:var(--secondary-text);color:var(--primary);border:0;border-radius:3px}
+textarea{resize:none;height:64px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label.chk{display:flex;gap:8px;align-items:center;cursor:pointer;font-size:.9rem;padding:2px 0}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--secondary-text)}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+.side :focus-visible{outline-color:var(--secondary-text)}
+.out{display:flex;flex-direction:column;min-height:0;gap:12px}
+.prevs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.box h3{margin:0 0 6px;font:400 1.05rem Charter,Georgia,serif}
+.card{border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px 14px;height:178px;overflow:hidden;color:#202124}
+.g .host{font-size:.78rem;color:#4d5156}
+.g .ttl{font:400 1.2rem/1.3 Arial,sans-serif;color:#1a0dab;margin:2px 0 3px}
+.g .ds{font:.85rem/1.5 Arial,sans-serif;color:#4d5156}
+.sc{padding:0;display:flex;flex-direction:column}
+.sc .im{background:var(--panel) center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:var(--soft);font-size:.8rem;flex:none}
+.sc.large .im{height:92px;border-bottom:1px solid var(--line)}
+.sc .tx{padding:8px 12px;overflow:hidden}
+.sc.sum{flex-direction:row}
+.sc.sum .im{width:100px;height:100%;border-right:1px solid var(--line)}
+.sc .dm{font-size:.72rem;text-transform:uppercase;color:#5f6368}
+.sc .st{font:600 .95rem/1.3 system-ui,sans-serif;margin:1px 0}
+.sc .sd{font-size:.82rem;color:#5f6368;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.code{flex:1;min-height:0;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.bar h3{margin:0;font:400 1.05rem Charter,Georgia,serif;flex:1}
+button{font:inherit;cursor:pointer;border-radius:6px;padding:5px 16px;border:1px solid var(--secondary-bg);background:var(--secondary-bg);color:var(--secondary-text);font-weight:600}
+button:hover{background:var(--primary);border-color:var(--primary)}
+pre{flex:1;min-height:0;margin:0;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:.82rem/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre;tab-size:2}
+.chk2{margin:6px 0 0;font-size:.82rem;color:var(--soft);min-height:1.2em}
+.foot{margin:4px 0 0;color:var(--soft);font-size:.76rem}
+@media(max-width:900px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .grid{grid-template-columns:1fr}.prevs{grid-template-columns:1fr}pre{min-height:260px}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Meta Tag &amp; Open Graph Generator</h1>
+    <div class="tag">Fill in the page details, copy the tags into your &lt;head&gt;, and check how it will look.</div>
+  </header>
+
+  <div class="grid">
+    <div class="side">
+      <fieldset>
+        <legend>Page</legend>
+        <div class="f"><label for="title">Title <span id="tc">0 / 60</span></label><input type="text" id="title" placeholder="Page title" autocomplete="off"></div>
+        <div class="f"><label for="desc">Description <span id="dc">0 / 160</span></label><textarea id="desc" placeholder="One or two sentences on what this page offers"></textarea></div>
+        <div class="f"><label for="url">Page URL (canonical)</label><input type="text" id="url" placeholder="https://example.com/page" autocomplete="off"></div>
+        <div class="two">
+          <div class="f"><label for="author">Author</label><input type="text" id="author" autocomplete="off"></div>
+          <div class="f"><label for="theme">Theme color</label><input type="text" id="theme" placeholder="#600060" autocomplete="off"></div>
+        </div>
+        <div class="f"><label for="kw">Keywords <span>optional</span></label><input type="text" id="kw" placeholder="comma, separated" autocomplete="off"></div>
+        <div class="f"><label for="robots">Search engines</label>
+          <select id="robots"><option value="">Default (add no tag)</option><option>noindex, follow</option><option>index, nofollow</option><option>noindex, nofollow</option></select></div>
+        <label class="chk"><input type="checkbox" id="basics" checked> Include charset and viewport</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Open Graph</legend>
+        <label class="chk"><input type="checkbox" id="og" checked> Add Open Graph tags</label>
+        <div class="two" style="margin-top:8px">
+          <div class="f"><label for="type">Type</label><select id="type"><option>website</option><option>article</option><option>product</option><option>profile</option></select></div>
+          <div class="f"><label for="loc">Locale</label><input type="text" id="loc" placeholder="en_US" autocomplete="off"></div>
+        </div>
+        <div class="f"><label for="site">Site name</label><input type="text" id="site" autocomplete="off"></div>
+        <div class="f"><label for="img">Image URL <span>1200 × 630 works well</span></label><input type="text" id="img" placeholder="https://example.com/share.jpg" autocomplete="off"></div>
+        <div class="f"><label for="alt">Image description</label><input type="text" id="alt" autocomplete="off"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Twitter / X</legend>
+        <label class="chk"><input type="checkbox" id="tw" checked> Add Twitter Card tags</label>
+        <div class="f" style="margin-top:8px"><label for="card">Card</label><select id="card"><option value="summary_large_image">Large image</option><option value="summary">Small summary</option></select></div>
+        <div class="two">
+          <div class="f"><label for="tsite">Site @handle</label><input type="text" id="tsite" placeholder="@brand" autocomplete="off"></div>
+          <div class="f"><label for="tcr">Creator @handle</label><input type="text" id="tcr" placeholder="@you" autocomplete="off"></div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="out">
+      <div class="prevs">
+        <div class="box"><h3>Search result</h3><div class="card g"><div class="host" id="gh"></div><div class="ttl" id="gt"></div><div class="ds" id="gd"></div></div></div>
+        <div class="box"><h3>Social share</h3>
+          <div class="card sc large" id="sc"><div class="im" id="si"></div><div class="tx"><div class="dm" id="sdm"></div><div class="st" id="st"></div><div class="sd" id="sd"></div></div></div></div>
+      </div>
+      <div class="code">
+        <div class="bar"><h3>Your tags</h3><button id="copy" aria-live="polite">Copy tags</button></div>
+        <pre id="pre" tabindex="0"></pre>
+        <p class="chk2" id="notes" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+  <p class="foot">Runs in your browser. Nothing you type is sent anywhere. Previews are close approximations; platforms change their layouts.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const v=id=>$(id).value.trim();
+const esc=s=>s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const escT=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const chars=s=>Array.from(s);
+const clip=(s,n)=>{const a=chars(s);return a.length>n?a.slice(0,n-1).join('').trimEnd()+'\u2026':s};
+const handle=h=>h&&(h[0]==='@'?h:'@'+h);
+const isUrl=s=>/^https?:\/\/[^\s/]+\.[^\s/]+/i.test(s);
+
+function gen(){
+  const t=v('title'),d=v('desc'),u=v('url'),img=v('img'),L=[];
+  const m=(n,c)=>{if(c)L.push('<meta name="'+n+'" content="'+esc(c)+'">')};
+  const p=(n,c)=>{if(c)L.push('<meta property="'+n+'" content="'+esc(c)+'">')};
+  L.push('<!-- Primary meta tags -->');
+  if($('basics').checked)L.push('<meta charset="UTF-8">','<meta name="viewport" content="width=device-width, initial-scale=1">');
+  if(t)L.push('<title>'+escT(t)+'</title>');
+  m('description',d);m('keywords',v('kw'));m('author',v('author'));m('robots',v('robots'));m('theme-color',v('theme'));
+  if(u)L.push('<link rel="canonical" href="'+esc(u)+'">');
+  if($('og').checked){
+    L.push('','<!-- Open Graph / Facebook -->');
+    p('og:type',v('type'));p('og:url',u);p('og:title',t);p('og:description',d);
+    p('og:image',img);if(img)p('og:image:alt',v('alt'));p('og:site_name',v('site'));p('og:locale',v('loc'));
+  }
+  if($('tw').checked){
+    L.push('','<!-- Twitter -->');
+    m('twitter:card',v('card'));m('twitter:title',t);m('twitter:description',d);
+    m('twitter:image',img);if(img)m('twitter:image:alt',v('alt'));
+    m('twitter:site',handle(v('tsite')));m('twitter:creator',handle(v('tcr')));
+  }
+  $('pre').textContent=L.join('\n');
+
+  // counters
+  const tl=chars(t).length,dl=chars(d).length;
+  $('tc').textContent=tl+' / 60';$('tc').className=tl>60?'warn':'';
+  $('dc').textContent=dl+' / 160';$('dc').className=dl>160?'warn':'';
+
+  // search preview
+  let host='example.com',path='';
+  if(isUrl(u)){try{const x=new URL(u);host=x.host;path=x.pathname.replace(/\/$/,'').split('/').filter(Boolean).join(' \u203a ')}catch(e){}}
+  $('gh').textContent=host+(path?' \u203a '+path:'');
+  $('gt').textContent=clip(t||'Your page title',60);
+  $('gd').textContent=clip(d||'Your description appears here. Aim for 120 to 160 characters so it isn\u2019t cut off.',160);
+
+  // social preview
+  const card=$('sc'),large=!$('tw').checked||v('card')==='summary_large_image';
+  card.className='card sc '+(large?'large':'sum');
+  const im=$('si');im.style.backgroundImage='';im.textContent=img?'':'No image set';
+  if(img&&isUrl(img)){
+    const probe=new Image();
+    probe.onload=()=>{if(v('img')===img){im.style.backgroundImage='url("'+img.replace(/"/g,'%22')+'")';im.textContent=''}};
+    probe.onerror=()=>{if(v('img')===img)im.textContent='Image didn\u2019t load'};
+    probe.src=img;
+  }else if(img)im.textContent='Use a full https:// link';
+  $('sdm').textContent=host;$('st').textContent=clip(t||'Your page title',70);
+  $('sd').textContent=d||'Your description appears here.';
+
+  // checks
+  const n=[];
+  if(!t)n.push('Add a title.');else if(tl>60)n.push('The title is long and may be cut off in search results.');
+  if(!d)n.push('Add a description.');else if(dl<70)n.push('A short description may go unused; aim for 120\u2013160 characters.');else if(dl>160)n.push('The description will be cut off after about 160 characters.');
+  if(u&&!isUrl(u))n.push('The page URL should start with https://.');
+  if(($('og').checked||$('tw').checked)&&!img)n.push('Shares without an image look plain.');
+  if(img&&!isUrl(img))n.push('Image URLs must be full links starting with https://.');
+  $('notes').textContent=n.length?n.slice(0,2).join(' '):'Looks good.';
+}
+document.querySelectorAll('input,select,textarea').forEach(e=>e.addEventListener('input',gen));
+let copyRequest=0,copyTimer;
+$('copy').onclick=async e=>{
+  const request=++copyRequest,btn=e.currentTarget,active=document.activeElement,t=$('pre').textContent;
+  clearTimeout(copyTimer);
+  let copied=false;
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function'){
+    try{await navigator.clipboard.writeText(t);copied=true}catch(x){}
+  }
+  if(!copied&&request===copyRequest){
+    const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.left='-9999px';document.body.appendChild(a);a.select();
+    try{copied=document.execCommand('copy')}catch(x){}
+    a.remove();
+    if(active&&active.isConnected)active.focus();
+  }
+  if(request!==copyRequest)return;
+  btn.textContent=copied?'Copied':'Copy failed';
+  copyTimer=setTimeout(()=>{if(request===copyRequest&&btn.isConnected)btn.textContent='Copy tags'},1200);
+};
+gen();
+</script>
+</body>
+</html>

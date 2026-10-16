@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open-Source Project Files: CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, CHANGELOG</title>
+<meta name="description" content="Generate CONTRIBUTING.md, LICENSE, CODE_OF_CONDUCT.md, SECURITY.md and CHANGELOG.md for your open-source project, then copy each file or download them all as a zip.">
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--panel:rgba(96,0,96,.06);--onp-line:rgba(255,250,250,.3);--err:#b00020}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1280px;margin:0 auto;padding:20px 24px 10px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:14px}
+h1{font:400 clamp(1.7rem,3.6vw,2.5rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.hr{display:flex;align-items:center;gap:12px}
+.tag{color:var(--soft);font-size:.86rem;text-align:right;max-width:30ch}
+button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--primary);background:transparent;color:var(--primary)}
+button:hover:not(:disabled){background:var(--primary);color:var(--primary-bg)}
+button:disabled{opacity:.45;cursor:default}
+button.fill{background:var(--secondary-bg);border-color:var(--secondary-bg);color:var(--secondary-text);font-weight:600}
+button.fill:hover:not(:disabled){background:var(--primary);border-color:var(--primary)}
+.zip{padding:9px 18px}
+.s{font-size:.86rem;padding:4px 12px}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:330px 1fr;gap:20px}
+.side{background:var(--secondary-bg);color:var(--secondary-text);padding:14px 16px 16px;overflow-y:auto;border-radius:12px;min-height:0}
+.side h2{margin:0 0 8px;font:400 1.1rem Charter,Georgia,serif}
+.side h2.opt{margin-top:14px;padding-top:12px;border-top:1px solid var(--onp-line)}
+.side p.muted{font-size:.82rem;opacity:.9;margin:0}
+.f{margin-bottom:8px}
+.f label{display:block;font-size:.8rem;margin-bottom:2px}
+.two{display:grid;grid-template-columns:1fr 78px;gap:8px}
+.side input[type=text],.side select,.side textarea{width:100%;padding:6px 9px;border:0;border-radius:4px;background:var(--secondary-text);color:var(--primary);font:inherit;font-size:.9rem}
+.side textarea{resize:none;height:56px;font:.84rem/1.4 ui-monospace,Menlo,Consolas,monospace}
+.side label.chk{display:flex;gap:8px;align-items:flex-start;font-size:.86rem;cursor:pointer;margin:2px 0 6px}
+.side input[type=checkbox]{margin-top:2px;width:15px;height:15px;accent-color:var(--secondary-text)}
+.side :focus-visible{outline-color:var(--secondary-text)}
+.out{display:flex;flex-direction:column;min-height:0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.ftab{display:flex;align-items:center;border:1px solid var(--primary);border-radius:8px;overflow:hidden}
+.ftab input{margin:0 0 0 9px;width:15px;height:15px;accent-color:var(--secondary-bg)}
+.ftab button{border:0;border-radius:0;padding:6px 12px;font-size:.88rem;background:transparent}
+.ftab.on{background:var(--secondary-bg)}
+.ftab.on button{color:var(--secondary-text);font-weight:600}
+.ftab.on input{accent-color:var(--secondary-text)}
+.bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar .blurb{flex:1;font-size:.84rem;color:var(--soft)}
+textarea.view{flex:1;min-height:0;width:100%;resize:none;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--primary);font:.84rem/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:auto}
+.info{margin:6px 0 0;min-height:1.3em;font-size:.86rem;color:var(--soft)}
+.info.err{color:var(--err);font-weight:600}
+.foot{margin:4px 0 0;color:var(--soft);font-size:.74rem}
+@media(max-width:900px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:8px}.tag{display:none}
+  .grid{grid-template-columns:1fr}textarea.view{min-height:340px;flex:none}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Open-Source Project Files</h1>
+    <div class="hr"><span class="tag">Fill in your project once, then copy each file or download them all.</span>
+      <button class="zip fill" id="zip">Download zip</button></div>
+  </header>
+
+  <div class="grid">
+    <div class="side">
+      <h2>Project</h2>
+      <div class="f"><label for="p-project">Project name</label><input type="text" id="p-project" placeholder="My Project" autocomplete="off"></div>
+      <div class="f"><label for="p-owner">Your name or organisation</label><input type="text" id="p-owner" placeholder="Jane Doe" autocomplete="name"></div>
+      <div class="f"><label for="p-email">Contact email</label><input type="text" id="p-email" placeholder="security@example.com" autocomplete="email"></div>
+      <div class="f"><label for="p-repo">Repository URL</label><input type="text" id="p-repo" placeholder="https://github.com/you/project" autocomplete="off" spellcheck="false"></div>
+      <div class="two">
+        <div class="f"><label for="p-branch">Default branch</label><input type="text" id="p-branch" autocomplete="off" spellcheck="false"></div>
+        <div class="f"><label for="p-year">Year</label><input type="text" id="p-year" inputmode="numeric" maxlength="4"></div>
+      </div>
+      <div class="f"><label for="p-license">License</label><select id="p-license"></select></div>
+      <h2 class="opt" id="optTitle">Options</h2>
+      <div id="opts"></div>
+    </div>
+
+    <div class="out">
+      <div class="tabs" id="tabs"></div>
+      <div class="bar"><span class="blurb" id="blurb"></span>
+        <button class="s" id="copy">Copy</button><button class="s fill" id="dl">Download</button></div>
+      <textarea class="view" id="view" readonly spellcheck="false" aria-label="Generated file"></textarea>
+      <p class="info" id="info" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="foot">Runs in your browser; nothing is uploaded. Tick a file's box to include it in the zip. Each file is built by its own .js module, loaded when needed, so keep this folder together. Starting points, not legal advice: read each file before you publish it.</p>
+</div>
+
+<script>
+var App = (function () {
+  var FILES = { contributing: 'contributing.js', license: 'license.js', coc: 'code-of-conduct.js', security: 'security.js', changelog: 'changelog.js',
+                mit: 'MIT.js', apache: 'apache.js', gpl: 'gnu-gpl.js', bsd: 'bsd3.js' };
+  var ORDER = ['contributing', 'license', 'coc', 'security', 'changelog'];
+  var LABEL = { contributing: 'CONTRIBUTING.md', license: 'LICENSE', coc: 'CODE_OF_CONDUCT.md', security: 'SECURITY.md', changelog: 'CHANGELOG.md' };
+  var LICENSES = {
+    mit: { name: 'MIT License', tpl: 'mit' },
+    apache: { name: 'Apache License 2.0', tpl: 'apache' },
+    gpl: { name: 'GNU GPL v3', tpl: 'gpl' },
+    bsd3: { name: 'BSD 3-Clause License', tpl: 'bsd', variant: '3' },
+    bsd2: { name: 'BSD 2-Clause License', tpl: 'bsd', variant: '2' }
+  };
+  var S = { project: '', owner: '', email: '', repo: '', branch: 'main', year: String(new Date().getFullYear()), license: 'mit', opt: {}, inc: {} };
+  ORDER.forEach(function (id) { S.inc[id] = true; });
+  var current = 'contributing', seq = 0, drawnOpts = null;
+  window.Templates = window.Templates || {};
+  var $ = function (id) { return document.getElementById(id); };
+
+  function load(id) {
+    return new Promise(function (ok, bad) {
+      if (window.Templates[id]) return ok(window.Templates[id]);
+      var s = document.createElement('script');
+      s.src = FILES[id];
+      s.onload = function () { window.Templates[id] ? ok(window.Templates[id]) : bad(new Error('empty')); };
+      s.onerror = function () { bad(new Error('Couldn\u2019t load ' + FILES[id] + '. Keep index.html and all the .js files in one folder.')); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function repoBase(u) {
+    var value = String(u || '').trim();
+    if (!value) return '';
+    var parsed;
+    try { parsed = new URL(/^https?:\/\//i.test(value) ? value : 'https://' + value); } catch (e) { return ''; }
+    var host = parsed.hostname.toLowerCase();
+    if ((host !== 'github.com' && host !== 'www.github.com') || parsed.username || parsed.password || parsed.port) return '';
+    var parts = parsed.pathname.split('/').filter(Boolean);
+    if (parts.length < 2) return '';
+    var owner, repo;
+    try { owner = decodeURIComponent(parts[0]); repo = decodeURIComponent(parts[1]).replace(/\.git$/i, ''); } catch (e) { return ''; }
+    if (!/^[A-Za-z0-9_.-]+$/.test(owner) || !/^[A-Za-z0-9_.-]+$/.test(repo) || repo === '.' || repo === '..') return '';
+    return 'https://github.com/' + owner + '/' + repo;
+  }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+
+  function values(id, tpl) {
+    var base = repoBase(S.repo), name = S.project.trim(), sl = slug(name), year = S.year.trim();
+    var v = {
+      project: name || '[Project Name]', rawProject: name, owner: S.owner.trim(), email: S.email.trim(),
+      repo: base, branch: S.branch.trim() || 'main',
+      year: /^\d{4}$/.test(year) ? year : (year ? '[year]' : String(new Date().getFullYear())),
+      license: S.license, licenseName: LICENSES[S.license].name,
+      repoName: base ? base.split('/').pop() : (sl || 'project'), slug: sl || 'project',
+      today: new Date().toISOString().slice(0, 10)
+    };
+    var o = S.opt[id] || {};
+    (tpl.fields || []).forEach(function (f) { v[f.id] = o[f.id] !== undefined ? o[f.id] : (f.default !== undefined ? f.default : (f.type === 'checkbox' ? false : '')); });
+    return v;
+  }
+
+  function build(id) {
+    return load(id).then(function (tpl) {
+      var v = values(id, tpl);
+      return Promise.resolve(tpl.prepare ? tpl.prepare(v) : null).then(function () {
+        var notes = tpl.check ? tpl.check(v) : [];
+        if (!S.project.trim()) notes.unshift('Add your project name.');
+        if (S.repo.trim() && !repoBase(S.repo)) notes.push('Enter a valid GitHub repository URL, such as https://github.com/you/project.');
+        if (S.year.trim() && !/^\d{4}$/.test(S.year.trim())) notes.push('Use a four-digit year.');
+        return { tpl: tpl, file: tpl.file, text: tpl.generate(v), notes: notes };
+      });
+    });
+  }
+
+  function drawTabs() {
+    var box = $('tabs'); box.innerHTML = '';
+    ORDER.forEach(function (id) {
+      var d = document.createElement('div'); d.className = 'ftab' + (id === current ? ' on' : '');
+      var c = document.createElement('input'); c.type = 'checkbox'; c.checked = S.inc[id]; c.setAttribute('aria-label', 'Include ' + LABEL[id] + ' in the zip');
+      c.onchange = function () { S.inc[id] = c.checked; zipLabel(); };
+      var b = document.createElement('button'); b.textContent = LABEL[id];
+      b.onclick = function () { current = id; drawTabs(); refresh(); };
+      d.appendChild(c); d.appendChild(b); box.appendChild(d);
+    });
+    zipLabel();
+  }
+  function zipLabel() {
+    var n = ORDER.filter(function (id) { return S.inc[id]; }).length;
+    $('zip').textContent = 'Download zip (' + n + ' file' + (n === 1 ? '' : 's') + ')';
+    $('zip').disabled = !n;
+  }
+
+  function drawOpts(tpl) {
+    if (drawnOpts === tpl.id) return;
+    drawnOpts = tpl.id;
+    $('optTitle').textContent = tpl.label + ' options';
+    var box = $('opts'); box.innerHTML = '';
+    var fields = tpl.fields || [];
+    if (!fields.length) {
+      var p = document.createElement('p'); p.className = 'muted';
+      p.textContent = 'No extra options for this file. It uses the project details above.'; box.appendChild(p); return;
+    }
+    var o = S.opt[tpl.id] = S.opt[tpl.id] || {};
+    fields.forEach(function (f) {
+      var val = o[f.id] !== undefined ? o[f.id] : f.default;
+      var d = document.createElement('div'), inp;
+      if (f.type === 'checkbox') {
+        d.className = 'chk-wrap';
+        var l = document.createElement('label'); l.className = 'chk';
+        inp = document.createElement('input'); inp.type = 'checkbox'; inp.checked = !!val;
+        var sp = document.createElement('span'); sp.textContent = f.label;
+        l.appendChild(inp); l.appendChild(sp); d.appendChild(l);
+        inp.onchange = function () { o[f.id] = inp.checked; refresh(); };
+      } else {
+        d.className = 'f';
+        var lb = document.createElement('label'); lb.textContent = f.label; d.appendChild(lb);
+        inp = document.createElement(f.type === 'textarea' ? 'textarea' : 'input');
+        if (f.type !== 'textarea') inp.type = 'text';
+        inp.value = val || ''; inp.placeholder = f.placeholder || ''; inp.autocomplete = 'off'; inp.spellcheck = false;
+        inp.oninput = function () { o[f.id] = inp.value; refresh(); };
+        d.appendChild(inp);
+      }
+      box.appendChild(d);
+    });
+  }
+
+  function say(msg, err) { var i = $('info'); i.textContent = msg; i.classList.toggle('err', !!err); }
+
+  function refresh() {
+    var my = ++seq;
+    build(current).then(function (r) {
+      if (my !== seq) return;
+      drawOpts(r.tpl);
+      $('blurb').textContent = r.tpl.blurb || '';
+      $('view').value = r.text;
+      $('dl').textContent = 'Download ' + r.file;
+      say(r.notes.join(' '), r.notes.length > 0);
+    }, function (e) { if (my === seq) say(e.message, true); });
+  }
+
+  /* minimal ZIP writer (stored, no compression) */
+  var CRC = (function () { var t = new Uint32Array(256); for (var n = 0; n < 256; n++) { var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  function crc32(b) { var c = 0xFFFFFFFF; for (var i = 0; i < b.length; i++) c = CRC[(c ^ b[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+  function makeZip(files) {
+    var enc = new TextEncoder(), parts = [], central = [], offset = 0, d = new Date();
+    var dt = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1);
+    var dd = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+    files.forEach(function (f) {
+      var nm = enc.encode(f.name), data = enc.encode(f.text), crc = crc32(data);
+      var lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+      lh.setUint16(10, dt, true); lh.setUint16(12, dd, true); lh.setUint32(14, crc, true);
+      lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true); lh.setUint16(26, nm.length, true); lh.setUint16(28, 0, true);
+      parts.push(new Uint8Array(lh.buffer), nm, data);
+      var ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+      ch.setUint16(12, dt, true); ch.setUint16(14, dd, true); ch.setUint32(16, crc, true);
+      ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true); ch.setUint16(28, nm.length, true);
+      ch.setUint32(42, offset, true);
+      central.push(new Uint8Array(ch.buffer), nm);
+      offset += 30 + nm.length + data.length;
+    });
+    var csize = 0; central.forEach(function (c) { csize += c.length; });
+    var end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+    end.setUint32(12, csize, true); end.setUint32(16, offset, true);
+    return new Blob(parts.concat(central, [new Uint8Array(end.buffer)]), { type: 'application/zip' });
+  }
+
+  function save(name, blob) {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 800);
+  }
+  function copy(text, btn) {
+    var done = function () { var o = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = o; }, 1200); };
+    var failed = function () { say('Couldn\u2019t copy automatically. Select the text and copy it manually.', true); };
+    var fb = function () {
+      var a = document.createElement('textarea'), copied = false;
+      a.value = text; a.setAttribute('readonly', ''); a.style.position = 'fixed'; a.style.left = '-9999px';
+      document.body.appendChild(a); a.select();
+      try { copied = document.execCommand('copy'); } catch (e) {}
+      a.remove();
+      if (copied) done(); else failed();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try { navigator.clipboard.writeText(text).then(done, fb); } catch (e) { fb(); }
+    } else fb();
+  }
+
+  function downloadZip() {
+    var ids = ORDER.filter(function (id) { return S.inc[id]; });
+    if (!ids.length) return;
+    $('zip').disabled = true; say('Building the zip\u2026');
+    Promise.all(ids.map(build)).then(function (rs) {
+      save((slug(S.project) || 'project') + '-community-files.zip', makeZip(rs.map(function (r) { return { name: r.file, text: r.text }; })));
+      var missing = rs.some(function (r) { return r.notes.length; });
+      say('Zip downloaded with ' + rs.length + ' file' + (rs.length === 1 ? '' : 's') + '.' + (missing ? ' Some files still have notes. Check them before you publish.' : ''));
+    }).catch(function (e) { say(e.message, true); }).then(zipLabel);
+  }
+
+  // wire up
+  var sel = $('p-license');
+  Object.keys(LICENSES).forEach(function (k) { var o = document.createElement('option'); o.value = k; o.textContent = LICENSES[k].name; sel.appendChild(o); });
+  [['p-project', 'project'], ['p-owner', 'owner'], ['p-email', 'email'], ['p-repo', 'repo'], ['p-branch', 'branch'], ['p-year', 'year'], ['p-license', 'license']].forEach(function (p) {
+    var el = $(p[0]); el.value = S[p[1]];
+    el.addEventListener('input', function () { S[p[1]] = el.value; refresh(); });
+  });
+  $('copy').onclick = function (e) { copy($('view').value, e.target); };
+  $('dl').onclick = function () { var n = LABEL[current]; save(n, new Blob([$('view').value], { type: 'text/plain' })); };
+  $('zip').onclick = downloadZip;
+  drawTabs(); refresh();
+
+  return { load: load, LICENSES: LICENSES, makeZip: makeZip, S: S };
+})();
+</script>
+</body>
+</html>

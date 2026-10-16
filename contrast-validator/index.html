@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contrast Validator</title>
+<style>
+:root{color-scheme:light;
+  --primary:#600060;--primary-bg:#FFFAFA;--secondary-bg:#800080;--secondary-text:#FFFAFA;
+  --soft:rgba(96,0,96,.68);--line:rgba(96,0,96,.2);--panel:rgba(96,0,96,.06);--err:#b00020}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--primary-bg);color:var(--primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+.wrap{height:100%;max-width:1160px;margin:0 auto;padding:22px 24px 14px;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-bottom:10px;border-bottom:2px solid var(--primary);margin-bottom:16px}
+h1{font:400 clamp(1.9rem,4vw,2.7rem)/1 Charter,"Bitstream Charter","Iowan Old Style",Georgia,serif;margin:0;letter-spacing:-.02em}
+.tag{color:var(--soft);font-size:.88rem;text-align:right;max-width:32ch}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:490px 1fr;gap:22px}
+
+.panel{background:var(--panel);border-radius:16px;padding:22px 24px;overflow-y:auto;min-height:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.lab{display:block;font-weight:600;font-size:.86rem;margin-bottom:8px}
+.field{position:relative}
+.field input[type=text]{width:100%;height:46px;padding:0 54px 0 14px;font:1rem ui-monospace,Menlo,Consolas,monospace;color:var(--primary);background:#fff;border:1px solid var(--line);border-radius:12px}
+.field input[type=text]:focus{outline:2px solid var(--secondary-bg);outline-offset:0}
+.field input[aria-invalid=true]{border-color:var(--err);outline:2px solid var(--err)}
+.field input[type=color]{position:absolute;right:8px;top:8px;width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:8px;background:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+input[type=color]::-webkit-color-swatch{border:0;border-radius:7px}
+input[type=color]::-moz-color-swatch{border:0;border-radius:7px}
+.msg{margin:4px 0 0;font-size:.78rem;color:var(--err);min-height:1.1em}
+.msg.ok{color:var(--soft)}
+.crow{display:flex;align-items:center;gap:8px;margin:6px 0 8px}
+.crow .lab{margin:0;flex:1}
+button{font:inherit;cursor:pointer;border-radius:8px;padding:5px 13px;border:1px solid var(--primary);background:transparent;color:var(--primary);font-size:.85rem}
+button:hover{background:var(--primary);color:var(--primary-bg)}
+button.fill{background:var(--secondary-bg);border-color:var(--secondary-bg);color:var(--secondary-text)}
+button.fill:hover{background:var(--primary);border-color:var(--primary)}
+:focus-visible{outline:3px solid var(--secondary-bg);outline-offset:2px}
+
+.card{border-radius:14px;overflow:hidden;background:var(--cbg);color:var(--cfg)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:20px 26px}
+.big{font:800 3.6rem/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.03em}
+.rate{text-align:center}
+.rate b{display:block;font-size:1.05rem;margin-bottom:3px}
+.st{letter-spacing:.12em;white-space:nowrap}
+.st .off{opacity:.25}
+.cells{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-top:2px solid var(--panel-solid,#f6eff6)}
+.cell{padding:12px 18px;display:flex;justify-content:space-between;align-items:center;background:var(--cbg);font-weight:600}
+.cell small{display:block;font-weight:500;opacity:.85}
+.cell .st{font-size:.8rem}
+.g1{--cbg:#dcf9e5;--cfg:#14602f}
+.g2{--cbg:#e8f5d0;--cfg:#3c5a0d}
+.g3{--cbg:#fcefcc;--cfg:#734600}
+.g4{--cbg:#fddede;--cfg:#86151f}
+.note{margin:12px 0 2px;color:var(--soft)}
+.ui{margin:0;color:var(--soft);font-size:.85rem}
+.fix{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.fix h3{margin:0 0 6px;font-size:.9rem}
+.sug{display:flex;align-items:center;gap:10px;padding:4px 0;font-size:.88rem}
+.sw{width:26px;height:26px;border:1px solid var(--line);border-radius:7px;flex:none}
+.sug .g{flex:1}
+.sug code{font-family:ui-monospace,Menlo,Consolas,monospace}
+
+.prev{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;background:var(--pbg);color:var(--pfg);border:1px solid var(--line);border-radius:16px;min-height:0;overflow:auto}
+.prev h2{font:600 clamp(1.9rem,3.6vw,2.8rem)/1.15 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.02em;margin:0 0 16px;max-width:18ch}
+.prev p{margin:0;font-size:1.05rem;line-height:1.55;max-width:44ch}
+.prev .small{font-size:.8rem;margin-top:12px;max-width:44ch}
+.exp{position:absolute;top:14px;right:14px;width:36px;height:36px;padding:0;display:flex;align-items:center;justify-content:center;border:0;border-radius:10px;background:rgba(128,128,128,.16);color:var(--pfg)}
+.exp:hover{background:rgba(128,128,128,.3);color:var(--pfg)}
+.prev.full{position:fixed;inset:0;z-index:20;border-radius:0;border:0}
+.foot{margin:6px 0 0;color:var(--soft);font-size:.76rem}
+@media(max-width:900px){
+  html,body{height:auto}body{overflow:auto}.wrap{height:auto}
+  header{flex-direction:column;align-items:flex-start;gap:6px}.tag{text-align:left;max-width:none}
+  .grid{grid-template-columns:1fr;gap:16px}.prev{min-height:300px;order:-1}.big{font-size:2.8rem}
+}
+</style>
+  <script defer src="Home.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Contrast Validator</h1>
+    <div class="tag">Check a text and background pair against WCAG 2, then fix it if it falls short.</div>
+  </header>
+
+  <div class="grid">
+    <div class="panel">
+      <div class="two">
+        <div>
+          <label class="lab" for="fgt">Text color</label>
+          <div class="field"><input type="text" id="fgt" maxlength="32" placeholder="#102A43 or navy" spellcheck="false" autocomplete="off" aria-describedby="fgm"><input type="color" id="fgc" aria-label="Pick text color"></div>
+          <p class="msg" id="fgm" aria-live="polite"></p>
+        </div>
+        <div>
+          <label class="lab" for="bgt">Background color</label>
+          <div class="field"><input type="text" id="bgt" maxlength="32" placeholder="#FAFCFF or white" spellcheck="false" autocomplete="off" aria-describedby="bgm"><input type="color" id="bgc" aria-label="Pick background color"></div>
+          <p class="msg" id="bgm" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="crow"><span class="lab">Contrast</span><button id="swap">Swap</button><button id="rand" class="fill">Random pair</button></div>
+
+      <div class="card" id="card" aria-live="polite">
+        <div class="top">
+          <div class="big" id="big">–</div>
+          <div class="rate"><b id="rl"></b><div class="st" id="rs" aria-hidden="true"></div></div>
+        </div>
+        <div class="cells">
+          <div class="cell"><div>Small text<small id="sc"></small></div><div class="st" id="ss" aria-hidden="true"></div></div>
+          <div class="cell"><div>Large text<small id="lc"></small></div><div class="st" id="ls" aria-hidden="true"></div></div>
+        </div>
+      </div>
+      <p class="note" id="note"></p>
+      <p class="ui" id="ui"></p>
+
+      <div class="fix" id="fix" hidden><h3>Adjust the text color</h3><div id="sugs"></div></div>
+    </div>
+
+    <div class="prev" id="prev">
+      <button class="exp" id="exp" aria-label="Expand preview" title="Expand preview"></button>
+      <h2>Contrast is a kindness.</h2>
+      <p>Good contrast lets more people read what you wrote, in bright rooms, on small screens and with tired eyes.</p>
+      <p class="small">Small print sits at the same limits as body text.</p>
+    </div>
+  </div>
+  <p class="foot">Large text is 24px and up, or 18.66px and up in bold. Ratios are cut down, never rounded up, so a pass is a real pass.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let fg='#102a43',bg='#fafcff';
+
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const HEXRE=/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i;
+const cx=document.createElement('canvas').getContext('2d');
+// Lets the browser parse any CSS color (names, rgb(), hsl()); an invalid string leaves the sentinel unchanged.
+function cssColor(str){
+  if(/^(current|inherit|initial|unset|transparent)/i.test(str))return null;
+  cx.fillStyle='#010203';cx.fillStyle=str;const a=cx.fillStyle;
+  cx.fillStyle='#040506';cx.fillStyle=str;const b=cx.fillStyle;
+  return a===b&&/^#[0-9a-f]{6}$/i.test(a)?a.toLowerCase():null;
+}
+function norm(s){
+  s=s.trim();
+  if(HEXRE.test(s)){
+    s=s.replace(/^#/,'').toLowerCase();
+    if(s.length===3)s=s.replace(/./g,c=>c+c);
+    return '#'+s;
+  }
+  if(!s||/[;{}]/.test(s))return null;
+  return cssColor(s.includes('(')?s:s.replace(/\s+/g,''));
+}
+const toRgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const toHex=r=>'#'+r.map(v=>clamp(Math.round(v),0,255).toString(16).padStart(2,'0')).join('');
+function lum(rgb){
+  const [r,g,b]=rgb.map(v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)});
+  return 0.2126*r+0.7152*g+0.0722*b;
+}
+function ratio(a,b){const x=lum(a),y=lum(b);return (Math.max(x,y)+0.05)/(Math.min(x,y)+0.05)}
+function toHsl([r,g,b]){
+  r/=255;g/=255;b/=255;
+  const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,d=mx-mn;
+  let h=0,s=0;
+  if(d){s=d/(1-Math.abs(2*l-1));h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;if(h<0)h+=360}
+  return[h,s,l];
+}
+function fromHsl(h,s,l){
+  const c=(1-Math.abs(2*l-1))*s,x=c*(1-Math.abs((h/60)%2-1)),m=l-c/2;
+  let r=0,g=0,b=0;
+  if(h<60)[r,g,b]=[c,x,0];else if(h<120)[r,g,b]=[x,c,0];else if(h<180)[r,g,b]=[0,c,x];
+  else if(h<240)[r,g,b]=[0,x,c];else if(h<300)[r,g,b]=[x,0,c];else[r,g,b]=[c,0,x];
+  return[(r+m)*255,(g+m)*255,(b+m)*255];
+}
+const shown=v=>(Math.floor(v*100)/100).toFixed(2);
+
+// Nearest text color (same hue and saturation, only lightness moves) that reaches the target.
+function solve(fgHex,bgHex,target){
+  const [h,s,l]=toHsl(toRgb(fgHex)),B=toRgb(bgHex);
+  let best=null;
+  for(const dir of[-1,1]){
+    const end=dir<0?0:1;
+    if(ratio(fromHsl(h,s,end).map(Math.round),B)<target)continue;
+    let lo=l,hi=end;
+    for(let i=0;i<26;i++){const mid=(lo+hi)/2;ratio(fromHsl(h,s,mid).map(Math.round),B)>=target?hi=mid:lo=mid}
+    let L=hi,rgb=fromHsl(h,s,L).map(Math.round),n=0;
+    while(ratio(rgb,B)<target&&n++<60){L=clamp(L+dir*0.002,0,1);rgb=fromHsl(h,s,L).map(Math.round)}
+    if(ratio(rgb,B)<target)continue;
+    const c={hex:toHex(rgb),r:ratio(rgb,B),d:Math.abs(L-l)};
+    if(!best||c.d<best.d)best=c;
+  }
+  return best;
+}
+
+const stars=(n,t)=>Array.from({length:t},(_,i)=>'<span class="'+(i<n?'on':'off')+'">\u2605</span>').join('');
+function rate(r){
+  return r>=12?['Super',5,'g1']:r>=7?['Very good',4,'g1']:r>=4.5?['Good',3,'g2']:r>=3?['Poor',2,'g3']:['Very poor',1,'g4'];
+}
+
+function update(){
+  const F=toRgb(fg),B=toRgb(bg),r=ratio(F,B),[label,n,cls]=rate(r);
+  const p=$('prev');p.style.setProperty('--pfg',fg);p.style.setProperty('--pbg',bg);
+  $('card').className='card '+cls;
+  $('big').textContent=shown(r);
+  $('rl').textContent=label;
+  $('rs').innerHTML=stars(n,5);
+  const sm=r>=7?3:r>=4.5?2:0,lg=r>=4.5?3:r>=3?2:0;
+  $('ss').innerHTML=stars(sm,3);$('ls').innerHTML=stars(lg,3);
+  $('sc').textContent=sm===3?'Passes AAA':sm===2?'Passes AA':'Fails';
+  $('lc').textContent=lg===3?'Passes AAA':lg===2?'Passes AA':'Fails';
+  $('note').textContent=r>=7?'Great contrast for all text sizes.':r>=4.5?'Good contrast for all text sizes. It meets AA but not AAA.':r>=3?'Only for large text and UI parts. Small text needs more contrast.':'Not enough contrast for text. Move the colors further apart.';
+  $('ui').textContent='UI parts and graphics (3:1): '+(r>=3?'passes':'fails');
+  for(const [k,v] of[['fg',fg],['bg',bg]]){
+    if(document.activeElement!==$(k+'t'))$(k+'t').value=v.toUpperCase();
+    $(k+'c').value=v;
+  }
+  const box=$('sugs');box.innerHTML='';
+  const rows=[[4.5,'AA'],[7,'AAA']].filter(t=>r<t[0]);
+  $('fix').hidden=!rows.length;
+  rows.forEach(([t,name])=>{
+    const s=solve(fg,bg,t),d=document.createElement('div');d.className='sug';
+    d.innerHTML=s?'<span class="sw" style="background:'+s.hex+'"></span><span class="g"><b>'+name+'</b> <code>'+s.hex.toUpperCase()+'</code> \u00b7 '+shown(s.r)+'</span><button class="fill" data-h="'+s.hex+'">Use</button>'
+      :'<span class="g"><b>'+name+'</b>: no color of this hue reaches '+t+':1 here. Change the background.</span>';
+    box.appendChild(d);
+  });
+}
+
+const timers={};
+function clearMessage(k){
+  clearTimeout(timers[k]);
+  $(k+'t').removeAttribute('aria-invalid');
+  $(k+'m').className='msg';
+  $(k+'m').textContent='';
+}
+function fromText(k,final){
+  const t=$(k+'t'),m=$(k+'m'),raw=t.value.trim(),v=norm(raw);
+  clearMessage(k);
+  if(v){
+    t.removeAttribute('aria-invalid');
+    if(k==='fg')fg=v;else bg=v;
+    if(raw&&!HEXRE.test(raw)){m.className='msg ok';m.textContent=raw+' \u2192 '+v.toUpperCase()}
+    else{m.className='msg';m.textContent=''}
+    update();
+  }else{
+    const show=()=>{t.setAttribute('aria-invalid','true');m.className='msg';m.textContent=raw?'\u201c'+raw+'\u201d isn\u2019t a color I know. Try a name, a hex code or rgb().':'Enter a color.'};
+    if(final){show();t.removeAttribute('aria-invalid');t.value=(k==='fg'?fg:bg).toUpperCase()}
+    else timers[k]=setTimeout(show,700);
+  }
+}
+['fg','bg'].forEach(k=>{
+  $(k+'t').addEventListener('input',()=>fromText(k,false));
+  $(k+'t').addEventListener('blur',()=>{
+    const v=norm($(k+'t').value);
+    if(v)$(k+'t').value=v.toUpperCase();else fromText(k,true);
+  });
+  $(k+'t').addEventListener('keydown',e=>{if(e.key==='Enter')$(k+'t').blur()});
+  $(k+'c').addEventListener('input',e=>{
+    if(k==='fg')fg=e.target.value;else bg=e.target.value;
+    clearMessage(k);update();
+  });
+});
+$('swap').onclick=()=>{clearMessage('fg');clearMessage('bg');[fg,bg]=[bg,fg];update()};
+$('rand').onclick=()=>{
+  clearMessage('fg');clearMessage('bg');
+  const h=Math.random()*360,dark=Math.random()<.4,rn=(a,b)=>a+Math.random()*(b-a);
+  bg=toHex(fromHsl(h,rn(.25,.7),dark?rn(.08,.17):rn(.9,.96)));
+  const f=toHex(fromHsl((h+rn(-35,35)+360)%360,rn(.4,.85),dark?rn(.72,.86):rn(.14,.28)));
+  const s=ratio(toRgb(f),toRgb(bg))<4.5?solve(f,bg,4.5):null;
+  fg=s?s.hex:f;
+  update();
+};
+$('sugs').addEventListener('click',e=>{const h=e.target.dataset.h;if(h){clearMessage('fg');fg=h;update()}});
+
+const ICON_IN='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+const ICON_OUT='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>';
+function full(on){
+  $('prev').classList.toggle('full',on);
+  $('exp').innerHTML=on?ICON_OUT:ICON_IN;
+  $('exp').setAttribute('aria-label',on?'Close expanded preview':'Expand preview');
+}
+$('exp').onclick=()=>full(!$('prev').classList.contains('full'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')full(false)});
+full(false);update();
+</script>
+</body>
+</html>
