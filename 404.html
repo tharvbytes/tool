@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#321344">
+<meta name="description" content="This page could not be found. Explore MicroService Tools for free developer utilities, converters, generators, and more.">
+<meta name="robots" content="noindex, follow">
+
+<title>404 — Tool Not Found | MicroService Tools</title>
+
+<style>
+:root {
+  --plum: #59247f;
+  --plum-dark: #321344;
+  --plum-light: #9060c2;
+  --snow: #fbf9ff;
+  --muted: #8f879c;
+  --border: rgba(87, 47, 116, .14);
+  --shadow: 0 18px 55px rgba(42, 17, 62, .12);
+  --ink: #261a30;
+  --lilac: #eee4f8;
+  --white: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--snow);
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #b98ce0;
+  outline-offset: 4px;
+}
+
+::selection {
+  background: #d9c1ed;
+  color: var(--plum-dark);
+}
+
+/* Navigation */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(251, 249, 255, .94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  width: min(1160px, calc(100% - 44px));
+  min-height: 72px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--plum-dark);
+  font-size: 17px;
+  font-weight: 780;
+  letter-spacing: -.04em;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  width: 33px;
+  height: 33px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 10px 10px 10px 3px;
+  background: var(--plum-dark);
+  color: white;
+  box-shadow: 3px 3px 0 #d7c0e9;
+  font-size: 15px;
+  transform: rotate(-2deg);
+}
+
+.brand small {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+.nav-links > a {
+  color: #65566f;
+  font-size: 12px;
+  font-weight: 600;
+  transition: color .2s;
+}
+
+.nav-links > a:hover {
+  color: var(--plum);
+}
+
+.nav-links .coffee-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 37px;
+  padding: 0 14px;
+  border-radius: 7px;
+  background: var(--plum);
+  color: white;
+  box-shadow: 0 4px 0 rgba(50, 19, 68, .12);
+  transition: background .2s, transform .2s;
+}
+
+.nav-links .coffee-link:hover {
+  background: var(--plum-dark);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Main layout */
+
+main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.error-section {
+  position: relative;
+  overflow: hidden;
+  padding: 65px 22px 55px;
+}
+
+.error-section::before {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  top: -220px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(215, 192, 233, .22);
+  filter: blur(55px);
+  pointer-events: none;
+}
+
+.error-content {
+  position: relative;
+  z-index: 1;
+  width: min(650px, 100%);
+  margin: auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: var(--plum);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 19px;
+  height: 2px;
+  background: var(--plum-light);
+}
+
+.eyebrow::after {
+  content: "";
+  width: 19px;
+  height: 2px;
+  background: var(--plum-light);
+}
+
+.error-number {
+  position: relative;
+  margin: 23px 0 0;
+  font-size: clamp(130px, 26vw, 220px);
+  font-weight: 850;
+  line-height: .91;
+  letter-spacing: -.095em;
+  padding-right: .095em;
+  color: transparent;
+  background: linear-gradient(
+    135deg,
+    var(--plum-dark) 5%,
+    var(--plum) 48%,
+    #b58bd7 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: error-enter .75s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.error-content h1 {
+  margin: 22px 0 12px;
+  color: var(--plum-dark);
+  font-size: clamp(30px, 5vw, 43px);
+  line-height: 1.1;
+  letter-spacing: -.065em;
+  font-weight: 790;
+}
+
+.error-content h1 span {
+  color: var(--plum-light);
+}
+
+.description {
+  max-width: 445px;
+  margin: 0 auto;
+  color: #75697f;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+/* Buttons */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-top: 25px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 17px;
+  border: 1px solid var(--plum);
+  border-radius: 8px;
+  background: var(--plum);
+  color: white;
+  font-size: 12px;
+  font-weight: 750;
+  box-shadow: 0 5px 0 rgba(50, 19, 68, .1);
+  cursor: pointer;
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  background: var(--plum-dark);
+  box-shadow: 0 8px 17px rgba(50, 19, 68, .15);
+}
+
+.button.secondary {
+  background: rgba(255, 255, 255, .8);
+  border-color: var(--border);
+  color: var(--plum-dark);
+  box-shadow: none;
+}
+
+.button.secondary:hover {
+  background: var(--lilac);
+}
+
+.button .arrow {
+  font-size: 15px;
+  transition: transform .2s;
+}
+
+.button:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* Request details */
+
+.request-card {
+  margin-top: 36px;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  background: rgba(255, 255, 255, .85);
+  border: 1px solid var(--border);
+  border-radius: 12px 12px 12px 4px;
+  box-shadow: 0 12px 35px rgba(42, 17, 62, .055);
+  animation: card-enter .7s .12s both;
+}
+
+.request-header {
+  min-height: 45px;
+  padding: 0 17px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f5effa;
+  border-bottom: 1px solid var(--border);
+}
+
+.request-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--plum-dark);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.request-icon {
+  width: 21px;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #e6d7f2;
+  color: var(--plum);
+  font-size: 12px;
+}
+
+.request-badge {
+  padding: 5px 9px;
+  border: 1px solid #edc9cf;
+  border-radius: 20px;
+  background: #fff2f3;
+  color: #a34058;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.request-body {
+  padding: 8px 18px;
+}
+
+.request-row {
+  display: grid;
+  grid-template-columns: 135px minmax(0, 1fr);
+  gap: 15px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(87, 47, 116, .08);
+}
+
+.request-row:last-child {
+  border-bottom: 0;
+}
+
+.request-label {
+  color: #92849d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.request-value {
+  min-width: 0;
+  color: #493653;
+  font-size: 11px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.request-value.path {
+  color: var(--plum);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-weight: 500;
+}
+
+.request-value.status {
+  color: #b34e62;
+}
+
+.request-value.suggestion {
+  color: #568465;
+}
+
+/* Tool suggestions */
+
+.suggestions {
+  width: min(800px, calc(100% - 44px));
+  margin: 0 auto;
+  padding: 8px 0 64px;
+}
+
+.suggestions-heading {
+  margin-bottom: 17px;
+  text-align: center;
+}
+
+.suggestions-heading .kicker {
+  color: var(--plum-light);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.suggestions-heading h2 {
+  margin: 8px 0 5px;
+  color: var(--plum-dark);
+  font-size: clamp(22px, 4vw, 29px);
+  line-height: 1.2;
+  letter-spacing: -.05em;
+}
+
+.suggestions-heading p {
+  margin: 0;
+  color: #82758b;
+  font-size: 12px;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tool-card {
+  min-width: 0;
+  position: relative;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 11px 11px 11px 4px;
+  background: rgba(255, 255, 255, .78);
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(89, 36, 127, .28);
+  box-shadow: var(--shadow);
+}
+
+.tool-icon {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(89, 36, 127, .1);
+  border-radius: 10px;
+  background: var(--lilac);
+  color: var(--plum);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tool-card h3 {
+  margin: 12px 0 5px;
+  color: var(--plum-dark);
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: -.025em;
+}
+
+.tool-card p {
+  margin: 0;
+  color: #82758b;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.tool-arrow {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--plum);
+  font-size: 12px;
+  font-weight: 750;
+  transition: transform .2s;
+}
+
+.tool-card:hover .tool-arrow {
+  transform: translateX(4px);
+}
+
+/* Footer */
+
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, .4);
+}
+
+.footer-inner {
+  width: min(1160px, calc(100% - 44px));
+  min-height: 78px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+}
+
+.footer-brand {
+  color: var(--plum-dark);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.footer-brand small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 17px;
+}
+
+.footer-links a {
+  color: #76677f;
+  font-size: 11px;
+  transition: color .2s;
+}
+
+.footer-links a:hover {
+  color: var(--plum);
+}
+
+.footer-copy {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* Motion */
+
+@keyframes error-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .nav {
+    min-height: 65px;
+    width: calc(100% - 30px);
+  }
+
+  .brand {
+    font-size: 15px;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links > a {
+    font-size: 11px;
+  }
+
+  .nav-links .coffee-link {
+    min-height: 34px;
+    padding: 0 10px;
+  }
+
+  .error-section {
+    padding: 48px 15px 40px;
+  }
+
+  .error-content h1 {
+    margin-top: 19px;
+  }
+
+  .description {
+    max-width: 390px;
+    font-size: 13px;
+  }
+
+  .request-card {
+    margin-top: 30px;
+  }
+
+  .request-row {
+    grid-template-columns: 105px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .suggestions {
+    width: calc(100% - 30px);
+    padding-bottom: 45px;
+  }
+
+  .tool-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-inner {
+    width: calc(100% - 30px);
+  }
+}
+
+@media (max-width: 440px) {
+  .nav-links {
+    gap: 9px;
+  }
+
+  .nav-links .about-link {
+    display: none;
+  }
+
+  .brand {
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+  .error-section {
+    padding-top: 40px;
+  }
+
+  .error-number {
+    font-size: 135px;
+  }
+
+  .error-content h1 {
+    font-size: 31px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: min(280px, 100%);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .actions .button {
+    width: 100%;
+  }
+
+  .request-header {
+    padding: 0 12px;
+  }
+
+  .request-body {
+    padding: 7px 12px;
+  }
+
+  .request-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 10px 0;
+  }
+
+  .tool-grid {
+    gap: 9px;
+  }
+
+  .tool-card {
+    padding: 13px;
+  }
+
+  .footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .footer-links {
+    gap: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<header class="site-header">
+  <nav class="nav" aria-label="Main navigation">
+
+    <a class="brand" href="/tool/" aria-label="MicroService Tools homepage">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span>
+        MicroService Tools
+        <small>Small tools. Thoughtfully made.</small>
+      </span>
+    </a>
+
+    <div class="nav-links">
+      <a class="about-link"
+         href="https://about.imtharvesh.me"
+         target="_blank"
+         rel="noopener noreferrer">
+        About Me
+      </a>
+
+      <a class="coffee-link"
+         href="https://buymeacoffee.com/tharveshmuhaideen"
+         target="_blank"
+         rel="noopener noreferrer">
+        Buy me a coffee <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+  </nav>
+</header>
+
+<main>
+
+  <!-- Main 404 section -->
+  <section class="error-section">
+    <div class="error-content">
+
+      <div class="eyebrow">A little detour on the internet</div>
+
+      <div class="error-number" aria-label="Error 404">404</div>
+
+      <h1>
+        Tool not found<span>.</span>
+      </h1>
+
+      <p class="description">
+        Well, this is a little unexpected. The page you're looking for
+        might have moved, been renamed, or never existed.
+        Let's get you back to something useful.
+      </p>
+
+      <div class="actions">
+        <a class="button" href="/tool/">
+          Explore all tools
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+
+        <button class="button secondary" id="goBack" type="button">
+          <span aria-hidden="true">←</span>
+          Go back
+        </button>
+      </div>
+
+      <!-- Request details -->
+      <section class="request-card" aria-label="Request details">
+
+        <div class="request-header">
+          <div class="request-title">
+            <span class="request-icon" aria-hidden="true">⌘</span>
+            Request details
+          </div>
+
+          <span class="request-badge">404 NOT FOUND</span>
+        </div>
+
+        <div class="request-body">
+
+          <div class="request-row">
+            <div class="request-label">Requested URL</div>
+            <div class="request-value path" id="requestedPath">Loading...</div>
+          </div>
+
+          <div class="request-row">
+            <div class="request-label">Status</div>
+            <div class="request-value status">404 · Resource not found</div>
+          </div>
+
+          <div class="request-row">
+            <div class="request-label">What happened?</div>
+            <div class="request-value">
+              We couldn't find a page at this address.
+            </div>
+          </div>
+
+          <div class="request-row">
+            <div class="request-label">Suggested action</div>
+            <div class="request-value suggestion">
+              Explore the available developer tools below.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- Suggested tools -->
+  <section class="suggestions" aria-labelledby="suggestionsTitle">
+
+    <div class="suggestions-heading">
+      <div class="kicker">A better place to start</div>
+
+      <h2 id="suggestionsTitle">Maybe you meant one of these?</h2>
+
+      <p>A few handy tools to get you back on track.</p>
+    </div>
+
+    <div class="tool-grid">
+
+      <a class="tool-card" href="/tool/yaml-properties-converter/">
+        <span class="tool-icon" aria-hidden="true">{ }</span>
+        <h3>YAML &amp; Properties</h3>
+        <p>Convert and work with configuration formats.</p>
+        <span class="tool-arrow">Explore tool →</span>
+      </a>
+
+      <a class="tool-card" href="/tool/base64-encoder-decoder/">
+        <span class="tool-icon" aria-hidden="true">B64</span>
+        <h3>Base64 Converter</h3>
+        <p>Encode and decode Base64 strings with ease.</p>
+        <span class="tool-arrow">Explore tool →</span>
+      </a>
+
+      <a class="tool-card" href="/tool/uuid-generator/">
+        <span class="tool-icon" aria-hidden="true">#</span>
+        <h3>UUID Generator</h3>
+        <p>Generate unique identifiers for your projects.</p>
+        <span class="tool-arrow">Explore tool →</span>
+      </a>
+
+      <a class="tool-card" href="/tool/json-formatter/">
+        <span class="tool-icon" aria-hidden="true">{ }</span>
+        <h3>JSON Formatter</h3>
+        <p>Format and inspect JSON data more easily.</p>
+        <span class="tool-arrow">Explore tool →</span>
+      </a>
+
+      <a class="tool-card" href="/tool/hash-generator/">
+        <span class="tool-icon" aria-hidden="true">#</span>
+        <h3>Hash Generator</h3>
+        <p>Generate hashes for your text and data.</p>
+        <span class="tool-arrow">Explore tool →</span>
+      </a>
+
+      <a class="tool-card" href="/tool/word-counter/">
+        <span class="tool-icon" aria-hidden="true">Aa</span>
+        <h3>Word Counter</h3>
+        <p>Count words, characters, and other text metrics.</p>
+        <span class="tool-arrow">Explore tool →</span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      MicroService Tools
+      <small>Small tools. Thoughtfully made.</small>
+    </div>
+
+    <div class="footer-links">
+      <a href="/tool/">Home</a>
+      <a href="https://about.imtharvesh.me"
+         target="_blank"
+         rel="noopener noreferrer">About Me</a>
+      <a href="https://github.com/tharvbytes/tool"
+         target="_blank"
+         rel="noopener noreferrer">GitHub ↗</a>
+    </div>
+
+    <div class="footer-copy">
+      © <span id="year"></span> TharvBytes
+    </div>
+
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  /*
+   * GitHub Pages project site:
+   * https://tharvbytes.github.io/tool/
+   */
+  const BASE_PATH = "/tool/";
+
+  // Display the actual requested pathname.
+  const requestedPath = document.getElementById("requestedPath");
+
+  requestedPath.textContent =
+    window.location.pathname +
+    window.location.search;
+
+  // Current year.
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+  // Go back, with a safe fallback to the tools homepage.
+  document.getElementById("goBack").addEventListener("click", () => {
+    if (
+      window.history.length > 1 &&
+      document.referrer &&
+      new URL(document.referrer).origin === window.location.origin
+    ) {
+      window.history.back();
+    } else {
+      window.location.href = BASE_PATH;
+    }
+  });
+
+  /*
+   * Optional: highlight the requested path if it looks like
+   * an individual tool URL.
+   */
+  const path = window.location.pathname;
+
+  if (path.startsWith(BASE_PATH)) {
+    const relativePath = path.slice(BASE_PATH.length);
+
+    if (relativePath) {
+      requestedPath.title = relativePath;
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

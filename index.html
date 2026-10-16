@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fbf9ff">
-<meta name="description" content="Explore free browser-based developer and writing tools: minify code, generate hashes and UUIDs, check contrast, compare text, convert formats, and more.">
-<meta name="color-scheme" content="light">
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-<link rel="canonical" href="https://tharvbytes.github.io/tool/">
-<link rel="icon" href="/tool/favicon_io/favicon.ico" sizes="any">
-<link rel="icon" href="/tool/favicon_io/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/tool/favicon_io/apple-touch-icon.png">
-<link rel="manifest" href="/tool/favicon_io/site.webmanifest">
-<title>MicroService Tools | Free Online Developer &amp; Writing Tools</title>
-<meta property="og:type" content="website">
-<meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="MicroService Tools">
-<meta property="og:url" content="https://tharvbytes.github.io/tool/">
-<meta property="og:title" content="MicroService Tools | Free Online Developer &amp; Writing Tools">
-<meta property="og:description" content="Explore free browser-based developer and writing tools: minify code, generate hashes and UUIDs, check contrast, compare text, convert formats, and more.">
-<meta property="og:image" content="https://tharvbytes.github.io/tool/favicon_io/og-image.png">
-<meta property="og:image:alt" content="MicroService Tools — small tools, thoughtfully made">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MicroService Tools | Free Online Developer &amp; Writing Tools">
-<meta name="twitter:description" content="Free browser-based tools for developers and writers. Minify, convert, compare, validate, and generate right in your browser.">
-<meta name="twitter:image" content="https://tharvbytes.github.io/tool/favicon_io/og-image.png">
-<meta name="twitter:image:alt" content="MicroService Tools — small tools, thoughtfully made">
-<script type="application/ld+json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf9ff">
+  <meta name="description"
+    content="Explore free browser-based developer and writing tools: minify code, generate hashes and UUIDs, check contrast, compare text, convert formats, and more.">
+  <meta name="color-scheme" content="light">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://tharvbytes.github.io/tool/">
+  <link rel="icon" href="/tool/favicon_io/favicon.ico" sizes="any">
+  <link rel="icon" href="/tool/favicon_io/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/tool/favicon_io/apple-touch-icon.png">
+  <link rel="manifest" href="/tool/favicon_io/site.webmanifest">
+  <title>MicroService Tools | Free Online Developer &amp; Writing Tools</title>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="MicroService Tools">
+  <meta property="og:url" content="https://tharvbytes.github.io/tool/">
+  <meta property="og:title" content="MicroService Tools | Free Online Developer &amp; Writing Tools">
+  <meta property="og:description"
+    content="Explore free browser-based developer and writing tools: minify code, generate hashes and UUIDs, check contrast, compare text, convert formats, and more.">
+  <meta property="og:image" content="https://tharvbytes.github.io/tool/favicon_io/og-image.png">
+  <meta property="og:image:alt" content="MicroService Tools — small tools, thoughtfully made">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MicroService Tools | Free Online Developer &amp; Writing Tools">
+  <meta name="twitter:description"
+    content="Free browser-based tools for developers and writers. Minify, convert, compare, validate, and generate right in your browser.">
+  <meta name="twitter:image" content="https://tharvbytes.github.io/tool/favicon_io/og-image.png">
+  <meta name="twitter:image:alt" content="MicroService Tools — small tools, thoughtfully made">
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -85,3520 +89,3472 @@
 }
 </script>
 
-<style>
-:root {
-  --plum: #59247f;
-  --plum-dark: #321344;
-  --plum-light: #9060c2;
-  --snow: #fbf9ff;
-  --lilac: #eee4f8;
-  --ink: #261a30;
-  --muted: #8f879c;
-  --border: rgba(87,47,116,.14);
-  --shadow: 0 18px 55px rgba(42,17,62,.10);
-  --white: #fff;
-  --green: #347a52;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 95px;
-}
-
-body {
-  margin: 0;
-  background: var(--snow);
-  color: var(--ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-
-body, input, button {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button, input {
-  font: inherit;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible {
-  outline: 3px solid #b98ce0;
-  outline-offset: 4px;
-}
-
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.wrap {
-  width: min(1160px, calc(100% - 44px));
-  margin-inline: auto;
-}
-
-/* Navigation */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(251,249,255,.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav {
-  min-height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  color: var(--plum-dark);
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -.045em;
-  flex-shrink: 0;
-}
-
-.brand-mark {
-  width: 35px;
-  height: 35px;
-  display: grid;
-  place-items: center;
-  border-radius: 11px 11px 11px 4px;
-  background: var(--plum-dark);
-  color: white;
-  font-size: 16px;
-  box-shadow: 3px 3px 0 #d7c0e9;
-}
-
-.brand small {
-  display: block;
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  line-height: 1.2;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.nav-links > a {
-  color: #65566f;
-  font-size: 12px;
-  font-weight: 650;
-  transition: color .2s;
-}
-
-.nav-links > a:hover {
-  color: var(--plum);
-}
-
-.nav-links .coffee {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 0 15px;
-  border-radius: 7px;
-  background: var(--plum);
-  color: white;
-  box-shadow: 0 4px 0 rgba(50,19,68,.12);
-  transition: background .2s, transform .2s;
-}
-
-.nav-links .coffee:hover {
-  background: var(--plum-dark);
-  color: white;
-  transform: translateY(-2px);
-}
-
-/* Hero */
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 76px 0 55px;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  right: -180px;
-  top: -210px;
-  border: 1px solid rgba(89,36,127,.08);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 35px rgba(89,36,127,.025),
-    0 0 0 75px rgba(89,36,127,.02);
-  pointer-events: none;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr .72fr;
-  gap: 45px;
-  align-items: center;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--plum);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-}
-
-.eyebrow::before {
-  content: "";
-  width: 22px;
-  height: 2px;
-  background: var(--plum-light);
-}
-
-.hero h1 {
-  max-width: 670px;
-  margin: 20px 0;
-  color: var(--plum-dark);
-  font-size: clamp(45px, 6.5vw, 76px);
-  line-height: .99;
-  letter-spacing: -.075em;
-  font-weight: 800;
-}
-
-.hero h1 em {
-  color: var(--plum-light);
-  font-style: normal;
-}
-
-.hero-copy {
-  max-width: 520px;
-  margin: 0;
-  color: #6b6073;
-  font-size: 15px;
-  line-height: 1.85;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 11px;
-  margin-top: 25px;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  min-height: 43px;
-  padding: 0 17px;
-  border: 1px solid var(--plum);
-  border-radius: 7px;
-  background: var(--plum);
-  color: white;
-  font-size: 12px;
-  font-weight: 750;
-  cursor: pointer;
-  box-shadow: 0 4px 0 rgba(50,19,68,.1);
-  transition: transform .2s, background .2s, box-shadow .2s;
-}
-
-.button:hover {
-  transform: translateY(-2px);
-  background: var(--plum-dark);
-  box-shadow: 0 8px 18px rgba(50,19,68,.15);
-}
-
-.button.secondary {
-  background: white;
-  color: var(--plum-dark);
-  border-color: var(--border);
-  box-shadow: none;
-}
-
-.button.secondary:hover {
-  background: var(--lilac);
-}
-
-.hero-proof {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin-top: 22px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.proof-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #6caa7c;
-}
-
-/* Hero visual */
-
-.hero-visual {
-  position: relative;
-  min-width: 0;
-  padding: 15px 0 18px 12px;
-}
-
-.hero-visual::before {
-  content: "";
-  position: absolute;
-  inset: 7% -5% 0 8%;
-  z-index: -1;
-  border-radius: 43% 35% 42% 32%;
-  background: #eee3f7;
-  transform: rotate(3deg);
-}
-
-.preview-window {
-  overflow: hidden;
-  border: 6px solid #24192c;
-  border-radius: 13px;
-  background: #17121e;
-  box-shadow: 0 25px 55px rgba(42,17,62,.2);
-  transform: rotate(1deg);
-}
-
-.preview-top {
-  height: 32px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 0 10px;
-  background: #261c30;
-}
-
-.window-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #786b82;
-}
-
-.preview-address {
-  flex: 1;
-  margin-left: 9px;
-  padding: 2px 9px;
-  border-radius: 4px;
-  background: #352740;
-  color: #d4c8dc;
-  font-size: 8px;
-}
-
-.preview-body {
-  min-height: 280px;
-  padding: 22px 19px;
-  background: linear-gradient(135deg, #e7d7f4, #f8f3fc 60%, #dfcdeb);
-}
-
-.preview-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.preview-heading strong {
-  display: block;
-  color: #3a204b;
-  font-size: 15px;
-  letter-spacing: -.04em;
-}
-
-.preview-heading small {
-  color: #806c8e;
-  font-size: 9px;
-}
-
-.preview-badge {
-  padding: 5px 8px;
-  border: 1px solid rgba(89,36,127,.15);
-  border-radius: 20px;
-  background: rgba(255,255,255,.7);
-  color: var(--plum);
-  font-size: 8px;
-  font-weight: 800;
-}
-
-.preview-search {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin: 22px 0 17px;
-  padding: 11px;
-  border: 1px solid rgba(89,36,127,.13);
-  border-radius: 8px;
-  background: rgba(255,255,255,.85);
-  color: #9989a3;
-  font-size: 10px;
-}
-
-.preview-search span:first-child {
-  color: var(--plum);
-  font-size: 15px;
-}
-
-.preview-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-}
-
-.preview-card {
-  min-width: 0;
-  padding: 11px 7px;
-  border: 1px solid rgba(89,36,127,.12);
-  border-radius: 8px;
-  background: rgba(255,255,255,.82);
-  text-align: center;
-}
-
-.preview-icon {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  margin: 0 auto 7px;
-  border-radius: 9px;
-  background: #efe4f8;
-  color: var(--plum);
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.preview-card b {
-  display: block;
-  overflow: hidden;
-  color: #4c315e;
-  font-size: 9px;
-  text-overflow: ellipsis;
-}
-
-.preview-card small {
-  display: block;
-  margin-top: 2px;
-  color: #97869f;
-  font-size: 8px;
-}
-
-.preview-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 17px;
-  color: #806c8e;
-  font-size: 8px;
-}
-
-/* Statistics */
-
-.stats {
-  padding: 19px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: rgba(255,255,255,.55);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.stat {
-  padding: 6px 15px;
-  text-align: center;
-}
-
-.stat + .stat {
-  border-left: 1px solid var(--border);
-}
-
-.stat strong {
-  display: block;
-  color: var(--plum-dark);
-  font-size: 24px;
-  letter-spacing: -.06em;
-}
-
-.stat span {
-  color: var(--muted);
-  font-size: 10px;
-}
-
-/* Tools section */
-
-.tools-section {
-  padding: 70px 0 80px;
-}
-
-.section-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 25px;
-  margin-bottom: 28px;
-}
-
-.kicker {
-  color: var(--plum-light);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-.section-heading h2 {
-  margin: 9px 0 7px;
-  color: var(--plum-dark);
-  font-size: clamp(30px, 4vw, 43px);
-  line-height: 1.08;
-  letter-spacing: -.065em;
-}
-
-.section-heading p {
-  max-width: 480px;
-  margin: 0;
-  color: #766b7f;
-  font-size: 13px;
-  line-height: 1.75;
-}
-
-.tool-count {
-  flex-shrink: 0;
-  padding: 7px 11px;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  background: white;
-  color: var(--plum);
-  font-size: 10px;
-  font-weight: 800;
-}
-
-/* Search */
-
-.search-area {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  padding: 11px 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: white;
-  box-shadow: 0 5px 20px rgba(42,17,62,.035);
-  transition: border-color .2s, box-shadow .2s;
-}
-
-.search-area:focus-within {
-  border-color: rgba(89,36,127,.5);
-  box-shadow: 0 0 0 4px rgba(89,36,127,.06);
-}
-
-.search-icon {
-  color: var(--plum);
-  font-size: 20px;
-}
-
-.search-area input {
-  width: 100%;
-  min-width: 0;
-  padding: 5px 0;
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: var(--ink);
-  font-size: 13px;
-}
-
-.search-area input::placeholder {
-  color: #a69bab;
-}
-
-.search-area input:focus-visible {
-  outline: none;
-}
-
-.search-shortcut {
-  flex-shrink: 0;
-  padding: 3px 7px;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  color: var(--muted);
-  font-size: 10px;
-}
-
-/* Filters */
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 27px;
-}
-
-.filter {
-  min-height: 34px;
-  padding: 0 13px;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  background: white;
-  color: #71657a;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .2s, color .2s, border-color .2s;
-}
-
-.filter:hover {
-  border-color: #c8addc;
-  color: var(--plum);
-}
-
-.filter[aria-pressed="true"] {
-  border-color: var(--plum-dark);
-  background: var(--plum-dark);
-  color: white;
-}
-
-/* Tool cards */
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-}
-
-.tool-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 208px;
-  padding: 21px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 12px 12px 12px 4px;
-  background: rgba(255,255,255,.83);
-  transition:
-    transform .22s,
-    border-color .22s,
-    box-shadow .22s;
-}
-
-.tool-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(89,36,127,.32);
-  box-shadow: var(--shadow);
-}
-
-.tool-card[hidden] {
-  display: none;
-}
-
-.tool-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.tool-icon {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  border: 1px solid rgba(89,36,127,.09);
-  border-radius: 12px 12px 12px 4px;
-  background: #efe4f8;
-  color: var(--plum);
-  font-size: 17px;
-  font-weight: 800;
-}
-
-.tool-icon.blue {
-  background: #e6f0ff;
-  color: #3666a4;
-}
-
-.tool-icon.green {
-  background: #e0f2e5;
-  color: #357b4d;
-}
-
-.tool-icon.orange {
-  background: #fff0d8;
-  color: #a86c23;
-}
-
-.tool-icon.pink {
-  background: #f9dfe8;
-  color: #a34065;
-}
-
-.tool-icon.cyan {
-  background: #e4edf0;
-  color: #376978;
-}
-
-.tool-icon.yellow {
-  background: #fff4cb;
-  color: #8a6a12;
-}
-
-.tool-icon.slate {
-  background: #e9e7f1;
-  color: #5c4c77;
-}
-
-.tool-category {
-  padding: 5px 7px;
-  border-radius: 5px;
-  background: #f5effa;
-  color: #816493;
-  font-size: 9px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.tool-card h3 {
-  margin: 17px 0 7px;
-  color: var(--plum-dark);
-  font-size: 16px;
-  letter-spacing: -.035em;
-}
-
-.tool-card p {
-  margin: 0 0 19px;
-  color: #796e81;
-  font-size: 11px;
-  line-height: 1.8;
-}
-
-.tool-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid rgba(87,47,116,.09);
-  color: var(--plum);
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.tool-link span:last-child {
-  font-size: 16px;
-  transition: transform .2s;
-}
-
-.tool-card:hover .tool-link span:last-child {
-  transform: translateX(4px);
-}
-
-.empty-state {
-  display: none;
-  padding: 45px 20px;
-  border: 1px dashed rgba(89,36,127,.25);
-  border-radius: 12px;
-  background: white;
-  text-align: center;
-}
-
-.empty-state.show {
-  display: block;
-}
-
-.empty-state strong {
-  display: block;
-  color: var(--plum-dark);
-  font-size: 17px;
-}
-
-.empty-state p {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.empty-state button {
-  padding: 9px 13px;
-  border: 0;
-  border-radius: 7px;
-  background: var(--plum);
-  color: white;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* Bottom CTA */
-
-.cta-section {
-  padding: 0 0 75px;
-}
-
-.cta-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 35px 38px;
-  overflow: hidden;
-  border-radius: 14px 14px 14px 5px;
-  background: var(--plum-dark);
-  color: white;
-}
-
-.cta-box::after {
-  content: "";
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  right: 17%;
-  top: -130px;
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 28px rgba(255,255,255,.025),
-    0 0 0 57px rgba(255,255,255,.02);
-  pointer-events: none;
-}
-
-.cta-copy {
-  position: relative;
-  z-index: 1;
-}
-
-.cta-box h2 {
-  margin: 0 0 9px;
-  font-size: clamp(24px, 3vw, 34px);
-  letter-spacing: -.055em;
-}
-
-.cta-box p {
-  max-width: 540px;
-  margin: 0;
-  color: #d4c2e0;
-  font-size: 12px;
-  line-height: 1.8;
-}
-
-.cta-box .button {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  border-color: white;
-  background: white;
-  color: var(--plum-dark);
-  box-shadow: none;
-}
-
-.cta-box .button:hover {
-  background: var(--lilac);
-}
-
-/* Footer */
-
-.site-footer {
-  border-top: 1px solid var(--border);
-  background: rgba(255,255,255,.55);
-}
-
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  padding: 24px 0;
-}
-
-.footer-brand {
-  color: var(--plum-dark);
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.footer-brand small {
-  display: block;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 10px;
-  font-weight: 500;
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 19px;
-}
-
-.footer-links a {
-  color: #766b7f;
-  font-size: 11px;
-}
-
-.footer-links a:hover {
-  color: var(--plum);
-}
-
-/* Reveal animations */
-
-.reveal {
-  animation: reveal-in .65s both;
-}
-
-@keyframes reveal-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive */
-
-@media (min-width: 1200px) {
-  .tools-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  .hero {
-    padding-top: 55px;
-  }
-
-  .hero-grid {
-    grid-template-columns: 1fr .85fr;
-    gap: 24px;
-  }
-
-  .hero h1 {
-    font-size: clamp(42px, 6vw, 58px);
-  }
-
-  .preview-body {
-    padding: 17px 13px;
-  }
-
-  .tools-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .cta-box {
-    padding: 30px;
-  }
-}
-
-@media (max-width: 620px) {
-  .wrap {
-    width: calc(100% - 30px);
-  }
-
-  .nav {
-    min-height: 64px;
-    gap: 10px;
-  }
-
-  .brand {
-    gap: 9px;
-    font-size: 15px;
-  }
-
-  .brand-mark {
-    width: 30px;
-    height: 30px;
-    font-size: 14px;
-  }
-
-  .brand small {
-    font-size: 7px;
-  }
-
-  .nav-links {
-    gap: 10px;
-  }
-
-  .nav-links > a {
-    font-size: 10px;
-  }
-
-  .nav-links .about-link {
-    display: none;
-  }
-
-  .nav-links .coffee {
-    min-height: 33px;
-    padding: 0 10px;
-    font-size: 10px;
-  }
-
-  .hero {
-    padding: 43px 0 38px;
-  }
-
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .hero h1 {
-    font-size: clamp(45px, 12vw, 61px);
-  }
-
-  .hero-copy {
-    font-size: 13px;
-  }
-
-  .hero-visual {
-    width: min(460px, 100%);
-    margin: 0 auto;
-    padding-left: 4px;
-    padding-right: 4px;
-  }
-
-  .preview-window {
-    border-width: 5px;
-  }
-
-  .preview-body {
-    min-height: 240px;
-    padding: 17px 13px;
-  }
-
-  .preview-card {
-    padding: 9px 4px;
-  }
-
-  .stats {
-    padding: 15px 0;
-  }
-
-  .stat {
-    padding: 5px 6px;
-  }
-
-  .stat strong {
-    font-size: 21px;
-  }
-
-  .stat span {
-    font-size: 9px;
-  }
-
-  .tools-section {
-    padding: 51px 0 55px;
-  }
-
-  .section-heading {
-    align-items: flex-start;
-    margin-bottom: 22px;
-  }
-
-  .section-heading h2 {
-    font-size: 32px;
-  }
-
-  .section-heading p {
-    font-size: 12px;
-  }
-
-  .tool-count {
-    margin-top: 18px;
-    padding: 6px 8px;
-    font-size: 9px;
-  }
-
-  .search-area {
-    gap: 9px;
-    padding: 9px 11px;
-  }
-
-  .search-area input {
-    font-size: 12px;
-  }
-
-  .search-shortcut {
-    display: none;
-  }
-
-  .filters {
-    gap: 7px;
-    margin-bottom: 20px;
-  }
-
-  .filter {
-    min-height: 32px;
-    padding: 0 10px;
-    font-size: 10px;
-  }
-
-  .tools-grid {
-    gap: 10px;
-  }
-
-  .tool-card {
-    min-height: 195px;
-    padding: 13px;
-  }
-
-  .tool-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px 10px 10px 3px;
-    font-size: 14px;
-  }
-
-  .tool-category {
-    padding: 4px 5px;
-    font-size: 8px;
-  }
-
-  .tool-card h3 {
-    margin-top: 13px;
-    font-size: 13px;
-  }
-
-  .tool-card p {
-    margin-bottom: 15px;
-    font-size: 10px;
-    line-height: 1.7;
-  }
-
-  .tool-link {
-    padding-top: 10px;
-    font-size: 10px;
-  }
-
-  .cta-section {
-    padding-bottom: 48px;
-  }
-
-  .cta-box {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 21px;
-    padding: 25px 21px;
-  }
-
-  .cta-box h2 {
-    font-size: 26px;
-  }
-
-  .cta-box p {
-    font-size: 11px;
-  }
-
-  .footer-inner {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 18px;
-    padding: 23px 0;
-  }
-
-  .footer-links {
-    gap: 13px;
-  }
-}
-
-@media (max-width: 360px) {
-  .brand {
-    font-size: 13px;
-  }
-
-  .nav-links .coffee {
-    padding: 0 7px;
-  }
-
-  .tools-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .tool-card {
-    min-height: 175px;
-    padding: 18px;
-  }
-
-  .tool-card h3 {
-    font-size: 15px;
-  }
-
-  .tool-card p {
-    font-size: 11px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
-}
-
-
-/* =========================================
+  <style>
+    :root {
+      --plum: #59247f;
+      --plum-dark: #321344;
+      --plum-light: #9060c2;
+      --snow: #fbf9ff;
+      --lilac: #eee4f8;
+      --ink: #261a30;
+      --muted: #8f879c;
+      --border: rgba(87, 47, 116, .14);
+      --shadow: 0 18px 55px rgba(42, 17, 62, .10);
+      --white: #fff;
+      --green: #347a52;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 95px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--snow);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body,
+    input,
+    button {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #b98ce0;
+      outline-offset: 4px;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wrap {
+      width: min(1160px, calc(100% - 44px));
+      margin-inline: auto;
+    }
+
+    /* Navigation */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(251, 249, 255, .92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--plum-dark);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -.045em;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px 11px 11px 4px;
+      background: var(--plum-dark);
+      color: white;
+      font-size: 16px;
+      box-shadow: 3px 3px 0 #d7c0e9;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links>a {
+      color: #65566f;
+      font-size: 12px;
+      font-weight: 650;
+      transition: color .2s;
+    }
+
+    .nav-links>a:hover {
+      color: var(--plum);
+    }
+
+    .nav-links .coffee {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 15px;
+      border-radius: 7px;
+      background: var(--plum);
+      color: white;
+      box-shadow: 0 4px 0 rgba(50, 19, 68, .12);
+      transition: background .2s, transform .2s;
+    }
+
+    .nav-links .coffee:hover {
+      background: var(--plum-dark);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Hero */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 76px 0 55px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      right: -180px;
+      top: -210px;
+      border: 1px solid rgba(89, 36, 127, .08);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 35px rgba(89, 36, 127, .025),
+        0 0 0 75px rgba(89, 36, 127, .02);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr .72fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--plum);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--plum-light);
+    }
+
+    .hero h1 {
+      max-width: 670px;
+      margin: 20px 0;
+      color: var(--plum-dark);
+      font-size: clamp(45px, 6.5vw, 76px);
+      line-height: .99;
+      letter-spacing: -.075em;
+      font-weight: 800;
+    }
+
+    .hero h1 em {
+      color: var(--plum-light);
+      font-style: normal;
+    }
+
+    .hero-copy {
+      max-width: 520px;
+      margin: 0;
+      color: #6b6073;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 43px;
+      padding: 0 17px;
+      border: 1px solid var(--plum);
+      border-radius: 7px;
+      background: var(--plum);
+      color: white;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 4px 0 rgba(50, 19, 68, .1);
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--plum-dark);
+      box-shadow: 0 8px 18px rgba(50, 19, 68, .15);
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--plum-dark);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+
+    .button.secondary:hover {
+      background: var(--lilac);
+    }
+
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .proof-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #6caa7c;
+    }
+
+    /* Hero visual */
+
+    .hero-visual {
+      position: relative;
+      min-width: 0;
+      padding: 15px 0 18px 12px;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 7% -5% 0 8%;
+      z-index: -1;
+      border-radius: 43% 35% 42% 32%;
+      background: #eee3f7;
+      transform: rotate(3deg);
+    }
+
+    .preview-window {
+      overflow: hidden;
+      border: 6px solid #24192c;
+      border-radius: 13px;
+      background: #17121e;
+      box-shadow: 0 25px 55px rgba(42, 17, 62, .2);
+      transform: rotate(1deg);
+    }
+
+    .preview-top {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 10px;
+      background: #261c30;
+    }
+
+    .window-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #786b82;
+    }
+
+    .preview-address {
+      flex: 1;
+      margin-left: 9px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background: #352740;
+      color: #d4c8dc;
+      font-size: 8px;
+    }
+
+    .preview-body {
+      min-height: 280px;
+      padding: 22px 19px;
+      background: linear-gradient(135deg, #e7d7f4, #f8f3fc 60%, #dfcdeb);
+    }
+
+    .preview-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .preview-heading strong {
+      display: block;
+      color: #3a204b;
+      font-size: 15px;
+      letter-spacing: -.04em;
+    }
+
+    .preview-heading small {
+      color: #806c8e;
+      font-size: 9px;
+    }
+
+    .preview-badge {
+      padding: 5px 8px;
+      border: 1px solid rgba(89, 36, 127, .15);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .7);
+      color: var(--plum);
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .preview-search {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 22px 0 17px;
+      padding: 11px;
+      border: 1px solid rgba(89, 36, 127, .13);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .85);
+      color: #9989a3;
+      font-size: 10px;
+    }
+
+    .preview-search span:first-child {
+      color: var(--plum);
+      font-size: 15px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .preview-card {
+      min-width: 0;
+      padding: 11px 7px;
+      border: 1px solid rgba(89, 36, 127, .12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .82);
+      text-align: center;
+    }
+
+    .preview-icon {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 7px;
+      border-radius: 9px;
+      background: #efe4f8;
+      color: var(--plum);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .preview-card b {
+      display: block;
+      overflow: hidden;
+      color: #4c315e;
+      font-size: 9px;
+      text-overflow: ellipsis;
+    }
+
+    .preview-card small {
+      display: block;
+      margin-top: 2px;
+      color: #97869f;
+      font-size: 8px;
+    }
+
+    .preview-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 17px;
+      color: #806c8e;
+      font-size: 8px;
+    }
+
+    /* Statistics */
+
+    .stats {
+      padding: 19px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, .55);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat {
+      padding: 6px 15px;
+      text-align: center;
+    }
+
+    .stat+.stat {
+      border-left: 1px solid var(--border);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--plum-dark);
+      font-size: 24px;
+      letter-spacing: -.06em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* Tools section */
+
+    .tools-section {
+      padding: 70px 0 80px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      color: var(--plum-light);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin: 9px 0 7px;
+      color: var(--plum-dark);
+      font-size: clamp(30px, 4vw, 43px);
+      line-height: 1.08;
+      letter-spacing: -.065em;
+    }
+
+    .section-heading p {
+      max-width: 480px;
+      margin: 0;
+      color: #766b7f;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .tool-count {
+      flex-shrink: 0;
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: white;
+      color: var(--plum);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* Search */
+
+    .search-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 5px 20px rgba(42, 17, 62, .035);
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .search-area:focus-within {
+      border-color: rgba(89, 36, 127, .5);
+      box-shadow: 0 0 0 4px rgba(89, 36, 127, .06);
+    }
+
+    .search-icon {
+      color: var(--plum);
+      font-size: 20px;
+    }
+
+    .search-area input {
+      width: 100%;
+      min-width: 0;
+      padding: 5px 0;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .search-area input::placeholder {
+      color: #a69bab;
+    }
+
+    .search-area input:focus-visible {
+      outline: none;
+    }
+
+    .search-shortcut {
+      flex-shrink: 0;
+      padding: 3px 7px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* Filters */
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 27px;
+    }
+
+    .filter {
+      min-height: 34px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: white;
+      color: #71657a;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+
+    .filter:hover {
+      border-color: #c8addc;
+      color: var(--plum);
+    }
+
+    .filter[aria-pressed="true"] {
+      border-color: var(--plum-dark);
+      background: var(--plum-dark);
+      color: white;
+    }
+
+    /* Tool cards */
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .tool-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 208px;
+      padding: 21px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 12px 12px 12px 4px;
+      background: rgba(255, 255, 255, .83);
+      transition:
+        transform .22s,
+        border-color .22s,
+        box-shadow .22s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(89, 36, 127, .32);
+      box-shadow: var(--shadow);
+    }
+
+    .tool-card[hidden] {
+      display: none;
+    }
+
+    .tool-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .tool-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(89, 36, 127, .09);
+      border-radius: 12px 12px 12px 4px;
+      background: #efe4f8;
+      color: var(--plum);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .tool-icon.blue {
+      background: #e6f0ff;
+      color: #3666a4;
+    }
+
+    .tool-icon.green {
+      background: #e0f2e5;
+      color: #357b4d;
+    }
+
+    .tool-icon.orange {
+      background: #fff0d8;
+      color: #a86c23;
+    }
+
+    .tool-icon.pink {
+      background: #f9dfe8;
+      color: #a34065;
+    }
+
+    .tool-icon.cyan {
+      background: #e4edf0;
+      color: #376978;
+    }
+
+    .tool-icon.yellow {
+      background: #fff4cb;
+      color: #8a6a12;
+    }
+
+    .tool-icon.slate {
+      background: #e9e7f1;
+      color: #5c4c77;
+    }
+
+    .tool-category {
+      padding: 5px 7px;
+      border-radius: 5px;
+      background: #f5effa;
+      color: #816493;
+      font-size: 9px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tool-card h3 {
+      margin: 17px 0 7px;
+      color: var(--plum-dark);
+      font-size: 16px;
+      letter-spacing: -.035em;
+    }
+
+    .tool-card p {
+      margin: 0 0 19px;
+      color: #796e81;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .tool-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(87, 47, 116, .09);
+      color: var(--plum);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .tool-link span:last-child {
+      font-size: 16px;
+      transition: transform .2s;
+    }
+
+    .tool-card:hover .tool-link span:last-child {
+      transform: translateX(4px);
+    }
+
+    .empty-state {
+      display: none;
+      padding: 45px 20px;
+      border: 1px dashed rgba(89, 36, 127, .25);
+      border-radius: 12px;
+      background: white;
+      text-align: center;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .empty-state strong {
+      display: block;
+      color: var(--plum-dark);
+      font-size: 17px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .empty-state button {
+      padding: 9px 13px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--plum);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Bottom CTA */
+
+    .cta-section {
+      padding: 0 0 75px;
+    }
+
+    .cta-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 35px 38px;
+      overflow: hidden;
+      border-radius: 14px 14px 14px 5px;
+      background: var(--plum-dark);
+      color: white;
+    }
+
+    .cta-box::after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      right: 17%;
+      top: -130px;
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 28px rgba(255, 255, 255, .025),
+        0 0 0 57px rgba(255, 255, 255, .02);
+      pointer-events: none;
+    }
+
+    .cta-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box h2 {
+      margin: 0 0 9px;
+      font-size: clamp(24px, 3vw, 34px);
+      letter-spacing: -.055em;
+    }
+
+    .cta-box p {
+      max-width: 540px;
+      margin: 0;
+      color: #d4c2e0;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .cta-box .button {
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      border-color: white;
+      background: white;
+      color: var(--plum-dark);
+      box-shadow: none;
+    }
+
+    .cta-box .button:hover {
+      background: var(--lilac);
+    }
+
+    /* Footer */
+
+    .site-footer {
+      border-top: 1px solid var(--border);
+      background: rgba(255, 255, 255, .55);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding: 24px 0;
+    }
+
+    .footer-brand {
+      color: var(--plum-dark);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .footer-brand small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 19px;
+    }
+
+    .footer-links a {
+      color: #766b7f;
+      font-size: 11px;
+    }
+
+    .footer-links a:hover {
+      color: var(--plum);
+    }
+
+    /* Reveal animations */
+
+    .reveal {
+      animation: reveal-in .65s both;
+    }
+
+    @keyframes reveal-in {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+
+    @media (min-width: 1200px) {
+      .tools-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding-top: 55px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr .85fr;
+        gap: 24px;
+      }
+
+      .hero h1 {
+        font-size: clamp(42px, 6vw, 58px);
+      }
+
+      .preview-body {
+        padding: 17px 13px;
+      }
+
+      .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cta-box {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .wrap {
+        width: calc(100% - 30px);
+      }
+
+      .nav {
+        min-height: 64px;
+        gap: 10px;
+      }
+
+      .brand {
+        gap: 9px;
+        font-size: 15px;
+      }
+
+      .brand-mark {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+      }
+
+      .brand small {
+        font-size: 7px;
+      }
+
+      .nav-links {
+        gap: 10px;
+      }
+
+      .nav-links>a {
+        font-size: 10px;
+      }
+
+      .nav-links .about-link {
+        display: none;
+      }
+
+      .nav-links .coffee {
+        min-height: 33px;
+        padding: 0 10px;
+        font-size: 10px;
+      }
+
+      .hero {
+        padding: 43px 0 38px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .hero h1 {
+        font-size: clamp(45px, 12vw, 61px);
+      }
+
+      .hero-copy {
+        font-size: 13px;
+      }
+
+      .hero-visual {
+        width: min(460px, 100%);
+        margin: 0 auto;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+
+      .preview-window {
+        border-width: 5px;
+      }
+
+      .preview-body {
+        min-height: 240px;
+        padding: 17px 13px;
+      }
+
+      .preview-card {
+        padding: 9px 4px;
+      }
+
+      .stats {
+        padding: 15px 0;
+      }
+
+      .stat {
+        padding: 5px 6px;
+      }
+
+      .stat strong {
+        font-size: 21px;
+      }
+
+      .stat span {
+        font-size: 9px;
+      }
+
+      .tools-section {
+        padding: 51px 0 55px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        margin-bottom: 22px;
+      }
+
+      .section-heading h2 {
+        font-size: 32px;
+      }
+
+      .section-heading p {
+        font-size: 12px;
+      }
+
+      .tool-count {
+        margin-top: 18px;
+        padding: 6px 8px;
+        font-size: 9px;
+      }
+
+      .search-area {
+        gap: 9px;
+        padding: 9px 11px;
+      }
+
+      .search-area input {
+        font-size: 12px;
+      }
+
+      .search-shortcut {
+        display: none;
+      }
+
+      .filters {
+        gap: 7px;
+        margin-bottom: 20px;
+      }
+
+      .filter {
+        min-height: 32px;
+        padding: 0 10px;
+        font-size: 10px;
+      }
+
+      .tools-grid {
+        gap: 10px;
+      }
+
+      .tool-card {
+        min-height: 195px;
+        padding: 13px;
+      }
+
+      .tool-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px 10px 10px 3px;
+        font-size: 14px;
+      }
+
+      .tool-category {
+        padding: 4px 5px;
+        font-size: 8px;
+      }
+
+      .tool-card h3 {
+        margin-top: 13px;
+        font-size: 13px;
+      }
+
+      .tool-card p {
+        margin-bottom: 15px;
+        font-size: 10px;
+        line-height: 1.7;
+      }
+
+      .tool-link {
+        padding-top: 10px;
+        font-size: 10px;
+      }
+
+      .cta-section {
+        padding-bottom: 48px;
+      }
+
+      .cta-box {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 21px;
+        padding: 25px 21px;
+      }
+
+      .cta-box h2 {
+        font-size: 26px;
+      }
+
+      .cta-box p {
+        font-size: 11px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+        padding: 23px 0;
+      }
+
+      .footer-links {
+        gap: 13px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand {
+        font-size: 13px;
+      }
+
+      .nav-links .coffee {
+        padding: 0 7px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        min-height: 175px;
+        padding: 18px;
+      }
+
+      .tool-card h3 {
+        font-size: 15px;
+      }
+
+      .tool-card p {
+        font-size: 11px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+
+    /* =========================================
    MICRO SERVICE TOOLS — CONTENT SECTIONS
    TharOS-inspired plum & lilac design
    ========================================= */
 
-:root {
-  --content-plum: var(--site-plum, #59247f);
-  --content-plum-dark: var(--site-plum-dark, #321344);
-  --content-plum-light: var(--site-plum-light, #9060c2);
-  --content-snow: var(--site-snow, #fbf9ff);
-  --content-muted: var(--site-muted, #8f879c);
-  --content-border: var(--site-border, rgba(87, 47, 116, .14));
-  --content-ink: var(--site-ink, #261a30);
-  --content-lilac: var(--site-lilac, #eee4f8);
-  --content-shadow: var(--site-shadow, 0 18px 55px rgba(42, 17, 62, .12));
-}
+    :root {
+      --content-plum: var(--site-plum, #59247f);
+      --content-plum-dark: var(--site-plum-dark, #321344);
+      --content-plum-light: var(--site-plum-light, #9060c2);
+      --content-snow: var(--site-snow, #fbf9ff);
+      --content-muted: var(--site-muted, #8f879c);
+      --content-border: var(--site-border, rgba(87, 47, 116, .14));
+      --content-ink: var(--site-ink, #261a30);
+      --content-lilac: var(--site-lilac, #eee4f8);
+      --content-shadow: var(--site-shadow, 0 18px 55px rgba(42, 17, 62, .12));
+    }
 
-.tools-content,
-.tools-content * {
-  box-sizing: border-box;
-}
+    .tools-content,
+    .tools-content * {
+      box-sizing: border-box;
+    }
 
-.tools-content {
-  color: var(--content-ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.6;
-}
+    .tools-content {
+      color: var(--content-ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
 
-.tools-content a {
-  color: inherit;
-  text-decoration: none;
-}
+    .tools-content a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.tools-content .tools-container {
-  width: min(1160px, calc(100% - 44px));
-  margin-inline: auto;
-}
+    .tools-content .tools-container {
+      width: min(1160px, calc(100% - 44px));
+      margin-inline: auto;
+    }
 
-.tools-content .tools-section {
-  padding: 76px 0;
-  scroll-margin-top: 90px;
-}
+    .tools-content .tools-section {
+      padding: 76px 0;
+      scroll-margin-top: 90px;
+    }
 
-.tools-section-heading {
-  max-width: 680px;
-  margin-bottom: 36px;
-}
+    .tools-section-heading {
+      max-width: 680px;
+      margin-bottom: 36px;
+    }
 
-.tools-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--content-plum);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
+    .tools-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--content-plum);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
 
-.tools-eyebrow::before {
-  content: "";
-  width: 22px;
-  height: 2px;
-  background: var(--content-plum-light);
-}
+    .tools-eyebrow::before {
+      content: "";
+      width: 22px;
+      height: 2px;
+      background: var(--content-plum-light);
+    }
 
-.tools-section-title {
-  margin: 13px 0 14px;
-  color: var(--content-plum-dark);
-  font-size: clamp(30px, 4vw, 45px);
-  font-weight: 790;
-  line-height: 1.08;
-  letter-spacing: -.06em;
-}
+    .tools-section-title {
+      margin: 13px 0 14px;
+      color: var(--content-plum-dark);
+      font-size: clamp(30px, 4vw, 45px);
+      font-weight: 790;
+      line-height: 1.08;
+      letter-spacing: -.06em;
+    }
 
-.tools-section-title em {
-  color: var(--content-plum-light);
-  font-style: normal;
-}
+    .tools-section-title em {
+      color: var(--content-plum-light);
+      font-style: normal;
+    }
 
-.tools-section-description {
-  max-width: 600px;
-  margin: 0;
-  color: #756b80;
-  font-size: 15px;
-  line-height: 1.8;
-}
+    .tools-section-description {
+      max-width: 600px;
+      margin: 0;
+      color: #756b80;
+      font-size: 15px;
+      line-height: 1.8;
+    }
 
-/* =========================================
+    /* =========================================
    01 — WHAT IS MICROSERVICE TOOLS?
    ========================================= */
 
-.tools-about {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      rgba(238, 228, 248, .72),
-      transparent 48%
-    ),
-    var(--content-snow);
-  border-top: 1px solid rgba(87, 47, 116, .07);
-  border-bottom: 1px solid var(--content-border);
-}
+    .tools-about {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 100% 0%,
+          rgba(238, 228, 248, .72),
+          transparent 48%),
+        var(--content-snow);
+      border-top: 1px solid rgba(87, 47, 116, .07);
+      border-bottom: 1px solid var(--content-border);
+    }
 
-.tools-about-grid {
-  display: grid;
-  grid-template-columns: 1fr .85fr;
-  align-items: center;
-  gap: 65px;
-}
+    .tools-about-grid {
+      display: grid;
+      grid-template-columns: 1fr .85fr;
+      align-items: center;
+      gap: 65px;
+    }
 
-.tools-about-copy .tools-section-title {
-  max-width: 520px;
-}
+    .tools-about-copy .tools-section-title {
+      max-width: 520px;
+    }
 
-.tools-about-copy > p {
-  max-width: 570px;
-  margin: 0 0 16px;
-  color: #6f6379;
-  font-size: 14px;
-  line-height: 1.9;
-}
+    .tools-about-copy>p {
+      max-width: 570px;
+      margin: 0 0 16px;
+      color: #6f6379;
+      font-size: 14px;
+      line-height: 1.9;
+    }
 
-.tools-about-copy > p strong {
-  color: var(--content-plum-dark);
-  font-weight: 750;
-}
+    .tools-about-copy>p strong {
+      color: var(--content-plum-dark);
+      font-weight: 750;
+    }
 
-.tools-about-highlights {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px;
-  margin-top: 25px;
-}
+    .tools-about-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      margin-top: 25px;
+    }
 
-.tools-highlight {
-  display: flex;
-  align-items: flex-start;
-  gap: 11px;
-  padding: 14px;
-  border: 1px solid var(--content-border);
-  border-radius: 10px 10px 10px 4px;
-  background: rgba(255, 255, 255, .75);
-}
+    .tools-highlight {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 14px;
+      border: 1px solid var(--content-border);
+      border-radius: 10px 10px 10px 4px;
+      background: rgba(255, 255, 255, .75);
+    }
 
-.tools-highlight-icon {
-  display: grid;
-  flex: 0 0 32px;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  border-radius: 9px;
-  background: var(--content-lilac);
-  color: var(--content-plum);
-  font-size: 15px;
-  font-weight: 800;
-}
+    .tools-highlight-icon {
+      display: grid;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--content-lilac);
+      color: var(--content-plum);
+      font-size: 15px;
+      font-weight: 800;
+    }
 
-.tools-highlight strong {
-  display: block;
-  margin-bottom: 3px;
-  color: var(--content-plum-dark);
-  font-size: 12px;
-}
+    .tools-highlight strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--content-plum-dark);
+      font-size: 12px;
+    }
 
-.tools-highlight span {
-  display: block;
-  color: #81748c;
-  font-size: 10px;
-  line-height: 1.6;
-}
+    .tools-highlight span {
+      display: block;
+      color: #81748c;
+      font-size: 10px;
+      line-height: 1.6;
+    }
 
-/* About visual */
+    /* About visual */
 
-.tools-about-visual {
-  position: relative;
-  padding: 14px;
-}
+    .tools-about-visual {
+      position: relative;
+      padding: 14px;
+    }
 
-.tools-about-visual::before {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  content: "";
-  border-radius: 40% 35% 38% 30%;
-  background: #eee3f7;
-  transform: rotate(3deg);
-}
+    .tools-about-visual::before {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      content: "";
+      border-radius: 40% 35% 38% 30%;
+      background: #eee3f7;
+      transform: rotate(3deg);
+    }
 
-.tools-dashboard {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  border: 6px solid #24192c;
-  border-radius: 13px;
-  background: #fff;
-  box-shadow: 0 24px 55px rgba(42, 17, 62, .19);
-  transform: rotate(-1deg);
-}
+    .tools-dashboard {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border: 6px solid #24192c;
+      border-radius: 13px;
+      background: #fff;
+      box-shadow: 0 24px 55px rgba(42, 17, 62, .19);
+      transform: rotate(-1deg);
+    }
 
-.tools-dashboard-bar {
-  display: flex;
-  height: 34px;
-  align-items: center;
-  gap: 5px;
-  padding: 0 11px;
-  background: #261c30;
-}
+    .tools-dashboard-bar {
+      display: flex;
+      height: 34px;
+      align-items: center;
+      gap: 5px;
+      padding: 0 11px;
+      background: #261c30;
+    }
 
-.tools-dashboard-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #8e7a9d;
-}
+    .tools-dashboard-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #8e7a9d;
+    }
 
-.tools-dashboard-address {
-  flex: 1;
-  margin-left: 8px;
-  padding: 3px 9px;
-  border-radius: 4px;
-  background: #352740;
-  color: #d7c9e0;
-  font-size: 9px;
-}
+    .tools-dashboard-address {
+      flex: 1;
+      margin-left: 8px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: #352740;
+      color: #d7c9e0;
+      font-size: 9px;
+    }
 
-.tools-dashboard-body {
-  padding: 22px 18px;
-  background: linear-gradient(135deg, #eee3f7, #fbf8ff 65%, #e2d1f0);
-}
+    .tools-dashboard-body {
+      padding: 22px 18px;
+      background: linear-gradient(135deg, #eee3f7, #fbf8ff 65%, #e2d1f0);
+    }
 
-.tools-dashboard-heading {
-  margin-bottom: 17px;
-}
+    .tools-dashboard-heading {
+      margin-bottom: 17px;
+    }
 
-.tools-dashboard-heading small {
-  display: block;
-  margin-bottom: 4px;
-  color: #896c9e;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
+    .tools-dashboard-heading small {
+      display: block;
+      margin-bottom: 4px;
+      color: #896c9e;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
 
-.tools-dashboard-heading strong {
-  display: block;
-  color: #39214a;
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: -.055em;
-}
+    .tools-dashboard-heading strong {
+      display: block;
+      color: #39214a;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.055em;
+    }
 
-.tools-dashboard-heading p {
-  margin: 4px 0 0;
-  color: #806c8e;
-  font-size: 10px;
-}
+    .tools-dashboard-heading p {
+      margin: 4px 0 0;
+      color: #806c8e;
+      font-size: 10px;
+    }
 
-.tools-mini-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
-}
+    .tools-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+    }
 
-.tools-mini-card {
-  min-width: 0;
-  padding: 12px 7px;
-  border: 1px solid rgba(89, 36, 127, .12);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, .87);
-  text-align: center;
-  transition: transform .2s, border-color .2s;
-}
+    .tools-mini-card {
+      min-width: 0;
+      padding: 12px 7px;
+      border: 1px solid rgba(89, 36, 127, .12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .87);
+      text-align: center;
+      transition: transform .2s, border-color .2s;
+    }
 
-.tools-mini-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(89, 36, 127, .35);
-}
+    .tools-mini-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(89, 36, 127, .35);
+    }
 
-.tools-mini-icon {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  margin: 0 auto 8px;
-  place-items: center;
-  border-radius: 10px;
-  background: #eee4f8;
-  color: #59247f;
-  font-size: 15px;
-  font-weight: 800;
-}
+    .tools-mini-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 8px;
+      place-items: center;
+      border-radius: 10px;
+      background: #eee4f8;
+      color: #59247f;
+      font-size: 15px;
+      font-weight: 800;
+    }
 
-.tools-mini-card:nth-child(2) .tools-mini-icon {
-  background: #e4edf9;
-  color: #42669a;
-}
+    .tools-mini-card:nth-child(2) .tools-mini-icon {
+      background: #e4edf9;
+      color: #42669a;
+    }
 
-.tools-mini-card:nth-child(3) .tools-mini-icon {
-  background: #e1f1e6;
-  color: #347a52;
-}
+    .tools-mini-card:nth-child(3) .tools-mini-icon {
+      background: #e1f1e6;
+      color: #347a52;
+    }
 
-.tools-mini-card:nth-child(4) .tools-mini-icon {
-  background: #f9e5ed;
-  color: #a34065;
-}
+    .tools-mini-card:nth-child(4) .tools-mini-icon {
+      background: #f9e5ed;
+      color: #a34065;
+    }
 
-.tools-mini-card:nth-child(5) .tools-mini-icon {
-  background: #fff0d8;
-  color: #a86c23;
-}
+    .tools-mini-card:nth-child(5) .tools-mini-icon {
+      background: #fff0d8;
+      color: #a86c23;
+    }
 
-.tools-mini-card:nth-child(6) .tools-mini-icon {
-  background: #e5e1ff;
-  color: #5541a4;
-}
+    .tools-mini-card:nth-child(6) .tools-mini-icon {
+      background: #e5e1ff;
+      color: #5541a4;
+    }
 
-.tools-mini-card strong {
-  display: block;
-  overflow-wrap: anywhere;
-  color: #493354;
-  font-size: 9px;
-}
+    .tools-mini-card strong {
+      display: block;
+      overflow-wrap: anywhere;
+      color: #493354;
+      font-size: 9px;
+    }
 
-.tools-mini-card span {
-  display: block;
-  margin-top: 2px;
-  color: #95869e;
-  font-size: 8px;
-}
+    .tools-mini-card span {
+      display: block;
+      margin-top: 2px;
+      color: #95869e;
+      font-size: 8px;
+    }
 
-.tools-dashboard-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px 12px;
-  background: #321344;
-  color: #e8dced;
-  font-size: 9px;
-}
+    .tools-dashboard-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #321344;
+      color: #e8dced;
+      font-size: 9px;
+    }
 
-/* =========================================
+    /* =========================================
    02 — HOW TO USE THE TOOLS
    ========================================= */
 
-.tools-how {
-  background: #fff;
-}
+    .tools-how {
+      background: #fff;
+    }
 
-.tools-steps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 15px;
-}
+    .tools-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+    }
 
-.tools-step {
-  position: relative;
-  min-width: 0;
-  padding: 24px 20px;
-  border: 1px solid var(--content-border);
-  border-radius: 12px 12px 12px 4px;
-  background: #fff;
-  transition: transform .22s, box-shadow .22s, border-color .22s;
-}
+    .tools-step {
+      position: relative;
+      min-width: 0;
+      padding: 24px 20px;
+      border: 1px solid var(--content-border);
+      border-radius: 12px 12px 12px 4px;
+      background: #fff;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+    }
 
-.tools-step:hover {
-  transform: translateY(-5px);
-  border-color: rgba(89, 36, 127, .3);
-  box-shadow: var(--content-shadow);
-}
+    .tools-step:hover {
+      transform: translateY(-5px);
+      border-color: rgba(89, 36, 127, .3);
+      box-shadow: var(--content-shadow);
+    }
 
-.tools-step-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 24px;
-}
+    .tools-step-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
 
-.tools-step-number {
-  color: #c3a5db;
-  font-size: 12px;
-  font-weight: 850;
-  letter-spacing: .1em;
-}
+    .tools-step-number {
+      color: #c3a5db;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .1em;
+    }
 
-.tools-step-icon {
-  display: grid;
-  width: 43px;
-  height: 43px;
-  place-items: center;
-  border: 1px solid rgba(89, 36, 127, .12);
-  border-radius: 12px;
-  background: #f3ebfa;
-  color: var(--content-plum);
-  font-size: 19px;
-}
+    .tools-step-icon {
+      display: grid;
+      width: 43px;
+      height: 43px;
+      place-items: center;
+      border: 1px solid rgba(89, 36, 127, .12);
+      border-radius: 12px;
+      background: #f3ebfa;
+      color: var(--content-plum);
+      font-size: 19px;
+    }
 
-.tools-step h3 {
-  margin: 0 0 9px;
-  color: var(--content-plum-dark);
-  font-size: 16px;
-  font-weight: 780;
-  letter-spacing: -.035em;
-}
+    .tools-step h3 {
+      margin: 0 0 9px;
+      color: var(--content-plum-dark);
+      font-size: 16px;
+      font-weight: 780;
+      letter-spacing: -.035em;
+    }
 
-.tools-step p {
-  margin: 0;
-  color: #7a6e83;
-  font-size: 12px;
-  line-height: 1.85;
-}
+    .tools-step p {
+      margin: 0;
+      color: #7a6e83;
+      font-size: 12px;
+      line-height: 1.85;
+    }
 
-.tools-step-tag {
-  display: inline-flex;
-  margin-top: 18px;
-  padding: 5px 9px;
-  border-radius: 5px;
-  background: #f6f0fb;
-  color: var(--content-plum);
-  font-size: 9px;
-  font-weight: 750;
-}
+    .tools-step-tag {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 5px 9px;
+      border-radius: 5px;
+      background: #f6f0fb;
+      color: var(--content-plum);
+      font-size: 9px;
+      font-weight: 750;
+    }
 
-/* =========================================
+    /* =========================================
    03 — USE CASES
    ========================================= */
 
-.tools-usecases {
-  border-top: 1px solid var(--content-border);
-  border-bottom: 1px solid var(--content-border);
-  background: #f4eef9;
-}
+    .tools-usecases {
+      border-top: 1px solid var(--content-border);
+      border-bottom: 1px solid var(--content-border);
+      background: #f4eef9;
+    }
 
-.tools-usecase-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-}
+    .tools-usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
 
-.tools-usecase {
-  position: relative;
-  overflow: hidden;
-  min-width: 0;
-  padding: 25px;
-  border: 1px solid rgba(87, 47, 116, .13);
-  border-radius: 12px 12px 12px 4px;
-  background: rgba(255, 255, 255, .8);
-  transition: transform .2s, background .2s, box-shadow .2s;
-}
+    .tools-usecase {
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+      padding: 25px;
+      border: 1px solid rgba(87, 47, 116, .13);
+      border-radius: 12px 12px 12px 4px;
+      background: rgba(255, 255, 255, .8);
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
 
-.tools-usecase:hover {
-  transform: translateY(-4px);
-  background: #fff;
-  box-shadow: 0 14px 35px rgba(42, 17, 62, .09);
-}
+    .tools-usecase:hover {
+      transform: translateY(-4px);
+      background: #fff;
+      box-shadow: 0 14px 35px rgba(42, 17, 62, .09);
+    }
 
-.tools-usecase::after {
-  position: absolute;
-  top: -37px;
-  right: -37px;
-  width: 100px;
-  height: 100px;
-  border: 1px solid rgba(89, 36, 127, .1);
-  border-radius: 50%;
-  content: "";
-  box-shadow: 0 0 0 15px rgba(89, 36, 127, .025);
-  pointer-events: none;
-}
+    .tools-usecase::after {
+      position: absolute;
+      top: -37px;
+      right: -37px;
+      width: 100px;
+      height: 100px;
+      border: 1px solid rgba(89, 36, 127, .1);
+      border-radius: 50%;
+      content: "";
+      box-shadow: 0 0 0 15px rgba(89, 36, 127, .025);
+      pointer-events: none;
+    }
 
-.tools-usecase-icon {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 20px;
-  place-items: center;
-  border-radius: 12px;
-  background: #eee4f8;
-  color: #59247f;
-  font-size: 19px;
-}
+    .tools-usecase-icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 20px;
+      place-items: center;
+      border-radius: 12px;
+      background: #eee4f8;
+      color: #59247f;
+      font-size: 19px;
+    }
 
-.tools-usecase:nth-child(3n + 2) .tools-usecase-icon {
-  background: #e5e1ff;
-  color: #5541a4;
-}
+    .tools-usecase:nth-child(3n + 2) .tools-usecase-icon {
+      background: #e5e1ff;
+      color: #5541a4;
+    }
 
-.tools-usecase:nth-child(3n) .tools-usecase-icon {
-  background: #e1f1e6;
-  color: #347a52;
-}
+    .tools-usecase:nth-child(3n) .tools-usecase-icon {
+      background: #e1f1e6;
+      color: #347a52;
+    }
 
-.tools-usecase h3 {
-  margin: 0 0 9px;
-  color: var(--content-plum-dark);
-  font-size: 17px;
-  font-weight: 780;
-  letter-spacing: -.035em;
-}
+    .tools-usecase h3 {
+      margin: 0 0 9px;
+      color: var(--content-plum-dark);
+      font-size: 17px;
+      font-weight: 780;
+      letter-spacing: -.035em;
+    }
 
-.tools-usecase p {
-  margin: 0;
-  color: #776b81;
-  font-size: 12px;
-  line-height: 1.85;
-}
+    .tools-usecase p {
+      margin: 0;
+      color: #776b81;
+      font-size: 12px;
+      line-height: 1.85;
+    }
 
-.tools-usecase-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 17px;
-}
+    .tools-usecase-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 17px;
+    }
 
-.tools-usecase-list span {
-  padding: 5px 8px;
-  border: 1px solid rgba(89, 36, 127, .11);
-  border-radius: 5px;
-  background: #fff;
-  color: #715d7d;
-  font-size: 9px;
-  font-weight: 650;
-}
+    .tools-usecase-list span {
+      padding: 5px 8px;
+      border: 1px solid rgba(89, 36, 127, .11);
+      border-radius: 5px;
+      background: #fff;
+      color: #715d7d;
+      font-size: 9px;
+      font-weight: 650;
+    }
 
-/* =========================================
+    /* =========================================
    04 — FREQUENTLY ASKED QUESTIONS
    ========================================= */
 
-.tools-faq {
-  background: var(--content-snow);
-}
+    .tools-faq {
+      background: var(--content-snow);
+    }
 
-.tools-faq-layout {
-  display: grid;
-  grid-template-columns: .75fr 1.25fr;
-  align-items: start;
-  gap: 65px;
-}
+    .tools-faq-layout {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      align-items: start;
+      gap: 65px;
+    }
 
-.tools-faq-intro {
-  position: sticky;
-  top: 100px;
-}
+    .tools-faq-intro {
+      position: sticky;
+      top: 100px;
+    }
 
-.tools-faq-intro .tools-section-title {
-  font-size: clamp(32px, 4vw, 43px);
-}
+    .tools-faq-intro .tools-section-title {
+      font-size: clamp(32px, 4vw, 43px);
+    }
 
-.tools-faq-intro > p {
-  margin: 0;
-  color: #756b80;
-  font-size: 13px;
-  line-height: 1.9;
-}
+    .tools-faq-intro>p {
+      margin: 0;
+      color: #756b80;
+      font-size: 13px;
+      line-height: 1.9;
+    }
 
-.tools-faq-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 11px;
-  margin-top: 25px;
-  padding: 15px;
-  border: 1px solid var(--content-border);
-  border-radius: 9px;
-  background: #fff;
-}
+    .tools-faq-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-top: 25px;
+      padding: 15px;
+      border: 1px solid var(--content-border);
+      border-radius: 9px;
+      background: #fff;
+    }
 
-.tools-faq-note-icon {
-  display: grid;
-  flex: 0 0 29px;
-  width: 29px;
-  height: 29px;
-  place-items: center;
-  border-radius: 8px;
-  background: #eee4f8;
-  color: var(--content-plum);
-  font-size: 13px;
-  font-weight: 800;
-}
+    .tools-faq-note-icon {
+      display: grid;
+      flex: 0 0 29px;
+      width: 29px;
+      height: 29px;
+      place-items: center;
+      border-radius: 8px;
+      background: #eee4f8;
+      color: var(--content-plum);
+      font-size: 13px;
+      font-weight: 800;
+    }
 
-.tools-faq-note p {
-  margin: 0;
-  color: #756b80;
-  font-size: 11px;
-  line-height: 1.75;
-}
+    .tools-faq-note p {
+      margin: 0;
+      color: #756b80;
+      font-size: 11px;
+      line-height: 1.75;
+    }
 
-.tools-faq-note strong {
-  color: var(--content-plum-dark);
-}
+    .tools-faq-note strong {
+      color: var(--content-plum-dark);
+    }
 
-.tools-faq-list {
-  border-top: 1px solid var(--content-border);
-}
+    .tools-faq-list {
+      border-top: 1px solid var(--content-border);
+    }
 
-.tools-faq-item {
-  border-bottom: 1px solid var(--content-border);
-}
+    .tools-faq-item {
+      border-bottom: 1px solid var(--content-border);
+    }
 
-.tools-faq-item summary {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 21px 36px 21px 0;
-  color: var(--content-plum-dark);
-  font-size: 13px;
-  font-weight: 750;
-  line-height: 1.6;
-  list-style: none;
-  cursor: pointer;
-}
+    .tools-faq-item summary {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 21px 36px 21px 0;
+      color: var(--content-plum-dark);
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.6;
+      list-style: none;
+      cursor: pointer;
+    }
 
-.tools-faq-item summary::-webkit-details-marker {
-  display: none;
-}
+    .tools-faq-item summary::-webkit-details-marker {
+      display: none;
+    }
 
-.tools-faq-item summary::after {
-  position: absolute;
-  top: 50%;
-  right: 4px;
-  display: grid;
-  width: 25px;
-  height: 25px;
-  place-items: center;
-  border: 1px solid var(--content-border);
-  border-radius: 7px;
-  background: #fff;
-  color: var(--content-plum);
-  content: "+";
-  font-size: 16px;
-  font-weight: 500;
-  transform: translateY(-50%);
-  transition: transform .2s, background .2s;
-}
+    .tools-faq-item summary::after {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      display: grid;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border: 1px solid var(--content-border);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--content-plum);
+      content: "+";
+      font-size: 16px;
+      font-weight: 500;
+      transform: translateY(-50%);
+      transition: transform .2s, background .2s;
+    }
 
-.tools-faq-item[open] summary::after {
-  background: var(--content-plum);
-  color: #fff;
-  content: "−";
-}
+    .tools-faq-item[open] summary::after {
+      background: var(--content-plum);
+      color: #fff;
+      content: "−";
+    }
 
-.tools-faq-number {
-  flex: 0 0 25px;
-  color: #b49acb;
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: .08em;
-}
+    .tools-faq-number {
+      flex: 0 0 25px;
+      color: #b49acb;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: .08em;
+    }
 
-.tools-faq-answer {
-  padding: 0 35px 21px 40px;
-}
+    .tools-faq-answer {
+      padding: 0 35px 21px 40px;
+    }
 
-.tools-faq-answer p {
-  margin: 0;
-  color: #766b80;
-  font-size: 12px;
-  line-height: 1.9;
-}
+    .tools-faq-answer p {
+      margin: 0;
+      color: #766b80;
+      font-size: 12px;
+      line-height: 1.9;
+    }
 
-.tools-faq-answer a {
-  color: var(--content-plum);
-  font-weight: 750;
-  text-decoration: underline;
-  text-decoration-color: #d6bfe9;
-  text-underline-offset: 3px;
-}
+    .tools-faq-answer a {
+      color: var(--content-plum);
+      font-weight: 750;
+      text-decoration: underline;
+      text-decoration-color: #d6bfe9;
+      text-underline-offset: 3px;
+    }
 
-/* =========================================
+    /* =========================================
    BOTTOM CALL TO ACTION
    ========================================= */
 
-.tools-content-cta {
-  padding: 0 0 75px;
-  background: var(--content-snow);
-}
+    .tools-content-cta {
+      padding: 0 0 75px;
+      background: var(--content-snow);
+    }
 
-.tools-cta-inner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  overflow: hidden;
-  padding: 35px 39px;
-  border-radius: 14px 14px 14px 5px;
-  background: var(--content-plum-dark);
-  color: #fff;
-}
+    .tools-cta-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      overflow: hidden;
+      padding: 35px 39px;
+      border-radius: 14px 14px 14px 5px;
+      background: var(--content-plum-dark);
+      color: #fff;
+    }
 
-.tools-cta-inner::after {
-  position: absolute;
-  top: -115px;
-  right: 16%;
-  width: 220px;
-  height: 220px;
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 50%;
-  content: "";
-  box-shadow:
-    0 0 0 27px rgba(255, 255, 255, .025),
-    0 0 0 54px rgba(255, 255, 255, .02);
-  pointer-events: none;
-}
+    .tools-cta-inner::after {
+      position: absolute;
+      top: -115px;
+      right: 16%;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 50%;
+      content: "";
+      box-shadow:
+        0 0 0 27px rgba(255, 255, 255, .025),
+        0 0 0 54px rgba(255, 255, 255, .02);
+      pointer-events: none;
+    }
 
-.tools-cta-copy {
-  position: relative;
-  z-index: 1;
-}
+    .tools-cta-copy {
+      position: relative;
+      z-index: 1;
+    }
 
-.tools-cta-copy small {
-  display: block;
-  margin-bottom: 8px;
-  color: #d2b9e7;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
+    .tools-cta-copy small {
+      display: block;
+      margin-bottom: 8px;
+      color: #d2b9e7;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
 
-.tools-cta-copy h2 {
-  margin: 0 0 9px;
-  color: #fff;
-  font-size: clamp(23px, 3vw, 34px);
-  line-height: 1.2;
-  letter-spacing: -.045em;
-}
+    .tools-cta-copy h2 {
+      margin: 0 0 9px;
+      color: #fff;
+      font-size: clamp(23px, 3vw, 34px);
+      line-height: 1.2;
+      letter-spacing: -.045em;
+    }
 
-.tools-cta-copy p {
-  max-width: 550px;
-  margin: 0;
-  color: #d4c2e0;
-  font-size: 12px;
-  line-height: 1.8;
-}
+    .tools-cta-copy p {
+      max-width: 550px;
+      margin: 0;
+      color: #d4c2e0;
+      font-size: 12px;
+      line-height: 1.8;
+    }
 
-.tools-cta-button {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  flex: 0 0 auto;
-  min-height: 43px;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 0 17px;
-  border: 0;
-  border-radius: 7px;
-  background: #fff;
-  color: var(--content-plum-dark) !important;
-  font-size: 12px;
-  font-weight: 750;
-  transition: transform .2s, background .2s;
-}
+    .tools-cta-button {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      flex: 0 0 auto;
+      min-height: 43px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      border: 0;
+      border-radius: 7px;
+      background: #fff;
+      color: var(--content-plum-dark) !important;
+      font-size: 12px;
+      font-weight: 750;
+      transition: transform .2s, background .2s;
+    }
 
-.tools-cta-button:hover {
-  transform: translateY(-3px);
-  background: #f0e5f8;
-}
+    .tools-cta-button:hover {
+      transform: translateY(-3px);
+      background: #f0e5f8;
+    }
 
-/* =========================================
+    /* =========================================
    ACCESSIBILITY & RESPONSIVENESS
    ========================================= */
 
-.tools-content a:focus-visible,
-.tools-content summary:focus-visible {
-  outline: 3px solid #b98ce0;
-  outline-offset: 4px;
-}
+    .tools-content a:focus-visible,
+    .tools-content summary:focus-visible {
+      outline: 3px solid #b98ce0;
+      outline-offset: 4px;
+    }
 
-@media (max-width: 950px) {
-  .tools-about-grid {
-    grid-template-columns: 1fr;
-    gap: 38px;
-  }
+    @media (max-width: 950px) {
+      .tools-about-grid {
+        grid-template-columns: 1fr;
+        gap: 38px;
+      }
 
-  .tools-about-visual {
-    width: min(600px, 100%);
-    margin-inline: auto;
-  }
+      .tools-about-visual {
+        width: min(600px, 100%);
+        margin-inline: auto;
+      }
 
-  .tools-steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+      .tools-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
 
-  .tools-faq-layout {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
+      .tools-faq-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
 
-  .tools-faq-intro {
-    position: static;
-  }
+      .tools-faq-intro {
+        position: static;
+      }
 
-  .tools-faq-intro .tools-section-title {
-    max-width: 520px;
-  }
-}
+      .tools-faq-intro .tools-section-title {
+        max-width: 520px;
+      }
+    }
 
-@media (max-width: 680px) {
-  .tools-content .tools-container {
-    width: calc(100% - 30px);
-  }
+    @media (max-width: 680px) {
+      .tools-content .tools-container {
+        width: calc(100% - 30px);
+      }
 
-  .tools-content .tools-section {
-    padding: 54px 0;
-  }
+      .tools-content .tools-section {
+        padding: 54px 0;
+      }
 
-  .tools-section-heading {
-    margin-bottom: 27px;
-  }
+      .tools-section-heading {
+        margin-bottom: 27px;
+      }
 
-  .tools-section-title {
-    font-size: 33px;
-  }
+      .tools-section-title {
+        font-size: 33px;
+      }
 
-  .tools-section-description {
-    font-size: 13px;
-  }
+      .tools-section-description {
+        font-size: 13px;
+      }
 
-  .tools-about-highlights {
-    gap: 8px;
-  }
+      .tools-about-highlights {
+        gap: 8px;
+      }
 
-  .tools-highlight {
-    gap: 8px;
-    padding: 11px 9px;
-  }
+      .tools-highlight {
+        gap: 8px;
+        padding: 11px 9px;
+      }
 
-  .tools-highlight-icon {
-    flex-basis: 28px;
-    width: 28px;
-    height: 28px;
-    font-size: 13px;
-  }
+      .tools-highlight-icon {
+        flex-basis: 28px;
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
 
-  .tools-highlight strong {
-    font-size: 11px;
-  }
+      .tools-highlight strong {
+        font-size: 11px;
+      }
 
-  .tools-highlight span {
-    font-size: 9px;
-  }
+      .tools-highlight span {
+        font-size: 9px;
+      }
 
-  .tools-about-visual {
-    padding: 8px;
-  }
+      .tools-about-visual {
+        padding: 8px;
+      }
 
-  .tools-dashboard {
-    border-width: 5px;
-  }
+      .tools-dashboard {
+        border-width: 5px;
+      }
 
-  .tools-dashboard-body {
-    padding: 17px 11px;
-  }
+      .tools-dashboard-body {
+        padding: 17px 11px;
+      }
 
-  .tools-dashboard-heading strong {
-    font-size: 18px;
-  }
+      .tools-dashboard-heading strong {
+        font-size: 18px;
+      }
 
-  .tools-mini-grid {
-    gap: 6px;
-  }
+      .tools-mini-grid {
+        gap: 6px;
+      }
 
-  .tools-mini-card {
-    padding: 10px 4px;
-  }
+      .tools-mini-card {
+        padding: 10px 4px;
+      }
 
-  .tools-mini-icon {
-    width: 29px;
-    height: 29px;
-    font-size: 13px;
-  }
+      .tools-mini-icon {
+        width: 29px;
+        height: 29px;
+        font-size: 13px;
+      }
 
-  .tools-mini-card strong {
-    font-size: 8px;
-  }
+      .tools-mini-card strong {
+        font-size: 8px;
+      }
 
-  .tools-mini-card span {
-    font-size: 7px;
-  }
+      .tools-mini-card span {
+        font-size: 7px;
+      }
 
-  .tools-steps {
-    gap: 10px;
-  }
+      .tools-steps {
+        gap: 10px;
+      }
 
-  .tools-step {
-    padding: 17px 14px;
-  }
+      .tools-step {
+        padding: 17px 14px;
+      }
 
-  .tools-step-top {
-    margin-bottom: 18px;
-  }
+      .tools-step-top {
+        margin-bottom: 18px;
+      }
 
-  .tools-step-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
+      .tools-step-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
 
-  .tools-step h3 {
-    font-size: 14px;
-  }
+      .tools-step h3 {
+        font-size: 14px;
+      }
 
-  .tools-step p {
-    font-size: 11px;
-  }
+      .tools-step p {
+        font-size: 11px;
+      }
 
-  .tools-step-tag {
-    font-size: 8px;
-  }
+      .tools-step-tag {
+        font-size: 8px;
+      }
 
-  .tools-usecase-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
+      .tools-usecase-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
 
-  .tools-usecase {
-    padding: 17px 14px;
-  }
+      .tools-usecase {
+        padding: 17px 14px;
+      }
 
-  .tools-usecase-icon {
-    width: 36px;
-    height: 36px;
-    margin-bottom: 15px;
-    font-size: 16px;
-  }
+      .tools-usecase-icon {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
 
-  .tools-usecase h3 {
-    font-size: 14px;
-  }
+      .tools-usecase h3 {
+        font-size: 14px;
+      }
 
-  .tools-usecase p {
-    font-size: 11px;
-  }
+      .tools-usecase p {
+        font-size: 11px;
+      }
 
-  .tools-usecase-list {
-    gap: 5px;
-  }
+      .tools-usecase-list {
+        gap: 5px;
+      }
 
-  .tools-usecase-list span {
-    font-size: 8px;
-  }
+      .tools-usecase-list span {
+        font-size: 8px;
+      }
 
-  .tools-faq-item summary {
-    gap: 10px;
-    padding: 18px 31px 18px 0;
-    font-size: 12px;
-  }
+      .tools-faq-item summary {
+        gap: 10px;
+        padding: 18px 31px 18px 0;
+        font-size: 12px;
+      }
 
-  .tools-faq-answer {
-    padding: 0 25px 19px 35px;
-  }
+      .tools-faq-answer {
+        padding: 0 25px 19px 35px;
+      }
 
-  .tools-faq-answer p {
-    font-size: 11px;
-  }
+      .tools-faq-answer p {
+        font-size: 11px;
+      }
 
-  .tools-content-cta {
-    padding-bottom: 50px;
-  }
+      .tools-content-cta {
+        padding-bottom: 50px;
+      }
 
-  .tools-cta-inner {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 22px;
-    padding: 26px 22px;
-  }
+      .tools-cta-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 22px;
+        padding: 26px 22px;
+      }
 
-  .tools-cta-copy h2 {
-    font-size: 26px;
-  }
-}
+      .tools-cta-copy h2 {
+        font-size: 26px;
+      }
+    }
 
-@media (max-width: 380px) {
-  .tools-about-highlights {
-    grid-template-columns: 1fr;
-  }
+    @media (max-width: 380px) {
+      .tools-about-highlights {
+        grid-template-columns: 1fr;
+      }
 
-  .tools-steps,
-  .tools-usecase-grid {
-    grid-template-columns: 1fr;
-  }
+      .tools-steps,
+      .tools-usecase-grid {
+        grid-template-columns: 1fr;
+      }
 
-  .tools-mini-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+      .tools-mini-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
 
-  .tools-mini-card {
-    padding: 12px 6px;
-  }
-}
+      .tools-mini-card {
+        padding: 12px 6px;
+      }
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  .tools-content *,
-  .tools-content *::before,
-  .tools-content *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
-}
-</style>
+    @media (prefers-reduced-motion: reduce) {
+
+      .tools-content *,
+      .tools-content *::before,
+      .tools-content *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="site-header">
-  <nav class="nav wrap" aria-label="Main navigation">
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Main navigation">
 
-    <a class="brand" href="/tool/" aria-label="MicroService Tools homepage">
-      <span class="brand-mark" aria-hidden="true">M</span>
-      <span>
-        MicroService Tools
-        <small>Small tools. Thoughtfully made.</small>
-      </span>
-    </a>
-
-    <div class="nav-links">
-      <a class="about-link"
-         href="https://about.imtharvesh.me"
-         target="_blank"
-         rel="noopener noreferrer">
-        About Me ↗
+      <a class="brand" href="/tool/" aria-label="MicroService Tools homepage">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>
+          MicroService Tools
+          <small>Small tools. Thoughtfully made.</small>
+        </span>
       </a>
 
-      <a class="coffee"
-         href="https://buymeacoffee.com/tharveshmuhaideen"
-         target="_blank"
-         rel="noopener noreferrer">
-        ♡ Buy me a coffee
-      </a>
-    </div>
+      <div class="nav-links">
+        <a class="about-link" href="https://about.imtharvesh.me" target="_blank" rel="noopener noreferrer">
+          About Me ↗
+        </a>
 
-  </nav>
-</header>
-
-<main>
-
-  <!-- HERO -->
-
-  <section class="hero">
-    <div class="hero-grid wrap">
-
-      <div class="reveal">
-        <div class="eyebrow">Your everyday web toolkit</div>
-
-        <h1>
-          Small tools.<br>
-          <em>Big difference.</em>
-        </h1>
-
-        <p class="hero-copy">
-          A thoughtfully crafted collection of free online utilities
-          for developers, creators, writers, and curious minds.
-          Get things done without the unnecessary complexity.
-        </p>
-
-        <div class="hero-actions">
-          <a class="button" href="#tools">
-            Explore all tools <span aria-hidden="true">↘</span>
-          </a>
-
-          <a class="button secondary"
-             href="https://github.com/tharvbytes/tool"
-             target="_blank"
-             rel="noopener noreferrer">
-            View on GitHub ↗
-          </a>
-        </div>
-
-        <div class="hero-proof">
-          <span class="proof-dot" aria-hidden="true"></span>
-          Simple, accessible and ready to use.
-        </div>
+        <a class="coffee" href="https://buymeacoffee.com/tharveshmuhaideen" target="_blank" rel="noopener noreferrer">
+          ♡ Buy me a coffee
+        </a>
       </div>
 
-      <!-- Decorative interface preview -->
+    </nav>
+  </header>
 
-      <div class="hero-visual reveal"
-           aria-label="Illustration of the MicroService Tools interface">
+  <main>
 
-        <div class="preview-window">
+    <!-- HERO -->
 
-          <div class="preview-top">
-            <i class="window-dot"></i>
-            <i class="window-dot"></i>
-            <i class="window-dot"></i>
-            <div class="preview-address">tharvbytes.github.io/tool/</div>
-          </div>
+    <section class="hero">
+      <div class="hero-grid wrap">
 
-          <div class="preview-body">
+        <div class="reveal">
+          <div class="eyebrow">Your everyday web toolkit</div>
 
-            <div class="preview-heading">
-              <div>
-                <strong>Your workspace.</strong>
-                <small>Everything you need, in one place.</small>
-              </div>
-              <span class="preview-badge">TOOLKIT</span>
-            </div>
+          <h1>
+            Small tools.<br>
+            <em>Big difference.</em>
+          </h1>
 
-            <div class="preview-search">
-              <span aria-hidden="true">⌕</span>
-              <span>What would you like to do?</span>
-            </div>
-
-            <div class="preview-grid">
-
-              <div class="preview-card">
-                <div class="preview-icon">Aa</div>
-                <b>Text tools</b>
-                <small>Write & edit</small>
-              </div>
-
-              <div class="preview-card">
-                <div class="preview-icon">{ }</div>
-                <b>Developer</b>
-                <small>Build & convert</small>
-              </div>
-
-              <div class="preview-card">
-                <div class="preview-icon">✳</div>
-                <b>Generators</b>
-                <small>Create & explore</small>
-              </div>
-
-              <div class="preview-card">
-                <div class="preview-icon">⌘</div>
-                <b>Utilities</b>
-                <small>Everyday tasks</small>
-              </div>
-
-              <div class="preview-card">
-                <div class="preview-icon">✓</div>
-                <b>Validators</b>
-                <small>Check & verify</small>
-              </div>
-
-              <div class="preview-card">
-                <div class="preview-icon">↔</div>
-                <b>Compare</b>
-                <small>Find differences</small>
-              </div>
-
-            </div>
-
-            <div class="preview-footer">
-              <span>● YOUR TOOLKIT IS READY</span>
-              <span>MADE WITH CARE</span>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- QUICK STATS -->
-
-  <section class="stats" aria-label="Tool collection overview">
-    <div class="stats-grid wrap">
-
-      <div class="stat">
-        <strong id="totalTools">17</strong>
-        <span>Handy tools</span>
-      </div>
-
-      <div class="stat">
-        <strong>Free</strong>
-        <span>To explore and use</span>
-      </div>
-
-      <div class="stat">
-        <strong>Simple</strong>
-        <span>By design</span>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- TOOL DIRECTORY -->
-
-  <section class="tools-section" id="tools">
-    <div class="wrap">
-
-      <div class="section-heading">
-
-        <div>
-          <div class="kicker">The collection</div>
-          <h2>Find your next tool.</h2>
-          <p>
-            Little utilities for everyday problems.
-            Search the collection or browse by category.
+          <p class="hero-copy">
+            A thoughtfully crafted collection of free online utilities
+            for developers, creators, writers, and curious minds.
+            Get things done without the unnecessary complexity.
           </p>
+
+          <div class="hero-actions">
+            <a class="button" href="#tools">
+              Explore all tools <span aria-hidden="true">↘</span>
+            </a>
+
+            <a class="button secondary" href="https://github.com/tharvbytes/tool" target="_blank"
+              rel="noopener noreferrer">
+              View on GitHub ↗
+            </a>
+          </div>
+
+          <div class="hero-proof">
+            <span class="proof-dot" aria-hidden="true"></span>
+            Simple, accessible and ready to use.
+          </div>
         </div>
 
-        <span class="tool-count" id="visibleCount">17 tools</span>
+        <!-- Decorative interface preview -->
+
+        <div class="hero-visual reveal" aria-label="Illustration of the MicroService Tools interface">
+
+          <div class="preview-window">
+
+            <div class="preview-top">
+              <i class="window-dot"></i>
+              <i class="window-dot"></i>
+              <i class="window-dot"></i>
+              <div class="preview-address">tharvbytes.github.io/tool/</div>
+            </div>
+
+            <div class="preview-body">
+
+              <div class="preview-heading">
+                <div>
+                  <strong>Your workspace.</strong>
+                  <small>Everything you need, in one place.</small>
+                </div>
+                <span class="preview-badge">TOOLKIT</span>
+              </div>
+
+              <div class="preview-search">
+                <span aria-hidden="true">⌕</span>
+                <span>What would you like to do?</span>
+              </div>
+
+              <div class="preview-grid">
+
+                <div class="preview-card">
+                  <div class="preview-icon">Aa</div>
+                  <b>Text tools</b>
+                  <small>Write & edit</small>
+                </div>
+
+                <div class="preview-card">
+                  <div class="preview-icon">{ }</div>
+                  <b>Developer</b>
+                  <small>Build & convert</small>
+                </div>
+
+                <div class="preview-card">
+                  <div class="preview-icon">✳</div>
+                  <b>Generators</b>
+                  <small>Create & explore</small>
+                </div>
+
+                <div class="preview-card">
+                  <div class="preview-icon">⌘</div>
+                  <b>Utilities</b>
+                  <small>Everyday tasks</small>
+                </div>
+
+                <div class="preview-card">
+                  <div class="preview-icon">✓</div>
+                  <b>Validators</b>
+                  <small>Check & verify</small>
+                </div>
+
+                <div class="preview-card">
+                  <div class="preview-icon">↔</div>
+                  <b>Compare</b>
+                  <small>Find differences</small>
+                </div>
+
+              </div>
+
+              <div class="preview-footer">
+                <span>● YOUR TOOLKIT IS READY</span>
+                <span>MADE WITH CARE</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK STATS -->
+
+    <section class="stats" aria-label="Tool collection overview">
+      <div class="stats-grid wrap">
+
+        <div class="stat">
+          <strong id="totalTools">17</strong>
+          <span>Handy tools</span>
+        </div>
+
+        <div class="stat">
+          <strong>Free</strong>
+          <span>To explore and use</span>
+        </div>
+
+        <div class="stat">
+          <strong>Simple</strong>
+          <span>By design</span>
+        </div>
 
       </div>
+    </section>
 
-      <!-- Search -->
+    <div class="tools-content">
 
-      <div class="search-area">
-        <span class="search-icon" aria-hidden="true">⌕</span>
-
-        <input
-          type="search"
-          id="toolSearch"
-          placeholder="Search tools, keywords, or categories..."
-          aria-label="Search tools"
-          autocomplete="off"
-          spellcheck="false"
-        >
-
-        <span class="search-shortcut" aria-hidden="true">/</span>
-      </div>
-
-      <!-- Category filters -->
-
-      <div class="filters"
-           id="filters"
-           role="group"
-           aria-label="Filter tools by category">
-
-        <button class="filter" type="button"
-                data-category="all" aria-pressed="true">
-          All tools
-        </button>
-
-        <button class="filter" type="button"
-                data-category="text" aria-pressed="false">
-          Text & Writing
-        </button>
-
-        <button class="filter" type="button"
-                data-category="developer" aria-pressed="false">
-          Developer
-        </button>
-
-        <button class="filter" type="button"
-                data-category="generator" aria-pressed="false">
-          Generators
-        </button>
-
-        <button class="filter" type="button"
-                data-category="validator" aria-pressed="false">
-          Validators
-        </button>
-
-        <button class="filter" type="button"
-                data-category="utility" aria-pressed="false">
-          Utilities
-        </button>
-
-      </div>
-
-      <!-- Cards are populated from the JavaScript directory -->
-
-      <div class="tools-grid" id="toolsGrid">
-
-        <a class="tool-card" href="/tool/base64-encoder-decoder/"
-           data-category="developer"
-           data-search="base64 encoder decoder encode decode text binary">
-
-          <div class="tool-top">
-            <span class="tool-icon blue">64</span>
-            <span class="tool-category">Developer</span>
-          </div>
-
-          <h3>Base64 Encoder / Decoder</h3>
-          <p>Encode text into Base64 or decode an existing Base64 string.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/case-converter/"
-           data-category="text"
-           data-search="case converter uppercase lowercase title sentence text">
-
-          <div class="tool-top">
-            <span class="tool-icon pink">Aa</span>
-            <span class="tool-category">Text & Writing</span>
-          </div>
-
-          <h3>Case Converter</h3>
-          <p>Transform text into uppercase, lowercase, title case, and more.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/contrast-checker/"
-           data-category="validator"
-           data-search="contrast checker accessibility color wcag text background">
-
-          <div class="tool-top">
-            <span class="tool-icon orange">◐</span>
-            <span class="tool-category">Validators</span>
-          </div>
-
-          <h3>Contrast Checker</h3>
-          <p>Inspect color contrast to help make your interfaces more accessible.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/contrast-validator/"
-           data-category="validator"
-           data-search="contrast validator accessibility wcag colors validation">
-
-          <div class="tool-top">
-            <span class="tool-icon green">✓</span>
-            <span class="tool-category">Validators</span>
-          </div>
-
-          <h3>Contrast Validator</h3>
-          <p>Validate color combinations against contrast requirements.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/diff-checker/"
-           data-category="developer"
-           data-search="diff checker compare text files differences changes">
-
-          <div class="tool-top">
-            <span class="tool-icon cyan">≠</span>
-            <span class="tool-category">Developer</span>
-          </div>
-
-          <h3>Diff Checker</h3>
-          <p>Compare two text inputs and quickly spot their differences.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/hash-generator/"
-           data-category="generator"
-           data-search="hash generator md5 sha1 sha256 sha512 cryptographic hash">
-
-          <div class="tool-top">
-            <span class="tool-icon slate">#</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>Hash Generator</h3>
-          <p>Generate supported cryptographic hashes from your input text.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/lorem-ipsum-generator/"
-           data-category="generator"
-           data-search="lorem ipsum generator placeholder dummy sample text paragraphs">
-
-          <div class="tool-top">
-            <span class="tool-icon yellow">¶</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>Lorem Ipsum Generator</h3>
-          <p>Create placeholder text for mockups, layouts, and prototypes.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/markdown-studio/"
-           data-category="text"
-           data-search="markdown studio editor preview markdown documentation writing">
-
-          <div class="tool-top">
-            <span class="tool-icon blue">M↓</span>
-            <span class="tool-category">Text & Writing</span>
-          </div>
-
-          <h3>Markdown Studio</h3>
-          <p>Write and preview Markdown for documentation and content.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/meta-tag-generator/"
-           data-category="generator"
-           data-search="meta tag generator seo social media html metadata description">
-
-          <div class="tool-top">
-            <span class="tool-icon green">&lt;/&gt;</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>Meta Tag Generator</h3>
-          <p>Create HTML metadata for page descriptions, SEO, and sharing.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/minifier/"
-           data-category="developer"
-           data-search="minifier minify html css javascript code whitespace">
-
-          <div class="tool-top">
-            <span class="tool-icon orange">⇣</span>
-            <span class="tool-category">Developer</span>
-          </div>
-
-          <h3>Minifier</h3>
-          <p>Minify supported code by reducing unnecessary whitespace and formatting.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/open-source-files/"
-           data-category="generator"
-           data-search="open source project files readme license contributing code of conduct gitignore">
-
-          <div class="tool-top">
-            <span class="tool-icon slate">⌘</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>Open-Source Project Files</h3>
-          <p>Prepare common documentation and community files for an open-source project.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/password-generator/"
-           data-category="generator"
-           data-search="password generator random secure strong password length">
-
-          <div class="tool-top">
-            <span class="tool-icon pink">✳</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>Password Generator</h3>
-          <p>Generate random passwords with configurable character options.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/robots-txt-generator/"
-           data-category="generator"
-           data-search="robots.txt generator robots crawler search engine user-agent sitemap allow disallow">
-
-          <div class="tool-top">
-            <span class="tool-icon green">R</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>robots.txt Generator</h3>
-          <p>Create robots.txt rules to guide search-engine crawlers through your site.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/template-generator/"
-           data-category="generator"
-           data-search="template generator starter templates code html project">
-
-          <div class="tool-top">
-            <span class="tool-icon slate">▤</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>Template Generator</h3>
-          <p>Create templates using the options supported by the tool.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/uuid-generator/"
-           data-category="generator"
-           data-search="uuid generator guid unique identifier random uuid v4">
-
-          <div class="tool-top">
-            <span class="tool-icon blue">ID</span>
-            <span class="tool-category">Generators</span>
-          </div>
-
-          <h3>UUID Generator</h3>
-          <p>Generate universally unique identifiers for development tasks.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/word-counter/"
-           data-category="text"
-           data-search="word counter character count sentence paragraph writing">
-
-          <div class="tool-top">
-            <span class="tool-icon green">W</span>
-            <span class="tool-category">Text & Writing</span>
-          </div>
-
-          <h3>Word Counter</h3>
-          <p>Count words and characters while checking your written content.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-        <a class="tool-card" href="/tool/yaml-properties-converter/"
-           data-category="developer"
-           data-search="yaml properties converter java properties configuration yaml">
-
-          <div class="tool-top">
-            <span class="tool-icon orange">Y</span>
-            <span class="tool-category">Developer</span>
-          </div>
-
-          <h3>YAML / Properties Converter</h3>
-          <p>Convert supported YAML and properties configuration formats.</p>
-
-          <span class="tool-link">
-            Open tool <span aria-hidden="true">↗</span>
-          </span>
-        </a>
-
-      </div>
-
-      <div class="empty-state" id="emptyState" aria-live="polite">
-        <strong>No tools found.</strong>
-        <p>Try a different search term or browse all available tools.</p>
-        <button type="button" id="resetSearch">Show all tools</button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- About, usage guidance, use cases, FAQ, and closing CTA -->
-
-  <div class="tools-content">
-
-    <!-- =====================================
+      <!-- =====================================
          01. WHAT IS MICROSERVICE TOOLS?
          ===================================== -->
 
-    <section class="tools-section tools-about" id="what-is">
-      <div class="tools-container tools-about-grid">
+      <section class="tools-section tools-about" id="what-is">
+        <div class="tools-container tools-about-grid">
 
-        <div class="tools-about-copy">
-          <div class="tools-eyebrow">A little about us</div>
+          <div class="tools-about-copy">
+            <div class="tools-eyebrow">A little about us</div>
 
-          <h2 class="tools-section-title">
-            Small tools.<br>
-            <em>Big time savings.</em>
-          </h2>
+            <h2 class="tools-section-title">
+              Small tools.<br>
+              <em>Big time savings.</em>
+            </h2>
 
-          <p>
-            <strong>MicroService Tools</strong> is a collection of simple,
-            browser-based utilities designed to make everyday digital tasks
-            quicker and easier.
-          </p>
+            <p>
+              <strong>MicroService Tools</strong> is a collection of simple,
+              browser-based utilities designed to make everyday digital tasks
+              quicker and easier.
+            </p>
 
-          <p>
-            From minifying code and converting text or configuration formats
-            to generating UUIDs, checking colour contrast, and comparing text,
-            each tool focuses on doing one job without unnecessary complexity.
-          </p>
+            <p>
+              From minifying code and converting text or configuration formats
+              to generating UUIDs, checking colour contrast, and comparing text,
+              each tool focuses on doing one job without unnecessary complexity.
+            </p>
 
-          <p>
-            No complicated setup or bulky software installations.
-            Open a tool, enter your data, and get straight to work.
-          </p>
+            <p>
+              No complicated setup or bulky software installations.
+              Open a tool, enter your data, and get straight to work.
+            </p>
 
-          <div class="tools-about-highlights">
+            <div class="tools-about-highlights">
 
-            <div class="tools-highlight">
-              <div class="tools-highlight-icon" aria-hidden="true">↗</div>
-              <div>
-                <strong>Ready in seconds</strong>
-                <span>Open a tool and get started.</span>
+              <div class="tools-highlight">
+                <div class="tools-highlight-icon" aria-hidden="true">↗</div>
+                <div>
+                  <strong>Ready in seconds</strong>
+                  <span>Open a tool and get started.</span>
+                </div>
               </div>
-            </div>
 
-            <div class="tools-highlight">
-              <div class="tools-highlight-icon" aria-hidden="true">⌘</div>
-              <div>
-                <strong>Developer friendly</strong>
-                <span>Practical utilities for daily work.</span>
+              <div class="tools-highlight">
+                <div class="tools-highlight-icon" aria-hidden="true">⌘</div>
+                <div>
+                  <strong>Developer friendly</strong>
+                  <span>Practical utilities for daily work.</span>
+                </div>
               </div>
-            </div>
 
-            <div class="tools-highlight">
-              <div class="tools-highlight-icon" aria-hidden="true">◇</div>
-              <div>
-                <strong>Simple by design</strong>
-                <span>Focused interfaces without clutter.</span>
+              <div class="tools-highlight">
+                <div class="tools-highlight-icon" aria-hidden="true">◇</div>
+                <div>
+                  <strong>Simple by design</strong>
+                  <span>Focused interfaces without clutter.</span>
+                </div>
               </div>
-            </div>
 
-            <div class="tools-highlight">
-              <div class="tools-highlight-icon" aria-hidden="true">◎</div>
-              <div>
-                <strong>Browser based</strong>
-                <span>Use the tools right in your browser.</span>
+              <div class="tools-highlight">
+                <div class="tools-highlight-icon" aria-hidden="true">◎</div>
+                <div>
+                  <strong>Browser based</strong>
+                  <span>Use the tools right in your browser.</span>
+                </div>
               </div>
-            </div>
 
+            </div>
           </div>
-        </div>
 
-        <div class="tools-about-visual"
-             role="img"
-             aria-label="Illustration showing a collection of browser-based developer tools">
+          <div class="tools-about-visual" role="img"
+            aria-label="Illustration showing a collection of browser-based developer tools">
 
-          <div class="tools-dashboard">
+            <div class="tools-dashboard">
 
-            <div class="tools-dashboard-bar">
-              <span class="tools-dashboard-dot"></span>
-              <span class="tools-dashboard-dot"></span>
-              <span class="tools-dashboard-dot"></span>
-              <div class="tools-dashboard-address">
-                tharvbytes.github.io/tool/
-              </div>
-            </div>
-
-            <div class="tools-dashboard-body">
-
-              <div class="tools-dashboard-heading">
-                <small>Your everyday toolkit</small>
-                <strong>What are we building today?</strong>
-                <p>A useful little tool for whatever comes next.</p>
+              <div class="tools-dashboard-bar">
+                <span class="tools-dashboard-dot"></span>
+                <span class="tools-dashboard-dot"></span>
+                <span class="tools-dashboard-dot"></span>
+                <div class="tools-dashboard-address">
+                  tharvbytes.github.io/tool/
+                </div>
               </div>
 
-              <div class="tools-mini-grid">
+              <div class="tools-dashboard-body">
 
-                <div class="tools-mini-card">
-                  <div class="tools-mini-icon">{ }</div>
-                  <strong>YAML Tools</strong>
-                  <span>Convert configuration</span>
+                <div class="tools-dashboard-heading">
+                  <small>Your everyday toolkit</small>
+                  <strong>What are we building today?</strong>
+                  <p>A useful little tool for whatever comes next.</p>
                 </div>
 
-                <div class="tools-mini-card">
-                  <div class="tools-mini-icon">Aa</div>
-                  <strong>Case Converter</strong>
-                  <span>Transform text</span>
-                </div>
+                <div class="tools-mini-grid">
 
-                <div class="tools-mini-card">
-                  <div class="tools-mini-icon">#</div>
-                  <strong>Hash Generator</strong>
-                  <span>Generate hashes</span>
-                </div>
+                  <div class="tools-mini-card">
+                    <div class="tools-mini-icon">{ }</div>
+                    <strong>YAML Tools</strong>
+                    <span>Convert configuration</span>
+                  </div>
 
-                <div class="tools-mini-card">
-                  <div class="tools-mini-icon">↔</div>
-                  <strong>Diff Checker</strong>
-                  <span>Compare content</span>
-                </div>
+                  <div class="tools-mini-card">
+                    <div class="tools-mini-icon">Aa</div>
+                    <strong>Case Converter</strong>
+                    <span>Transform text</span>
+                  </div>
 
-                <div class="tools-mini-card">
-                  <div class="tools-mini-icon">Aa</div>
-                  <strong>Word Counter</strong>
-                  <span>Count your words</span>
-                </div>
+                  <div class="tools-mini-card">
+                    <div class="tools-mini-icon">#</div>
+                    <strong>Hash Generator</strong>
+                    <span>Generate hashes</span>
+                  </div>
 
-                <div class="tools-mini-card">
-                  <div class="tools-mini-icon">✳</div>
-                  <strong>UUID Generator</strong>
-                  <span>Create unique IDs</span>
-                </div>
+                  <div class="tools-mini-card">
+                    <div class="tools-mini-icon">↔</div>
+                    <strong>Diff Checker</strong>
+                    <span>Compare content</span>
+                  </div>
 
+                  <div class="tools-mini-card">
+                    <div class="tools-mini-icon">Aa</div>
+                    <strong>Word Counter</strong>
+                    <span>Count your words</span>
+                  </div>
+
+                  <div class="tools-mini-card">
+                    <div class="tools-mini-icon">✳</div>
+                    <strong>UUID Generator</strong>
+                    <span>Create unique IDs</span>
+                  </div>
+
+                </div>
               </div>
-            </div>
 
-            <div class="tools-dashboard-footer">
-              <span>MicroService Tools</span>
-              <span>Small tools. Thoughtfully made.</span>
-            </div>
+              <div class="tools-dashboard-footer">
+                <span>MicroService Tools</span>
+                <span>Small tools. Thoughtfully made.</span>
+              </div>
 
+            </div>
           </div>
+
         </div>
-
-      </div>
-    </section>
+      </section>
 
 
-    <!-- =====================================
+      <!-- =====================================
          02. HOW TO USE THE TOOLS
          ===================================== -->
 
-    <section class="tools-section tools-how" id="how-to">
-      <div class="tools-container">
+      <section class="tools-section tools-how" id="how-to">
+        <div class="tools-container">
 
-        <div class="tools-section-heading">
-          <div class="tools-eyebrow">Getting started</div>
+          <div class="tools-section-heading">
+            <div class="tools-eyebrow">Getting started</div>
 
-          <h2 class="tools-section-title">
-            Four steps.<br>
-            <em>That's all it takes.</em>
-          </h2>
+            <h2 class="tools-section-title">
+              Four steps.<br>
+              <em>That's all it takes.</em>
+            </h2>
 
-          <p class="tools-section-description">
-            You don't need a complicated workflow to get things done.
-            Pick a utility, provide your input, and let the tool handle
-            the repetitive work.
-          </p>
+            <p class="tools-section-description">
+              You don't need a complicated workflow to get things done.
+              Pick a utility, provide your input, and let the tool handle
+              the repetitive work.
+            </p>
+          </div>
+
+          <div class="tools-steps">
+
+            <article class="tools-step">
+              <div class="tools-step-top">
+                <span class="tools-step-number">STEP 01</span>
+                <span class="tools-step-icon" aria-hidden="true">⌕</span>
+              </div>
+
+              <h3>Find your tool</h3>
+
+              <p>
+                Browse the collection and choose the utility that matches
+                your task, whether it's text conversion, configuration conversion,
+                or generating identifiers.
+              </p>
+
+              <span class="tools-step-tag">Choose a utility</span>
+            </article>
+
+            <article class="tools-step">
+              <div class="tools-step-top">
+                <span class="tools-step-number">STEP 02</span>
+                <span class="tools-step-icon" aria-hidden="true">↳</span>
+              </div>
+
+              <h3>Enter your input</h3>
+
+              <p>
+                Paste your text, enter your data, configure the available
+                options, or provide the values needed for the operation.
+              </p>
+
+              <span class="tools-step-tag">Add your data</span>
+            </article>
+
+            <article class="tools-step">
+              <div class="tools-step-top">
+                <span class="tools-step-number">STEP 03</span>
+                <span class="tools-step-icon" aria-hidden="true">✳</span>
+              </div>
+
+              <h3>Get your result</h3>
+
+              <p>
+                Run the operation and review the output. Depending on
+                the tool, you can format, convert, compare, or generate
+                the result you need.
+              </p>
+
+              <span class="tools-step-tag">Process your input</span>
+            </article>
+
+            <article class="tools-step">
+              <div class="tools-step-top">
+                <span class="tools-step-number">STEP 04</span>
+                <span class="tools-step-icon" aria-hidden="true">▢</span>
+              </div>
+
+              <h3>Copy and continue</h3>
+
+              <p>
+                Copy the result or use the available download option.
+                Take it back to your project, document, or everyday workflow.
+              </p>
+
+              <span class="tools-step-tag">Use your output</span>
+            </article>
+
+          </div>
         </div>
-
-        <div class="tools-steps">
-
-          <article class="tools-step">
-            <div class="tools-step-top">
-              <span class="tools-step-number">STEP 01</span>
-              <span class="tools-step-icon" aria-hidden="true">⌕</span>
-            </div>
-
-            <h3>Find your tool</h3>
-
-            <p>
-              Browse the collection and choose the utility that matches
-              your task, whether it's text conversion, configuration conversion,
-              or generating identifiers.
-            </p>
-
-            <span class="tools-step-tag">Choose a utility</span>
-          </article>
-
-          <article class="tools-step">
-            <div class="tools-step-top">
-              <span class="tools-step-number">STEP 02</span>
-              <span class="tools-step-icon" aria-hidden="true">↳</span>
-            </div>
-
-            <h3>Enter your input</h3>
-
-            <p>
-              Paste your text, enter your data, configure the available
-              options, or provide the values needed for the operation.
-            </p>
-
-            <span class="tools-step-tag">Add your data</span>
-          </article>
-
-          <article class="tools-step">
-            <div class="tools-step-top">
-              <span class="tools-step-number">STEP 03</span>
-              <span class="tools-step-icon" aria-hidden="true">✳</span>
-            </div>
-
-            <h3>Get your result</h3>
-
-            <p>
-              Run the operation and review the output. Depending on
-              the tool, you can format, convert, compare, or generate
-              the result you need.
-            </p>
-
-            <span class="tools-step-tag">Process your input</span>
-          </article>
-
-          <article class="tools-step">
-            <div class="tools-step-top">
-              <span class="tools-step-number">STEP 04</span>
-              <span class="tools-step-icon" aria-hidden="true">▢</span>
-            </div>
-
-            <h3>Copy and continue</h3>
-
-            <p>
-              Copy the result or use the available download option.
-              Take it back to your project, document, or everyday workflow.
-            </p>
-
-            <span class="tools-step-tag">Use your output</span>
-          </article>
-
-        </div>
-      </div>
-    </section>
+      </section>
 
 
-    <!-- =====================================
+      <!-- =====================================
          03. USE CASES
          ===================================== -->
 
-    <section class="tools-section tools-usecases" id="use-cases">
-      <div class="tools-container">
+      <section class="tools-section tools-usecases" id="use-cases">
+        <div class="tools-container">
 
-        <div class="tools-section-heading">
-          <div class="tools-eyebrow">Made for everyday tasks</div>
+          <div class="tools-section-heading">
+            <div class="tools-eyebrow">Made for everyday tasks</div>
 
-          <h2 class="tools-section-title">
-            Useful tools for<br>
-            <em>the work you actually do.</em>
-          </h2>
+            <h2 class="tools-section-title">
+              Useful tools for<br>
+              <em>the work you actually do.</em>
+            </h2>
 
-          <p class="tools-section-description">
-            Whether you're writing code, preparing content, checking a design,
-            or handling everyday text, there's a tool to help simplify the task.
-          </p>
+            <p class="tools-section-description">
+              Whether you're writing code, preparing content, checking a design,
+              or handling everyday text, there's a tool to help simplify the task.
+            </p>
+          </div>
+
+          <div class="tools-usecase-grid">
+
+            <article class="tools-usecase">
+              <div class="tools-usecase-icon" aria-hidden="true">{ }</div>
+
+              <h3>Web development</h3>
+
+              <p>
+                Convert configuration formats, generate UUIDs,
+                and work with common web development utilities without
+                switching between multiple websites.
+              </p>
+
+              <div class="tools-usecase-list">
+                <span>YAML / Properties</span>
+                <span>UUID Generator</span>
+                <span>Meta Tags</span>
+              </div>
+            </article>
+
+            <article class="tools-usecase">
+              <div class="tools-usecase-icon" aria-hidden="true">Aa</div>
+
+              <h3>Writing & content</h3>
+
+              <p>
+                Clean up text, change letter casing, count words, create
+                placeholder content, and prepare readable Markdown
+                for articles and documentation.
+              </p>
+
+              <div class="tools-usecase-list">
+                <span>Case Converter</span>
+                <span>Word Counter</span>
+                <span>Lorem Ipsum</span>
+              </div>
+            </article>
+
+            <article class="tools-usecase">
+              <div class="tools-usecase-icon" aria-hidden="true">⌘</div>
+
+              <h3>Debugging & comparison</h3>
+
+              <p>
+                Compare two versions of text, identify changes, inspect
+                configuration data, and simplify common troubleshooting
+                tasks during development.
+              </p>
+
+              <div class="tools-usecase-list">
+                <span>Diff Checker</span>
+                <span>Minifier</span>
+                <span>YAML Converter</span>
+              </div>
+            </article>
+
+            <article class="tools-usecase">
+              <div class="tools-usecase-icon" aria-hidden="true">◈</div>
+
+              <h3>Security-related utilities</h3>
+
+              <p>
+                Generate random passwords and calculate supported hash
+                digests for development, testing, and other appropriate
+                workflows.
+              </p>
+
+              <div class="tools-usecase-list">
+                <span>Password Generator</span>
+                <span>Hash Generator</span>
+              </div>
+            </article>
+
+            <article class="tools-usecase">
+              <div class="tools-usecase-icon" aria-hidden="true">◉</div>
+
+              <h3>UI & accessibility</h3>
+
+              <p>
+                Evaluate colour combinations, check contrast ratios,
+                and make more informed design decisions when building
+                accessible interfaces.
+              </p>
+
+              <div class="tools-usecase-list">
+                <span>Contrast Checker</span>
+                <span>Colour Validation</span>
+              </div>
+            </article>
+
+            <article class="tools-usecase">
+              <div class="tools-usecase-icon" aria-hidden="true">▤</div>
+
+              <h3>Project setup & planning</h3>
+
+              <p>
+                Generate starter templates, prepare robots.txt content,
+                create metadata, and speed up repetitive setup tasks
+                when starting a website or project.
+              </p>
+
+              <div class="tools-usecase-list">
+                <span>Template Generator</span>
+                <span>Robots.txt</span>
+                <span>Meta Tags</span>
+              </div>
+            </article>
+
+          </div>
         </div>
+      </section>
 
-        <div class="tools-usecase-grid">
+      <!-- TOOL DIRECTORY -->
 
-          <article class="tools-usecase">
-            <div class="tools-usecase-icon" aria-hidden="true">{ }</div>
+      <section class="tools-section" id="tools">
+        <div class="wrap">
 
-            <h3>Web development</h3>
+          <div class="section-heading">
 
-            <p>
-              Convert configuration formats, generate UUIDs,
-              and work with common web development utilities without
-              switching between multiple websites.
-            </p>
-
-            <div class="tools-usecase-list">
-              <span>YAML / Properties</span>
-              <span>UUID Generator</span>
-              <span>Meta Tags</span>
+            <div>
+              <div class="kicker">The collection</div>
+              <h2>Find your next tool.</h2>
+              <p>
+                Little utilities for everyday problems.
+                Search the collection or browse by category.
+              </p>
             </div>
-          </article>
 
-          <article class="tools-usecase">
-            <div class="tools-usecase-icon" aria-hidden="true">Aa</div>
+            <span class="tool-count" id="visibleCount">17 tools</span>
 
-            <h3>Writing & content</h3>
+          </div>
 
-            <p>
-              Clean up text, change letter casing, count words, create
-              placeholder content, and prepare readable Markdown
-              for articles and documentation.
-            </p>
+          <!-- Search -->
 
-            <div class="tools-usecase-list">
-              <span>Case Converter</span>
-              <span>Word Counter</span>
-              <span>Lorem Ipsum</span>
-            </div>
-          </article>
+          <div class="search-area">
+            <span class="search-icon" aria-hidden="true">⌕</span>
 
-          <article class="tools-usecase">
-            <div class="tools-usecase-icon" aria-hidden="true">⌘</div>
+            <input type="search" id="toolSearch" placeholder="Search tools, keywords, or categories..."
+              aria-label="Search tools" autocomplete="off" spellcheck="false">
 
-            <h3>Debugging & comparison</h3>
+            <span class="search-shortcut" aria-hidden="true">/</span>
+          </div>
 
-            <p>
-              Compare two versions of text, identify changes, inspect
-              configuration data, and simplify common troubleshooting
-              tasks during development.
-            </p>
+          <!-- Category filters -->
 
-            <div class="tools-usecase-list">
-              <span>Diff Checker</span>
-              <span>Minifier</span>
-              <span>YAML Converter</span>
-            </div>
-          </article>
+          <div class="filters" id="filters" role="group" aria-label="Filter tools by category">
 
-          <article class="tools-usecase">
-            <div class="tools-usecase-icon" aria-hidden="true">◈</div>
+            <button class="filter" type="button" data-category="all" aria-pressed="true">
+              All tools
+            </button>
 
-            <h3>Security-related utilities</h3>
+            <button class="filter" type="button" data-category="text" aria-pressed="false">
+              Text & Writing
+            </button>
 
-            <p>
-              Generate random passwords and calculate supported hash
-              digests for development, testing, and other appropriate
-              workflows.
-            </p>
+            <button class="filter" type="button" data-category="developer" aria-pressed="false">
+              Developer
+            </button>
 
-            <div class="tools-usecase-list">
-              <span>Password Generator</span>
-              <span>Hash Generator</span>
-            </div>
-          </article>
+            <button class="filter" type="button" data-category="generator" aria-pressed="false">
+              Generators
+            </button>
 
-          <article class="tools-usecase">
-            <div class="tools-usecase-icon" aria-hidden="true">◉</div>
+            <button class="filter" type="button" data-category="validator" aria-pressed="false">
+              Validators
+            </button>
 
-            <h3>UI & accessibility</h3>
+            <button class="filter" type="button" data-category="utility" aria-pressed="false">
+              Utilities
+            </button>
 
-            <p>
-              Evaluate colour combinations, check contrast ratios,
-              and make more informed design decisions when building
-              accessible interfaces.
-            </p>
+          </div>
 
-            <div class="tools-usecase-list">
-              <span>Contrast Checker</span>
-              <span>Colour Validation</span>
-            </div>
-          </article>
+          <!-- Cards are populated from the JavaScript directory -->
 
-          <article class="tools-usecase">
-            <div class="tools-usecase-icon" aria-hidden="true">▤</div>
+          <div class="tools-grid" id="toolsGrid">
 
-            <h3>Project setup & planning</h3>
+            <a class="tool-card" href="/base64-encoder-decoder/" data-category="developer"
+              data-search="base64 encoder decoder encode decode text binary">
 
-            <p>
-              Generate starter templates, prepare robots.txt content,
-              create metadata, and speed up repetitive setup tasks
-              when starting a website or project.
-            </p>
+              <div class="tool-top">
+                <span class="tool-icon blue">64</span>
+                <span class="tool-category">Developer</span>
+              </div>
 
-            <div class="tools-usecase-list">
-              <span>Template Generator</span>
-              <span>Robots.txt</span>
-              <span>Meta Tags</span>
-            </div>
-          </article>
+              <h3>Base64 Encoder / Decoder</h3>
+              <p>Encode text into Base64 or decode an existing Base64 string.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/case-converter/" data-category="text"
+              data-search="case converter uppercase lowercase title sentence text">
+
+              <div class="tool-top">
+                <span class="tool-icon pink">Aa</span>
+                <span class="tool-category">Text & Writing</span>
+              </div>
+
+              <h3>Case Converter</h3>
+              <p>Transform text into uppercase, lowercase, title case, and more.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/contrast-checker/" data-category="validator"
+              data-search="contrast checker accessibility color wcag text background">
+
+              <div class="tool-top">
+                <span class="tool-icon orange">◐</span>
+                <span class="tool-category">Validators</span>
+              </div>
+
+              <h3>Contrast Checker</h3>
+              <p>Inspect color contrast to help make your interfaces more accessible.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/contrast-validator/" data-category="validator"
+              data-search="contrast validator accessibility wcag colors validation">
+
+              <div class="tool-top">
+                <span class="tool-icon green">✓</span>
+                <span class="tool-category">Validators</span>
+              </div>
+
+              <h3>Contrast Validator</h3>
+              <p>Validate color combinations against contrast requirements.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/diff-checker/" data-category="developer"
+              data-search="diff checker compare text files differences changes">
+
+              <div class="tool-top">
+                <span class="tool-icon cyan">≠</span>
+                <span class="tool-category">Developer</span>
+              </div>
+
+              <h3>Diff Checker</h3>
+              <p>Compare two text inputs and quickly spot their differences.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/hash-generator/" data-category="generator"
+              data-search="hash generator md5 sha1 sha256 sha512 cryptographic hash">
+
+              <div class="tool-top">
+                <span class="tool-icon slate">#</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>Hash Generator</h3>
+              <p>Generate supported cryptographic hashes from your input text.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/lorem-ipsum-generator/" data-category="generator"
+              data-search="lorem ipsum generator placeholder dummy sample text paragraphs">
+
+              <div class="tool-top">
+                <span class="tool-icon yellow">¶</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>Lorem Ipsum Generator</h3>
+              <p>Create placeholder text for mockups, layouts, and prototypes.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/markdown-studio/" data-category="text"
+              data-search="markdown studio editor preview markdown documentation writing">
+
+              <div class="tool-top">
+                <span class="tool-icon blue">M↓</span>
+                <span class="tool-category">Text & Writing</span>
+              </div>
+
+              <h3>Markdown Studio</h3>
+              <p>Write and preview Markdown for documentation and content.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/meta-tag-generator/" data-category="generator"
+              data-search="meta tag generator seo social media html metadata description">
+
+              <div class="tool-top">
+                <span class="tool-icon green">&lt;/&gt;</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>Meta Tag Generator</h3>
+              <p>Create HTML metadata for page descriptions, SEO, and sharing.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/minifier/" data-category="developer"
+              data-search="minifier minify html css javascript code whitespace">
+
+              <div class="tool-top">
+                <span class="tool-icon orange">⇣</span>
+                <span class="tool-category">Developer</span>
+              </div>
+
+              <h3>Minifier</h3>
+              <p>Minify supported code by reducing unnecessary whitespace and formatting.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/open-source-files/" data-category="generator"
+              data-search="open source project files readme license contributing code of conduct gitignore">
+
+              <div class="tool-top">
+                <span class="tool-icon slate">⌘</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>Open-Source Project Files</h3>
+              <p>Prepare common documentation and community files for an open-source project.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/password-generator/" data-category="generator"
+              data-search="password generator random secure strong password length">
+
+              <div class="tool-top">
+                <span class="tool-icon pink">✳</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>Password Generator</h3>
+              <p>Generate random passwords with configurable character options.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/robots-txt-generator/" data-category="generator"
+              data-search="robots.txt generator robots crawler search engine user-agent sitemap allow disallow">
+
+              <div class="tool-top">
+                <span class="tool-icon green">R</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>robots.txt Generator</h3>
+              <p>Create robots.txt rules to guide search-engine crawlers through your site.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/template-generator/" data-category="generator"
+              data-search="template generator starter templates code html project">
+
+              <div class="tool-top">
+                <span class="tool-icon slate">▤</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>Template Generator</h3>
+              <p>Create templates using the options supported by the tool.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/uuid-generator/" data-category="generator"
+              data-search="uuid generator guid unique identifier random uuid v4">
+
+              <div class="tool-top">
+                <span class="tool-icon blue">ID</span>
+                <span class="tool-category">Generators</span>
+              </div>
+
+              <h3>UUID Generator</h3>
+              <p>Generate universally unique identifiers for development tasks.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/word-counter/" data-category="text"
+              data-search="word counter character count sentence paragraph writing">
+
+              <div class="tool-top">
+                <span class="tool-icon green">W</span>
+                <span class="tool-category">Text & Writing</span>
+              </div>
+
+              <h3>Word Counter</h3>
+              <p>Count words and characters while checking your written content.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+            <a class="tool-card" href="/yaml-properties-converter/" data-category="developer"
+              data-search="yaml properties converter java properties configuration yaml">
+
+              <div class="tool-top">
+                <span class="tool-icon orange">Y</span>
+                <span class="tool-category">Developer</span>
+              </div>
+
+              <h3>YAML / Properties Converter</h3>
+              <p>Convert supported YAML and properties configuration formats.</p>
+
+              <span class="tool-link">
+                Open tool <span aria-hidden="true">↗</span>
+              </span>
+            </a>
+
+          </div>
+
+          <div class="empty-state" id="emptyState" aria-live="polite">
+            <strong>No tools found.</strong>
+            <p>Try a different search term or browse all available tools.</p>
+            <button type="button" id="resetSearch">Show all tools</button>
+          </div>
 
         </div>
-      </div>
-    </section>
+      </section>
 
-
-    <!-- =====================================
+      <!-- =====================================
          04. FREQUENTLY ASKED QUESTIONS
          ===================================== -->
 
-    <section class="tools-section tools-faq" id="faq">
-      <div class="tools-container tools-faq-layout">
+      <section class="tools-section tools-faq" id="faq">
+        <div class="tools-container tools-faq-layout">
 
-        <div class="tools-faq-intro">
-          <div class="tools-eyebrow">Good questions</div>
+          <div class="tools-faq-intro">
+            <div class="tools-eyebrow">Good questions</div>
 
-          <h2 class="tools-section-title">
-            Before you<br>
-            <em>get started.</em>
-          </h2>
-
-          <p>
-            A few helpful answers about MicroService Tools, how the utilities
-            work, and what to keep in mind when using them.
-          </p>
-
-          <div class="tools-faq-note">
-            <div class="tools-faq-note-icon" aria-hidden="true">i</div>
+            <h2 class="tools-section-title">
+              Before you<br>
+              <em>get started.</em>
+            </h2>
 
             <p>
-              <strong>Have another question?</strong><br>
-              Check the documentation for the specific tool, if available,
-              to understand its options and limitations.
+              A few helpful answers about MicroService Tools, how the utilities
+              work, and what to keep in mind when using them.
             </p>
+
+            <div class="tools-faq-note">
+              <div class="tools-faq-note-icon" aria-hidden="true">i</div>
+
+              <p>
+                <strong>Have another question?</strong><br>
+                Check the documentation for the specific tool, if available,
+                to understand its options and limitations.
+              </p>
+            </div>
+          </div>
+
+          <div class="tools-faq-list">
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">01</span>
+                What is MicroService Tools?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  MicroService Tools is a collection of browser-based utilities
+                  for common tasks such as text and configuration conversion,
+                  password generation, hash calculation, colour contrast checking,
+                  and other developer or productivity workflows.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">02</span>
+                Are these tools free to use?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  The tools are hosted as part of a publicly accessible website.
+                  Check the individual tool and its associated terms for any
+                  usage restrictions or additional conditions.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">03</span>
+                Do I need to install any software?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  No separate installation is generally needed for browser-based
+                  tools. Open the relevant page in a supported, up-to-date browser
+                  and use the available interface.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">04</span>
+                Can I use these tools on my phone?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  The page layouts are designed to adapt to different screen
+                  sizes. However, individual tools may have different usability
+                  requirements, so a desktop browser may be more convenient
+                  for some tasks.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">05</span>
+                Is my input data uploaded to a server?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  Data handling depends on how each tool is implemented.
+                  Some browser-based operations can run locally, but you should
+                  not assume every tool processes data exclusively on your device.
+                  Check the specific tool's implementation and privacy information
+                  before entering sensitive data.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">06</span>
+                Can I use the generated output in my projects?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  Output from utilities such as text converters, UUID generators,
+                  and formatting tools can generally be copied into your projects.
+                  Make sure the output meets your project's requirements and
+                  verify any security-sensitive or production-critical values.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">07</span>
+                What should I do if a tool doesn't work?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  Check that your browser is up to date, confirm that your input
+                  is valid, and try reloading the page. If the problem persists,
+                  check the relevant project repository for known issues or
+                  troubleshooting information.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">08</span>
+                Are the tools suitable for sensitive information?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  Avoid entering passwords, private keys, personal information,
+                  confidential business data, or other secrets unless you have
+                  verified how the particular tool processes and handles that
+                  information. Browser-based does not automatically mean
+                  privacy-safe.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">09</span>
+                Do I need an account to use the tools?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  These pages are designed as directly accessible web utilities.
+                  If a particular tool requires an account or external service,
+                  follow the instructions displayed on that tool's page.
+                </p>
+              </div>
+            </details>
+
+            <details class="tools-faq-item">
+              <summary>
+                <span class="tools-faq-number">10</span>
+                How can I suggest a new tool or improvement?
+              </summary>
+
+              <div class="tools-faq-answer">
+                <p>
+                  You can visit the
+                  <a href="https://github.com/tharvbytes/tool" target="_blank" rel="noopener noreferrer">MicroService
+                    Tools repository</a>
+                  to explore the project and, where appropriate, submit an issue
+                  describing your suggestion or a problem you've encountered.
+                </p>
+              </div>
+            </details>
+
           </div>
         </div>
-
-        <div class="tools-faq-list">
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">01</span>
-              What is MicroService Tools?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                MicroService Tools is a collection of browser-based utilities
-                for common tasks such as text and configuration conversion,
-                password generation, hash calculation, colour contrast checking,
-                and other developer or productivity workflows.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">02</span>
-              Are these tools free to use?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                The tools are hosted as part of a publicly accessible website.
-                Check the individual tool and its associated terms for any
-                usage restrictions or additional conditions.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">03</span>
-              Do I need to install any software?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                No separate installation is generally needed for browser-based
-                tools. Open the relevant page in a supported, up-to-date browser
-                and use the available interface.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">04</span>
-              Can I use these tools on my phone?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                The page layouts are designed to adapt to different screen
-                sizes. However, individual tools may have different usability
-                requirements, so a desktop browser may be more convenient
-                for some tasks.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">05</span>
-              Is my input data uploaded to a server?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                Data handling depends on how each tool is implemented.
-                Some browser-based operations can run locally, but you should
-                not assume every tool processes data exclusively on your device.
-                Check the specific tool's implementation and privacy information
-                before entering sensitive data.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">06</span>
-              Can I use the generated output in my projects?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                Output from utilities such as text converters, UUID generators,
-                and formatting tools can generally be copied into your projects.
-                Make sure the output meets your project's requirements and
-                verify any security-sensitive or production-critical values.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">07</span>
-              What should I do if a tool doesn't work?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                Check that your browser is up to date, confirm that your input
-                is valid, and try reloading the page. If the problem persists,
-                check the relevant project repository for known issues or
-                troubleshooting information.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">08</span>
-              Are the tools suitable for sensitive information?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                Avoid entering passwords, private keys, personal information,
-                confidential business data, or other secrets unless you have
-                verified how the particular tool processes and handles that
-                information. Browser-based does not automatically mean
-                privacy-safe.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">09</span>
-              Do I need an account to use the tools?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                These pages are designed as directly accessible web utilities.
-                If a particular tool requires an account or external service,
-                follow the instructions displayed on that tool's page.
-              </p>
-            </div>
-          </details>
-
-          <details class="tools-faq-item">
-            <summary>
-              <span class="tools-faq-number">10</span>
-              How can I suggest a new tool or improvement?
-            </summary>
-
-            <div class="tools-faq-answer">
-              <p>
-                You can visit the
-                <a href="https://github.com/tharvbytes/tool"
-                   target="_blank"
-                   rel="noopener noreferrer">MicroService Tools repository</a>
-                to explore the project and, where appropriate, submit an issue
-                describing your suggestion or a problem you've encountered.
-              </p>
-            </div>
-          </details>
-
-        </div>
-      </div>
-    </section>
+      </section>
 
 
-    <!-- =====================================
+      <!-- =====================================
          05. FINAL CALL TO ACTION
          ===================================== -->
 
-    <section class="tools-content-cta">
-      <div class="tools-container">
-        <div class="tools-cta-inner">
+      <section class="tools-content-cta">
+        <div class="tools-container">
+          <div class="tools-cta-inner">
 
-          <div class="tools-cta-copy">
-            <small>Your next task starts here</small>
+            <div class="tools-cta-copy">
+              <small>Your next task starts here</small>
 
-            <h2>Less busywork. More building.</h2>
+              <h2>Less busywork. More building.</h2>
 
-            <p>
-              Explore the collection and find a simpler way to handle
-              your everyday development, writing, and productivity tasks.
-            </p>
+              <p>
+                Explore the collection and find a simpler way to handle
+                your everyday development, writing, and productivity tasks.
+              </p>
+            </div>
+
+            <a class="tools-cta-button" href="#tool-list">
+              Explore all tools
+              <span aria-hidden="true">↗</span>
+            </a>
+
           </div>
-
-          <a class="tools-cta-button"
-             href="#tool-list">
-            Explore all tools
-            <span aria-hidden="true">↗</span>
-          </a>
-
         </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+
+  <footer class="site-footer">
+    <div class="footer-inner wrap">
+
+      <div class="footer-brand">
+        MicroService Tools
+        <small>Built with care by Tharvesh Muhaideen A.</small>
       </div>
-    </section>
 
-  </div>
-</main>
+      <div class="footer-links">
+        <a href="https://github.com/tharvbytes/tool" target="_blank" rel="noopener noreferrer">
+          GitHub ↗
+        </a>
 
-<!-- FOOTER -->
+        <a href="https://about.imtharvesh.me" target="_blank" rel="noopener noreferrer">
+          About Me
+        </a>
 
-<footer class="site-footer">
-  <div class="footer-inner wrap">
+        <a href="https://buymeacoffee.com/tharveshmuhaideen" target="_blank" rel="noopener noreferrer">
+          Support the project
+        </a>
 
-    <div class="footer-brand">
-      MicroService Tools
-      <small>Built with care by Tharvesh Muhaideen A.</small>
+        <a href="#tools">Explore tools ↑</a>
+      </div>
+
     </div>
+  </footer>
 
-    <div class="footer-links">
-      <a href="https://github.com/tharvbytes/tool"
-         target="_blank"
-         rel="noopener noreferrer">
-        GitHub ↗
-      </a>
+  <script>
+    (() => {
+      const grid = document.getElementById('toolsGrid');
+      const cards = [...grid.querySelectorAll('.tool-card')];
+      const search = document.getElementById('toolSearch');
+      const filters = [...document.querySelectorAll('.filter')];
+      const count = document.getElementById('visibleCount');
+      const total = document.getElementById('totalTools');
+      const empty = document.getElementById('emptyState');
+      const reset = document.getElementById('resetSearch');
 
-      <a href="https://about.imtharvesh.me"
-         target="_blank"
-         rel="noopener noreferrer">
-        About Me
-      </a>
+      let activeCategory = 'all';
 
-      <a href="https://buymeacoffee.com/tharveshmuhaideen"
-         target="_blank"
-         rel="noopener noreferrer">
-        Support the project
-      </a>
+      total.textContent = cards.length + '+';
 
-      <a href="#tools">Explore tools ↑</a>
-    </div>
+      function updateTools() {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
 
-  </div>
-</footer>
+        cards.forEach(card => {
+          const category = card.dataset.category;
+          const searchableText = (
+            card.innerText + ' ' + (card.dataset.search || '')
+          ).toLowerCase();
 
-<script>
-(() => {
-  const grid = document.getElementById('toolsGrid');
-  const cards = [...grid.querySelectorAll('.tool-card')];
-  const search = document.getElementById('toolSearch');
-  const filters = [...document.querySelectorAll('.filter')];
-  const count = document.getElementById('visibleCount');
-  const total = document.getElementById('totalTools');
-  const empty = document.getElementById('emptyState');
-  const reset = document.getElementById('resetSearch');
+          const matchesCategory =
+            activeCategory === 'all' ||
+            category === activeCategory;
 
-  let activeCategory = 'all';
+          const matchesSearch =
+            !query || searchableText.includes(query);
 
-  total.textContent = cards.length + '+';
+          const show = matchesCategory && matchesSearch;
 
-  function updateTools() {
-    const query = search.value.trim().toLowerCase();
-    let visible = 0;
+          card.hidden = !show;
 
-    cards.forEach(card => {
-      const category = card.dataset.category;
-      const searchableText = (
-        card.innerText + ' ' + (card.dataset.search || '')
-      ).toLowerCase();
+          if (show) visible++;
+        });
 
-      const matchesCategory =
-        activeCategory === 'all' ||
-        category === activeCategory;
+        count.textContent =
+          visible + (visible === 1 ? ' tool' : ' tools');
 
-      const matchesSearch =
-        !query || searchableText.includes(query);
+        empty.classList.toggle('show', visible === 0);
+      }
 
-      const show = matchesCategory && matchesSearch;
+      filters.forEach(button => {
+        button.addEventListener('click', () => {
+          activeCategory = button.dataset.category;
 
-      card.hidden = !show;
+          filters.forEach(filter => {
+            filter.setAttribute(
+              'aria-pressed',
+              String(filter === button)
+            );
+          });
 
-      if (show) visible++;
-    });
+          updateTools();
+        });
+      });
 
-    count.textContent =
-      visible + (visible === 1 ? ' tool' : ' tools');
+      search.addEventListener('input', updateTools);
 
-    empty.classList.toggle('show', visible === 0);
-  }
+      reset.addEventListener('click', () => {
+        search.value = '';
+        activeCategory = 'all';
 
-  filters.forEach(button => {
-    button.addEventListener('click', () => {
-      activeCategory = button.dataset.category;
+        filters.forEach(button => {
+          button.setAttribute(
+            'aria-pressed',
+            String(button.dataset.category === 'all')
+          );
+        });
 
-      filters.forEach(filter => {
-        filter.setAttribute(
-          'aria-pressed',
-          String(filter === button)
-        );
+        updateTools();
+        search.focus();
+      });
+
+      // "/" focuses search unless the user is typing in a field.
+      document.addEventListener('keydown', event => {
+        const target = event.target;
+        const isTyping =
+          target instanceof HTMLInputElement ||
+          target instanceof HTMLTextAreaElement ||
+          target.isContentEditable;
+
+        if (
+          event.key === '/' &&
+          !isTyping &&
+          !event.ctrlKey &&
+          !event.metaKey &&
+          !event.altKey
+        ) {
+          event.preventDefault();
+          search.focus();
+        }
+
+        if (
+          event.key === 'Escape' &&
+          document.activeElement === search
+        ) {
+          search.value = '';
+          updateTools();
+          search.blur();
+        }
       });
 
       updateTools();
-    });
-  });
-
-  search.addEventListener('input', updateTools);
-
-  reset.addEventListener('click', () => {
-    search.value = '';
-    activeCategory = 'all';
-
-    filters.forEach(button => {
-      button.setAttribute(
-        'aria-pressed',
-        String(button.dataset.category === 'all')
-      );
-    });
-
-    updateTools();
-    search.focus();
-  });
-
-  // "/" focuses search unless the user is typing in a field.
-  document.addEventListener('keydown', event => {
-    const target = event.target;
-    const isTyping =
-      target instanceof HTMLInputElement ||
-      target instanceof HTMLTextAreaElement ||
-      target.isContentEditable;
-
-    if (
-      event.key === '/' &&
-      !isTyping &&
-      !event.ctrlKey &&
-      !event.metaKey &&
-      !event.altKey
-    ) {
-      event.preventDefault();
-      search.focus();
-    }
-
-    if (
-      event.key === 'Escape' &&
-      document.activeElement === search
-    ) {
-      search.value = '';
-      updateTools();
-      search.blur();
-    }
-  });
-
-  updateTools();
-})();
-</script>
+    })();
+  </script>
 
 </body>
+
 </html>
