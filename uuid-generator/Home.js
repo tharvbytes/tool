@@ -12,6 +12,33 @@
     var tag = tool.querySelector('.tag');
     description = tag ? tag.textContent.trim() : 'A practical tool for your everyday development work.';
   }
+  var guide = {
+  "what": "A UUID generator creates universally unique identifier strings for records, test data, and systems that need identifiers.",
+  "how": "Choose a UUID version and quantity, generate the values, and check the version and formatting options before using them.",
+  "input": "Version: UUID v4\\nQuantity: 1",
+  "output": "550e8400-e29b-41d4-a716-446655440000",
+  "uses": [
+    "Creating identifiers for test fixtures",
+    "Generating IDs for local development",
+    "Producing multiple IDs for sample data"
+  ],
+  "faqs": [
+    {
+      "q": "Are UUIDs secret tokens?",
+      "a": "Do not treat an identifier as an authorization secret. Use dedicated secure tokens and access controls."
+    },
+    {
+      "q": "Which UUID version should I choose?",
+      "a": "Choose based on the consuming system’s requirements; random v4 is commonly used when a generated random identifier is sufficient."
+    },
+    {
+      "q": "Can UUID collisions happen?",
+      "a": "UUIDs are designed to make collisions extremely unlikely for supported versions, but they are not a mathematical guarantee of uniqueness in every system."
+    }
+  ],
+  "how2Title": "How do you choose a UUID version?",
+  "how2": "Use a version required by the consuming system; random v4 is a common choice when you need a generated identifier without time ordering."
+};
 
   function escapeHtml(value) {
     return String(value).replace(/[&<>"']/g, function (char) {
@@ -34,6 +61,7 @@
     '#ecosystemFooter{border-top:1px solid var(--site-border);padding:20px 22px;background:var(--site-snow);color:#756b80;text-align:center;font-size:12px}#ecosystemFooter a{color:var(--site-plum);font-weight:700;text-decoration:none}#ecosystemFooter a:hover{text-decoration:underline;text-underline-offset:3px}.ecosystem-heart{color:#9060c2}' +
     '@media(max-width:900px){#ecosystemHome{padding:45px 0 55px}.ecosystem-hero-grid{grid-template-columns:1fr;gap:25px}.ecosystem-hero-copy p{max-width:62ch}.ecosystem-visual{width:min(680px,100%);margin:0 auto}.ecosystem-window-body{min-height:240px}.ecosystem-tool-body .grid,.ecosystem-tool-body .panes,.ecosystem-tool-body .shell,.ecosystem-tool-body .main,.ecosystem-tool-body #view{min-height:480px}}' +
     '@media(max-width:620px){#ecosystemHeader{min-height:62px;padding:9px 15px}.ecosystem-brand{font-size:15px}.ecosystem-mark{width:29px;height:29px}.ecosystem-links{gap:12px}.ecosystem-links a{font-size:11px}.ecosystem-links .ecosystem-about{display:none}.ecosystem-links .ecosystem-coffee{min-height:33px;padding:0 10px}#ecosystemHome,.ecosystem-tool-heading{width:calc(100% - 30px)}#ecosystemHome{padding:39px 0 48px}.ecosystem-hero-copy h2{font-size:44px}.ecosystem-window{border-width:5px}.ecosystem-window-body{min-height:220px;padding:16px}.ecosystem-preview{gap:7px;margin-top:16px}.ecosystem-preview-panel{min-height:95px;padding:9px}.ecosystem-tool-body>.wrap{width:calc(100% - 30px)!important;min-height:0;padding-top:12px!important}.ecosystem-tool-body .grid,.ecosystem-tool-body .panes,.ecosystem-tool-body .shell{grid-template-columns:minmax(0,1fr)!important;min-width:0}.ecosystem-tool-body .grid,.ecosystem-tool-body .panes,.ecosystem-tool-body .shell,.ecosystem-tool-body .main,.ecosystem-tool-body #view{min-height:0;min-width:0}.ecosystem-tool-body .side,.ecosystem-tool-body .out,.ecosystem-tool-body .pane{min-width:0}.ecosystem-tool-body .pane{min-height:280px}.ecosystem-tool-heading{padding-top:28px}}' +
+    '.ecosystem-guide{width:min(1160px,calc(100% - 48px));margin:0 auto 50px;padding:30px;border:1px solid var(--site-border);border-radius:20px;background:#fff;box-shadow:var(--site-shadow)}.ecosystem-guide h2{margin:0 0 20px;color:var(--site-plum-dark);font-size:clamp(24px,3vw,34px);letter-spacing:-.035em}.ecosystem-guide h3{margin:0 0 8px;color:var(--site-plum-dark);font-size:18px}.ecosystem-guide p,.ecosystem-guide li{color:#5e5365;line-height:1.7}.ecosystem-guide p{margin:0 0 12px}.ecosystem-guide section{padding:18px 0;border-top:1px solid var(--site-border)}.ecosystem-guide .ecosystem-example{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ecosystem-guide pre{overflow:auto;margin:8px 0 0;padding:14px;border-radius:10px;background:#f7f3fb;color:#321344;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.ecosystem-guide ul{margin:8px 0 0;padding-left:22px}.ecosystem-guide details{padding:13px 0;border-top:1px solid var(--site-border)}.ecosystem-guide summary{color:var(--site-plum-dark);font-weight:700;cursor:pointer}.ecosystem-guide details p{margin:8px 0 0}.ecosystem-guide details:last-child{border-bottom:1px solid var(--site-border)}@media(max-width:620px){.ecosystem-guide{width:calc(100% - 30px);padding:20px}.ecosystem-guide .ecosystem-example{grid-template-columns:1fr}}' +
     '@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ecosystem-button{transition:none}}';
   document.head.appendChild(style);
 
@@ -74,6 +102,48 @@
   section.appendChild(sectionHeading);
   section.appendChild(toolBody);
   toolBody.appendChild(tool);
+
+  var guideSection = document.createElement('section');
+  guideSection.className = 'ecosystem-guide';
+  guideSection.setAttribute('aria-labelledby', 'ecosystemGuideTitle');
+  guideSection.innerHTML =
+    '<h2 id="ecosystemGuideTitle">A quick guide to ' + escapeHtml(title) + '</h2>' +
+    '<section><h3>What is this tool?</h3><p>' + escapeHtml(guide.what) + '</p></section>' +
+    '<section><h3>How do you use it?</h3><p>' + escapeHtml(guide.how) + '</p></section>' +
+    '<section><h3>' + escapeHtml(guide.how2Title) + '</h3><p>' + escapeHtml(guide.how2) + '</p></section>' +
+    '<section><h3>Example input and output</h3><div class="ecosystem-example"><div><strong>Input</strong><pre><code>' + escapeHtml(guide.input) + '</code></pre></div><div><strong>Output</strong><pre><code>' + escapeHtml(guide.output) + '</code></pre></div></div></section>' +
+    '<section><h3>Common use cases</h3><ul>' + guide.uses.map(function (item) { return '<li>' + escapeHtml(item) + '</li>'; }).join('') + '</ul></section>' +
+    '<section><h3>Frequently asked questions</h3>' + guide.faqs.map(function (item) { return '<details><summary>' + escapeHtml(item.q) + '</summary><p>' + escapeHtml(item.a) + '</p></details>'; }).join('') + '</section>';
+  section.appendChild(guideSection);
+
+  var structuredData = document.createElement('script');
+  structuredData.type = 'application/ld+json';
+  structuredData.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebApplication',
+        name: title,
+        description: description,
+        url: window.location.origin + window.location.pathname,
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Any',
+        browserRequirements: 'Requires a modern web browser with JavaScript enabled',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: guide.faqs.map(function (item) {
+          return {
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a }
+          };
+        })
+      }
+    ]
+  });
+  document.head.appendChild(structuredData);
 
   var footer = document.createElement('footer');
   footer.id = 'ecosystemFooter';
