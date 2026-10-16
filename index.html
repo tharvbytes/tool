@@ -1,0 +1,348 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minifier: free HTML, CSS, JavaScript and JSON minifier</title>
+  <meta name="description" content="Minify HTML, CSS, JavaScript and JSON in your browser. See how many bytes you save, copy the result or download it. Nothing is uploaded.">
+  <style>
+  :root {
+    color-scheme: light;
+    --color-bg: #F5F6F1;
+    --color-surface: #FFFFFF;
+    --color-text: #101713;
+    --color-text-secondary: #68736B;
+    --color-accent: #C8F169;
+    --color-border: #DDE2D9;
+    --color-muted: #EDF0E9;
+    --color-danger: #C74440;
+    --color-success: #347A52;
+    --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --shadow-panel: 0 1px 2px rgba(16, 23, 19, .04);
+    --content-width: 1360px;
+    --control-height: 36px;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{min-height:100%;margin:0}
+  body{background:var(--color-bg);color:var(--color-text);font:15px/1.5 var(--font-sans)}
+  .wrap{min-height:100vh;max-width:var(--content-width);margin:0 auto;padding:20px clamp(16px,3vw,36px) 12px;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:16px;border-bottom:1px solid var(--color-border);margin-bottom:16px}
+  .brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  h1{font-size:1.45rem;line-height:1.2;margin:0;letter-spacing:-.035em;font-weight:650}
+  .tag{color:var(--color-text-secondary);font-size:.88rem}
+  .links{display:flex;align-items:center;gap:16px}
+  .links a.plain{color:var(--color-text-secondary);font-weight:550;text-decoration:none}
+  .links a.plain:hover{color:var(--color-text);text-decoration:underline;text-underline-offset:3px}
+  a.coffee{display:inline-flex;align-items:center;min-height:var(--control-height);background:transparent;color:var(--color-text);text-decoration:none;font-weight:600;padding:0 14px;border-radius:var(--radius-sm);border:1px solid var(--color-border)}
+  a.coffee:hover{background:var(--color-muted);border-color:#c5cdc0}
+  nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  nav button{font:inherit;font-size:.9rem;cursor:pointer;min-height:var(--control-height);padding:0 14px;border-radius:var(--radius-sm);border:1px solid transparent;background:transparent;color:var(--color-text-secondary)}
+  nav button:hover{background:var(--color-muted);color:var(--color-text)}
+  nav button[aria-current=page]{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-text);font-weight:650}
+  :focus-visible{outline:3px solid var(--color-success);outline-offset:2px}
+  main{flex:1;min-height:0;display:flex;flex-direction:column}
+  #view{flex:1;min-height:0;display:flex;flex-direction:column}
+  .loading{color:var(--color-text-secondary)}
+  .fail{color:var(--color-danger);font-weight:600}
+
+  .home{flex:1;min-height:0;display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-content:start;padding:20px 0}
+  .home h2{font-size:clamp(1.75rem,3vw,2.35rem);line-height:1.12;margin:0 0 16px;letter-spacing:-.04em;font-weight:620}
+  .home p{margin:0 0 12px;max-width:48ch}
+  .home .small{color:var(--color-text-secondary);font-size:.88rem}
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-content:start}
+  .card{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:6px;min-height:150px;padding:16px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);font:inherit;cursor:pointer;box-shadow:var(--shadow-panel);transition:background-color .15s,border-color .15s}
+  .card b{font-size:1.05rem;letter-spacing:-.01em}
+  .card span{font-size:.86rem;color:var(--color-text-secondary)}
+  .card em{font-style:normal;font-weight:650;font-size:.84rem;margin-top:auto;padding-top:8px}
+  .card:hover{background:#fbfcf8;border-color:#a8b29f}
+  .card:focus-visible{outline-offset:3px}
+
+  .opts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:12px;font-size:.88rem}
+  .opts label{display:flex;gap:8px;align-items:center;cursor:pointer}
+  input[type=checkbox]{width:16px;height:16px;accent-color:var(--color-success)}
+  .blurb{margin:0 0 12px;font-size:.88rem;color:var(--color-text-secondary)}
+  .grid{flex:1;min-height:320px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+  .pane{display:flex;flex-direction:column;min-height:0}
+  .bar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;min-height:var(--control-height)}
+  .bar b{font-size:.94rem;font-weight:650}
+  .sp{flex:1}
+  button.s{font:inherit;font-size:.84rem;cursor:pointer;min-height:32px;border-radius:var(--radius-sm);padding:3px 10px;border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text)}
+  button.s:hover:not(:disabled){background:var(--color-muted);border-color:#c5cdc0}
+  button.s:disabled{opacity:.45;cursor:default}
+  button.s.fill{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-text);font-weight:650}
+  button.s.fill:hover:not(:disabled){background:#b9e65a;border-color:#b9e65a}
+  textarea{flex:1;min-height:0;width:100%;resize:vertical;padding:14px 16px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text);font:.84rem/1.6 var(--font-mono);white-space:pre;overflow:auto;tab-size:2;box-shadow:var(--shadow-panel)}
+  textarea:focus{outline:3px solid var(--color-success);outline-offset:1px}
+  textarea[readonly]{background:#f9faf7}
+  .drag textarea{outline:3px dashed var(--color-success);outline-offset:2px}
+  .stats{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px;font-size:.86rem;min-height:1.5em;color:var(--color-text-secondary)}
+  .stats b{color:var(--color-text);font-weight:650}
+  .stats .big{font-size:1rem;color:var(--color-success)}
+  .stats .big.worse{color:var(--color-danger)}
+  .info{margin:4px 0 0;min-height:1.3em;font-size:.84rem;color:var(--color-text-secondary)}
+  .info.err{color:var(--color-danger);font-weight:600}
+  footer{margin-top:16px;padding-top:10px;border-top:1px solid var(--color-border);color:var(--color-text-secondary);font-size:.76rem;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:space-between}
+  footer a{color:var(--color-text);font-weight:600}
+  @media(max-width:900px){
+    .home{grid-template-columns:1fr;gap:20px}
+  }
+  @media(max-width:720px){
+    .wrap{padding:16px 16px 12px}
+    header{align-items:flex-start;flex-direction:column;gap:10px}
+    .links{flex-wrap:wrap}
+    .grid{grid-template-columns:1fr;min-height:0}
+    .pane{min-height:300px}
+    textarea{min-height:240px;flex:none;resize:vertical}
+  }
+  @media(max-width:460px){
+    .cards{grid-template-columns:1fr}
+    nav{gap:4px}
+    nav button{padding:0 10px}
+    .bar{gap:6px}
+    .bar .sp{flex-basis:100%}
+  }
+  </style>
+    <script defer src="Home.js"></script>
+</head>
+  <body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><h1>Minifier</h1><span class="tag">HTML, CSS, JavaScript and JSON, made smaller.</span></div>
+      <div class="links">
+        <a class="plain" href="https://about.imtharvesh.me" target="_blank" rel="noopener">About me</a>
+        <a class="coffee" href="https://buymeacoffee.com/tharveshmuhaideen" target="_blank" rel="noopener">Buy me a coffee</a>
+      </div>
+    </header>
+
+    <nav id="nav" aria-label="Tools">
+      <button data-id="home">Home</button>
+      <button data-id="html">HTML</button>
+      <button data-id="css">CSS</button>
+      <button data-id="js">JavaScript</button>
+      <button data-id="json">JSON</button>
+    </nav>
+
+    <main><div id="view" aria-live="polite"></div></main>
+
+    <footer>
+      <span>Runs in your browser. Nothing you paste is uploaded. Always test minified code before you ship it.</span>
+      <span>Made by Tharvesh. <a href="https://about.imtharvesh.me" target="_blank" rel="noopener">About me</a> &middot; <a href="https://buymeacoffee.com/tharveshmuhaideen" target="_blank" rel="noopener">Buy me a coffee</a></span>
+    </footer>
+  </div>
+
+  <script>
+  var App = (function () {
+    var FILES = { html: 'html-minifier.js', css: 'css-minifier.js', js: 'js-minifier.js', json: 'json-minifier.js' };
+    var SHORT = { html: 'HTML', css: 'CSS', js: 'JavaScript', json: 'JSON' };
+    var view = document.getElementById('view');
+    var opts = {}, inputs = {}, names = {};
+    var loading = {}, viewSeq = 0;
+    window.Tools = window.Tools || {};
+
+    function load(id) {
+      if (window.Tools[id]) return Promise.resolve(window.Tools[id]);
+      if (loading[id]) return loading[id];
+      var s = document.createElement('script');
+      s.src = FILES[id];
+      var request = new Promise(function (ok, bad) {
+        s.onload = function () { window.Tools[id] ? ok(window.Tools[id]) : bad(new Error('empty')); };
+        s.onerror = function () { bad(new Error('missing')); };
+      });
+      loading[id] = request;
+      request.then(function () { delete loading[id]; }, function () {
+        delete loading[id];
+        s.remove();
+      });
+      document.head.appendChild(s);
+      return request;
+    }
+
+    var HOME =
+      '<div class="home">' +
+        '<div>' +
+          '<h2>Welcome. Let\u2019s make your code lighter.</h2>' +
+          '<p>Paste your HTML, CSS, JavaScript or JSON, or drop in a file, and get a smaller version straight away. You\u2019ll see how many bytes you saved, and you can copy or download the result.</p>' +
+          '<p>Everything runs in your browser, so your code never leaves your device.</p>' +
+          '<p class="small">Minifying removes comments and extra whitespace. It makes files faster to download without changing what they do. Keep your readable originals, and test the minified copy before you ship it.</p>' +
+        '</div>' +
+        '<div class="cards">' +
+          '<button class="card" data-id="html"><b>HTML</b><span>Strips comments and extra whitespace, tidies attributes, and minifies inline CSS and JavaScript.</span><em>Open HTML Minifier</em></button>' +
+          '<button class="card" data-id="css"><b>CSS</b><span>Removes comments and whitespace, shortens colours and zero values, and drops empty rules.</span><em>Open CSS Minifier</em></button>' +
+          '<button class="card" data-id="js"><b>JavaScript</b><span>Removes comments and whitespace safely. It never renames your variables or changes behaviour.</span><em>Open JavaScript Minifier</em></button>' +
+          '<button class="card" data-id="json"><b>JSON</b><span>Validates your JSON, points to errors by line and column, then removes all the whitespace.</span><em>Open JSON Minifier</em></button>' +
+        '</div>' +
+      '</div>';
+
+    function open(id) {
+      if (id !== 'home' && !FILES[id]) id = 'home';
+      var request = ++viewSeq;
+      document.querySelectorAll('#nav button').forEach(function (b) {
+        if (b.getAttribute('data-id') === id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+      });
+      document.title = id === 'home' ? 'Minifier: free HTML, CSS, JavaScript and JSON minifier' : SHORT[id] + ' Minifier: free online ' + SHORT[id] + ' minifier';
+      if (id === 'home') { view.innerHTML = HOME; } else {
+        view.innerHTML = '<p class="loading">Loading ' + FILES[id] + '\u2026</p>';
+        load(id).then(function (t) {
+          if (request !== viewSeq) return;
+          view.innerHTML = '';
+          try { t.render(view); }
+          catch (err) { console.error(err); view.innerHTML = '<p class="fail">Something went wrong while drawing this page. Details are in the browser console.</p>'; }
+        }, function () {
+          if (request !== viewSeq) return;
+          view.innerHTML = '<p class="fail">Couldn\u2019t load ' + FILES[id] + '. Keep index.html and all the .js files in the same folder.</p>';
+        });
+      }
+      try { if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id); } catch (e) {}
+    }
+
+    function fmt(n) { return n < 1024 ? n + ' B' : (n / 1024).toFixed(n < 10240 ? 2 : 1) + ' KB'; }
+    function bytes(s) { return new Blob([s]).size; }
+    function readText(f) {
+      if (typeof f.text === 'function') return f.text();
+      return new Promise(function (ok, bad) {
+        if (typeof FileReader === 'undefined') return bad(new Error('File reading is not supported in this browser.'));
+        var reader = new FileReader();
+        reader.onload = function () { ok(String(reader.result || '')); };
+        reader.onerror = function () { bad(reader.error || new Error('File reading failed.')); };
+        reader.onabort = function () { bad(new Error('File reading was cancelled.')); };
+        try { reader.readAsText(f); } catch (e) { bad(e); }
+      });
+    }
+    function gzip(text) {
+      if (typeof CompressionStream === 'undefined') return Promise.resolve(null);
+      try {
+        var cs = new CompressionStream('gzip'), w = cs.writable.getWriter();
+        w.write(new TextEncoder().encode(text)); w.close();
+        return new Response(cs.readable).arrayBuffer().then(function (b) { return b.byteLength; }, function () { return null; });
+      } catch (e) { return Promise.resolve(null); }
+    }
+    function copy(text, btn, report) {
+      var done = function () {
+        var label = btn.textContent;
+        btn.textContent = 'Copied';
+        report('Copied to clipboard.');
+        setTimeout(function () { btn.textContent = label; }, 1200);
+      };
+      var failed = function () { report('Couldn\u2019t copy automatically. Select the result and copy it manually.', true); };
+      var fb = function () {
+        var a = document.createElement('textarea'), copied = false;
+        a.value = text;
+        a.setAttribute('readonly', '');
+        a.style.position = 'fixed';
+        a.style.left = '-9999px';
+        document.body.appendChild(a);
+        a.select();
+        try { copied = document.execCommand('copy'); } catch (e) {}
+        a.remove();
+        if (copied) done(); else failed();
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try { navigator.clipboard.writeText(text).then(done, fb); } catch (e) { fb(); }
+      } else fb();
+    }
+    function save(name, text) {
+      var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain' })); a.download = name; a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 800);
+    }
+
+    /* Shared page for every minifier. Each tool file supplies options, a sample and a minify() function. */
+    function toolUI(el, tool) {
+      var o = opts[tool.id] = opts[tool.id] || {};
+      tool.options.forEach(function (f) { if (o[f.id] === undefined) o[f.id] = f.default; });
+      el.innerHTML =
+        '<p class="blurb"></p><div class="opts"></div>' +
+        '<div class="grid">' +
+          '<div class="pane tin"><div class="bar"><b>Your ' + tool.name.replace(' Minifier', '') + '</b><span class="sp"></span>' +
+            '<button class="s t-sample">Sample</button><button class="s t-open">Open file</button><button class="s t-clear">Clear</button>' +
+            '<input type="file" class="t-file" hidden></div>' +
+            '<textarea class="t-in" spellcheck="false" aria-label="Input" placeholder="Paste your code here, or drop a file onto this box."></textarea></div>' +
+          '<div class="pane"><div class="bar"><b>Minified</b><span class="sp"></span>' +
+            '<button class="s t-copy" disabled>Copy</button><button class="s fill t-dl" disabled>Download</button></div>' +
+            '<textarea class="t-out" readonly spellcheck="false" aria-label="Minified result" placeholder="Your minified code appears here."></textarea></div>' +
+        '</div>' +
+        '<div class="stats"></div><p class="info" role="status" aria-live="polite" aria-atomic="true"></p>';
+      var q = function (s) { return el.querySelector(s); };
+      var inp = q('.t-in'), out = q('.t-out'), stats = q('.stats'), info = q('.info');
+      q('.t-file').accept = tool.accept;
+      q('.blurb').textContent = tool.blurb;
+      tool.options.forEach(function (f) {
+        var l = document.createElement('label'), c = document.createElement('input'), s = document.createElement('span');
+        c.type = 'checkbox'; c.checked = !!o[f.id]; s.textContent = f.label;
+        c.addEventListener('change', function () { o[f.id] = c.checked; run(); });
+        l.appendChild(c); l.appendChild(s); q('.opts').appendChild(l);
+      });
+      inp.value = inputs[tool.id] || '';
+
+      var timer = null, seq = 0;
+      function say(m, err) { info.textContent = m; info.classList.toggle('err', !!err); }
+      function run() {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          var my = ++seq, src = inp.value;
+          inputs[tool.id] = src;
+          if (!src.trim()) { out.value = ''; stats.innerHTML = ''; say(''); q('.t-copy').disabled = q('.t-dl').disabled = true; return; }
+          Promise.resolve(tool.prepare ? tool.prepare() : null).then(function () {
+            if (my !== seq) return;
+            var res;
+            try { res = tool.minify(src, o); }
+            catch (e) { out.value = ''; stats.innerHTML = ''; q('.t-copy').disabled = q('.t-dl').disabled = true; say(e.message || 'That input couldn\u2019t be minified.', true); return; }
+            out.value = res; say('');
+            q('.t-copy').disabled = q('.t-dl').disabled = !res;
+            var a = bytes(src), b = bytes(res), change = a ? (1 - b / a) * 100 : 0;
+            var sizeLabel = Math.abs(change).toFixed(1) + (change >= 0 ? '% smaller' : '% larger');
+            stats.innerHTML = '<span><b class="big' + (change < 0 ? ' worse' : '') + '">' + sizeLabel + '</b></span><span>Original <b>' + fmt(a) + '</b></span><span>Minified <b>' + fmt(b) + '</b></span><span class="gz"></span>';
+            Promise.all([gzip(src), gzip(res)]).then(function (g) {
+              if (my !== seq || g[0] === null || g[1] === null) return;
+              var gz = stats.querySelector('.gz'); if (gz) gz.innerHTML = 'Gzipped <b>' + fmt(g[0]) + '</b> to <b>' + fmt(g[1]) + '</b>';
+            });
+          }, function () { say('Couldn\u2019t load the helper files. Keep all the .js files in the same folder.', true); });
+        }, 160);
+      }
+      inp.addEventListener('input', run);
+      q('.t-sample').onclick = function () { inp.value = tool.sample; names[tool.id] = ''; run(); };
+      q('.t-clear').onclick = function () { inp.value = ''; names[tool.id] = ''; run(); inp.focus(); };
+      q('.t-open').onclick = function () { q('.t-file').click(); };
+      function readFile(f) {
+        if (!f) return;
+        if (f.size > 5 * 1048576) { say('That file is over 5 MB.', true); return; }
+        try {
+          readText(f).then(function (t) { inp.value = t; names[tool.id] = f.name; run(); say('Loaded ' + f.name); }, function () {
+            say('Couldn\u2019t read ' + f.name + '. Try opening the file again.', true);
+          });
+        } catch (e) {
+          say('Couldn\u2019t read ' + f.name + '. Try opening the file again.', true);
+        }
+      }
+      q('.t-file').addEventListener('change', function (e) { readFile(e.target.files[0]); e.target.value = ''; });
+      var pane = q('.tin');
+      ['dragenter', 'dragover'].forEach(function (t) { pane.addEventListener(t, function (e) { e.preventDefault(); pane.classList.add('drag'); }); });
+      ['dragleave', 'drop'].forEach(function (t) { pane.addEventListener(t, function (e) { e.preventDefault(); pane.classList.remove('drag'); }); });
+      pane.addEventListener('drop', function (e) { readFile(e.dataTransfer.files[0]); });
+      q('.t-copy').onclick = function (e) { copy(out.value, e.target, say); };
+      q('.t-dl').onclick = function () {
+        var n = names[tool.id], name = n ? n.replace(/(\.[^.]+)?$/, '.min.' + tool.ext) : 'minified.' + tool.ext;
+        save(name, out.value);
+      };
+      run();
+    }
+
+    document.getElementById('nav').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) open(b.getAttribute('data-id')); });
+    view.addEventListener('click', function (e) { var b = e.target.closest('.card'); if (b) open(b.getAttribute('data-id')); });
+    window.addEventListener('hashchange', function () { open(location.hash.slice(1) || 'home'); });
+    open(location.hash.slice(1) || 'home');
+
+    return { load: load, open: open, toolUI: toolUI };
+  })();
+  </script>
+  </body>
+  </html>
