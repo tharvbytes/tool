@@ -1,0 +1,42 @@
+{
+  "name": "MicroService Tools",
+  "url": "https://tharvbytes.github.io/tool/",
+  "description": "Free browser-based developer and writing utilities.",
+  "author": {
+    "name": "Tharvbytes.dev"
+  },
+  "developer": {
+    "name": "Tharvesh Muhaideen A",
+    "url": "https://about.imtharvesh.me"
+  },
+  "keywords": [
+    "Tharvesh",
+    "Tharvesh Muhaideen A",
+    "TM Nexus",
+    "Tharvbytes",
+    "microtools",
+    "Utility Tools"
+  ],
+  "sitemap": "https://tharvbytes.github.io/tool/sitemap.xml",
+  "robots": "https://tharvbytes.github.io/tool/robots.txt",
+  "manifest": "https://tharvbytes.github.io/tool/favicon_io/site.webmanifest",
+  "tools": [
+    "base64-encoder-decoder",
+    "case-converter",
+    "contrast-checker",
+    "contrast-validator",
+    "diff-checker",
+    "hash-generator",
+    "lorem-ipsum-generator",
+    "markdown-studio",
+    "meta-tag-generator",
+    "minifier",
+    "open-source-files",
+    "password-generator",
+    "robots-txt-generator",
+    "template-generator",
+    "uuid-generator",
+    "word-counter",
+    "yaml-properties-converter"
+  ]
+}
